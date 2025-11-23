@@ -47,6 +47,10 @@
   programs.bash = {
     enable = true;
     enableCompletion = true;
+    shellAliases = {
+      nrsf = "sudo nixos-rebuild switch --flake ~/nix-files/";
+      ngc = "sudo nix-collect-garbage --delete-older-than 30d";
+    };
     initExtra = ''
       eval "$(direnv hook bash)"
     '';
@@ -67,12 +71,13 @@
       hide_env_diff = true
     '';
   };
+
   dconf = {
     settings = {
       "org/gnome/shell/extensions/appindicator" = {
-        icon-brightness = 1.0;
+        icon-brightness = 0.0;
         icon-contrast = 0;
-        icon-opacity = 100;
+        icon-opacity = 255;
         icon-saturation = 0.0;
         icon-size = 0;
       };
