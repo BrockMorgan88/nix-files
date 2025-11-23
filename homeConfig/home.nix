@@ -67,9 +67,9 @@
       hide_env_diff = true
     '';
   };
-  programs.dconf = {
+  dconf = {
     settings = {
-      "/org/gnome/shell/extensions/appindicator" = {
+      "org/gnome/shell/extensions/appindicator" = {
         icon-brightness = 1.0;
         icon-contrast = 0;
         icon-opacity = 100;
@@ -78,7 +78,7 @@
       };
     };
   };
-  
+
   # Home Manager can also manage your environment variables through
   # 'home.sessionVariables'. These will be explicitly sourced when using a
   # shell provided by Home Manager. If you don't want to manage your shell

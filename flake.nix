@@ -26,7 +26,7 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
     home-manager = {
       url = "github:nix-community/home-manager/release-25.05";
-      input.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
   
@@ -119,8 +119,8 @@
           home-manager.useUserPackages = true;
           home-manager.users.brock = import ./homeConfig/home.nix;
         }
-      ]
-    }
+      ];
+    };
 
     # # Utilized by `nix flake check`
     # checks.x86_64-linux.test = c-hello.checks.x86_64-linux.test;
