@@ -72,6 +72,77 @@
     '';
   };
 
+  programs.vscode = 
+  let 
+    pythonexts = with pkgs.vscode-extensions.ms-python; [
+      vscode-pylance
+      python
+      debugpy
+    ];
+    cppexts = with pkgs.vscode-extensions.ms-vscode; [
+      cpptools
+      cpptools-extension-pack
+      #cpptools-themes
+      cmake-tools
+    ];
+    codeexts = with pkgs.vscode-extensions; [
+      mkhl.direnv
+      bbenoist.nix
+      platformio.platformio-vscode-ide
+      christian-kohler.path-intellisense
+      vscode-icons-team.vscode-icons
+    ];
+    better-cpp-syntax = pkgs.vscode-utils.buildVscodeMarketplaceExtension {
+      mktplcRef = {
+        name = "better-cpp-syntax";
+        publisher = "jeff-hykin";
+        version = "1.27.1";
+        hash = "sha256-GO/ooq50KLFsiEuimqTbD/mauQYcD/p2keHYo/6L9gw=";
+      };
+    };
+    doxdocgen = pkgs.vscode-utils.buildVscodeMarketplaceExtension {
+      mktplcRef = {
+        name = "doxdocgen";
+        publisher = "cschlosser";
+        version = "1.4.0";
+        hash = "sha256-InEfF1X7AgtsV47h8WWq5DZh6k/wxYhl2r/pLZz9JbU=";
+      };
+    };
+    msg = pkgs.vscode-utils.buildVscodeMarketplaceExtension {
+      mktplcRef = {
+        name = "msg";
+        publisher = "ajshort";
+        version = "0.1.1";
+        hash = "sha256-aL2znsL/iANHn/xCzAgjsysRTL3k1KxaBtmW/zGCYEI=";
+      };
+    };
+    treefmt = pkgs.vscode-utils.buildVscodeMarketplaceExtension {
+      mktplcRef = {
+        name = "treefmt-vscode";
+        publisher = "ibecker";
+        version = "2.2.1";
+        hash = "sha256-3kyEznwTWqdHdCWtoChGBCwRL7tMjtdLI+SQ7TqJh9I=";
+      };
+    };
+    otherexts = [
+      better-cpp-syntax
+      doxdocgen
+      msg
+      treefmt
+    ];
+
+
+  in {
+    enable = true;
+    package = pkgs.vscode;
+    mutableExtensionsDir = false;
+    profiles.default = {
+      enableUpdateCheck = false;
+      enableExtensionUpdateCheck = false;
+      extensions = pythonexts ++ cppexts ++ codeexts ++ otherexts;
+    };
+  };
+
   dconf = {
     settings = {
       "org/gnome/shell/extensions/appindicator" = {
