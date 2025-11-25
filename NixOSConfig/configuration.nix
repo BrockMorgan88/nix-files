@@ -22,6 +22,8 @@
   networking.hostName = "brock-thinkpad-nixos"; # Define your hostname.
   networking.networkmanager.enable = true;  # Enables wireless support via wpa_supplicant.
 
+  networking.firewall.enable = false;
+
   nixpkgs.config.allowUnfree = true; # Allow Unfree packages (like vs code and discord)
 
  # Set your time zone.
