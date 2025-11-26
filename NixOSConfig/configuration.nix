@@ -111,9 +111,10 @@ environment.systemPackages = with pkgs; [
     git
     gh
     libreoffice-fresh
+    platformio
     python3
     spotify
-    vscode
+    vscode.fhs
     vite
     vivaldi
     wget
@@ -133,6 +134,14 @@ environment.systemPackages = with pkgs; [
     platformio-core
     openocd
   ];
+
+  programs.nix-ld = {
+    enable = true;
+    libraries = with pkgs; [
+      python3
+      pipenv
+    ];
+  };
 
   nix.gc.automatic = true;
   nix.gc.dates = "weekly";
