@@ -124,17 +124,24 @@
         hash = "sha256-3kyEznwTWqdHdCWtoChGBCwRL7tMjtdLI+SQ7TqJh9I=";
       };
     };
+    svelte = pkgs.vscode-utils.buildVscodeMarketplaceExtension {
+      mktplcRef = {
+        name = "svelte-vscode";
+        publisher = "svelte";
+        version = "109.12.0";
+        hash = "sha256-pPzpP7xYZ2cxj1euA3jj6d0g0c+tK+1is+o4zeMdT/Q=";
+      };
+    };
     otherexts = [
       better-cpp-syntax
       doxdocgen
       msg
       treefmt
+      svelte
     ];
-
-
   in {
     enable = true;
-    package = pkgs.vscode;
+    package = pkgs.vscode.fhsWithPackages (ps: with ps; [ platformio-core avrdude ]);
     mutableExtensionsDir = false;
     profiles.default = {
       enableUpdateCheck = false;

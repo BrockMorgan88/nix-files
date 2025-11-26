@@ -1,17 +1,17 @@
 {
   description = "Home Manager configuration of brock";
 
-  inputs = {
-    # Specify the source of Home Manager and Nixpkgs.
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    home-manager = {
-      url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+  inputs = 
+  let
+    mainflake = import ./../flake.nix;
+    mainflakeinputs = mainflake.inputs;
+  in {
+    nixpkgs = mainflakeinputs.nixpkgs;
+    home-manager = mainflakeinputs.home-manager;
   };
 
   outputs =
-    { nixpkgs, home-manager, ... }:
+    { nixpkgs, home-manager, ... }@inputs:
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
@@ -19,7 +19,9 @@
     {
       homeConfigurations."brock" = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
-
+        useGlobalPkgs = true;
+        useUserPackages = true;
+        backupFileExtension = ".bak";
         # Specify your home configuration modules here, for example,
         # the path to your home.nix.
         modules = [ ./home.nix ];
