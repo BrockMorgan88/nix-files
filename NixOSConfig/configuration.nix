@@ -110,6 +110,7 @@ environment.systemPackages = with pkgs; [
     discord
     git
     gh
+    kicad-unstable-small
     libreoffice-fresh
     platformio
     python3
