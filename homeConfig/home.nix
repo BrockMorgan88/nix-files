@@ -132,12 +132,21 @@
         hash = "sha256-pPzpP7xYZ2cxj1euA3jj6d0g0c+tK+1is+o4zeMdT/Q=";
       };
     };
+    python-environments = pkgs.vscode-utils.buildVscodeMarketplaceExtension {
+      mktplcRef = {
+        name = "vscode-python-envs";
+        publisher = "ms-python";
+        version = "1.12.0";
+        hash = "sha256-8dCnGBuxv+8QwP0FrUZIKFxllVOR2z+wIhyyJgxsRns=";
+      };
+    };
     otherexts = [
       better-cpp-syntax
       doxdocgen
       msg
       treefmt
       svelte
+      python-environments
     ];
   in {
     enable = true;
