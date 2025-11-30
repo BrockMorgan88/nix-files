@@ -140,6 +140,22 @@
         hash = "sha256-8dCnGBuxv+8QwP0FrUZIKFxllVOR2z+wIhyyJgxsRns=";
       };
     };
+    ros2 = pkgs.vscode-utils.buildVscodeMarketplaceExtension {
+      mktplcRef = {
+        name = "vscode-ros2";
+        publisher = "jaehyunshim";
+        version = "0.0.9";
+        hash = "sha256-g0r/IuvAPVYEODAIVql0u2k3uyuK4dYC/tnFgyl4WQQ=";
+      };
+    };
+    python-environment-mgr = pkgs.vscode-utils.buildVscodeMarketplaceExtension {
+      mktplcRef = {
+        name = "python-environment-manager";
+        publisher = "donjayamanne";
+        version = "1.2.7";
+        hash = "sha256-w3csu6rJm/Z6invC/TR7tx6Aq5DD77VM62nem8/QMlg=";
+      };
+    };
     otherexts = [
       better-cpp-syntax
       doxdocgen
@@ -147,6 +163,8 @@
       treefmt
       svelte
       python-environments
+      ros2
+      python-environment-mgr
     ];
   in {
     enable = true;
