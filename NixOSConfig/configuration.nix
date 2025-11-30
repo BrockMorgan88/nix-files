@@ -56,12 +56,18 @@
   # Exclude unused GNOME packages
   environment.gnome.excludePackages = with pkgs; [
     gnome-calendar
+    gnome-clocks
+    gnome-console
     gnome-contacts
     gnome-maps
     gnome-music
+    gnome-system-monitor
     gnome-tour
     gnome-weather
+
+    baobab
     decibels
+    epiphany
     geary
     simple-scan
     totem
@@ -122,7 +128,7 @@ environment.systemPackages = with pkgs; [
     yarn
     zellij
     zsh
-
+    gnome-terminal
     gnome-tweaks
     gnomeExtensions.appindicator
     gnomeExtensions.blur-my-shell
