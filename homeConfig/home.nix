@@ -184,6 +184,7 @@
         };
         "C_Cpp.clang_format_style" = "{BasedOnStyle: Google, UseTab: Never, IndentWidth: 4, TabWidth: 4, BreakBeforeBraces: Allman, AllowShortIfStatementsOnASingleLine: false, IndentCaseLabels: false, ColumnLimit: 0, AccessModifierOffset: -4, NamespaceIndentation: All, FixNamespaceComments: false, AlignConsecutiveMacros: true,}";
         "workbench.secondarySideBar.defaultVisibility" = "hidden";
+        "workbench.iconTheme" = "vscode-icons";
       };
     };
   };
