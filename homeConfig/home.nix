@@ -80,11 +80,12 @@
       python
       debugpy
     ];
-    cppexts = with pkgs.vscode-extensions.ms-vscode; [
+    msexts = with pkgs.vscode-extensions.ms-vscode; [
       cpptools
       cpptools-extension-pack
       #cpptools-themes
       cmake-tools
+      makefile-tools
     ];
     codeexts = with pkgs.vscode-extensions; [
       mkhl.direnv
@@ -174,7 +175,7 @@
     profiles.default = {
       enableUpdateCheck = false;
       enableExtensionUpdateCheck = false;
-      extensions = pythonexts ++ cppexts ++ codeexts ++ otherexts;
+      extensions = pythonexts ++ msexts ++ codeexts ++ otherexts;
       userSettings = {
         "editor.formatOnSave" = true;
         "editor.defaultFormatter" = "ibecker.treefmt-vscode";
