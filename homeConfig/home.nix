@@ -178,7 +178,7 @@
       extensions = pythonexts ++ msexts ++ codeexts ++ otherexts;
       userSettings = {
         "editor.formatOnSave" = true;
-        "editor.defaultFormatter" = "ibecker.treefmt-vscode";
+        "editor.defaultFormatter" = "clang-format";
         "[cpp]" = {
           "editor.defaultFormatter" = "ms-vscode.cpptools";
         };
