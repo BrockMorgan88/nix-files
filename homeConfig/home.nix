@@ -158,6 +158,15 @@
         hash = "sha256-w3csu6rJm/Z6invC/TR7tx6Aq5DD77VM62nem8/QMlg=";
       };
     };
+    git-patch = pkgs.vscode-utils.buildVscodeMarketplaceExtension {
+      mktplcRef = {
+        name = "gitpatch";
+        publisher = "paragdiwan";
+        version = "0.2.1";
+        hash = "sha256-jpdRmTUfwbyJI8ruqHQEcSFwht7HSPrI9r+ZAaNf5Q4=";
+      };
+    };
+    
     otherexts = [
       better-cpp-syntax
       doxdocgen
@@ -167,6 +176,7 @@
       python-environments
       ros2
       python-environment-mgr
+      git-patch
     ];
   in {
     enable = true;
