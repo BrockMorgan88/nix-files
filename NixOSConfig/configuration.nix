@@ -15,18 +15,18 @@
     device = "/dev/nvme0n1p5";
   } ];
 
-  # Use the systemd-boot EFI boot loader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+  # EFI boot loader.
+  boot.loader = {
+    systemd-boot.enable = true;
+    efi.canTouchEfiVariables = true;
+  };
 
   networking.hostName = "brock-thinkpad-nixos"; # Define your hostname.
   networking.networkmanager.enable = true;  # Enables wireless support via wpa_supplicant.
 
-  networking.firewall.enable = false;
+  nixpkgs.config.allowUnfree = true; # Allow Unfree packages (e.g. vscode, discord, etc)
 
-  nixpkgs.config.allowUnfree = true; # Allow Unfree packages (like vs code and discord)
-
- # Set your time zone.
+  # Set your time zone.
   time.timeZone = "Australia/Brisbane";
 
   # Select internationalisation properties.
@@ -44,14 +44,14 @@
     LC_TIME = "en_AU.UTF-8";
   };
 
-  # Enable the X11 windowing system.
-  services.xserver.enable = true;
-  services.xserver.excludePackages = [ pkgs.xterm ];
-
-
-  # Enable the GNOME Desktop Environment.
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
+  # X11 windowing system.
+  services.xserver = {
+    enable = true;
+    excludePackages = [ pkgs.xterm ];
+    # GNOME Desktop Environment.
+    displayManager.gdm.enable = true;
+    desktopManager.gnome.enable = true;
+  };
   
   # Exclude unused GNOME packages
   environment.gnome.excludePackages = with pkgs; [
@@ -110,7 +110,7 @@
       home-manager
     ];
   };
-environment.systemPackages = with pkgs; [
+  environment.systemPackages = with pkgs; [
     btop
     direnv
     discord
@@ -150,8 +150,10 @@ environment.systemPackages = with pkgs; [
     ];
   };
 
-  nix.gc.automatic = true;
-  nix.gc.dates = "weekly";
+  nix.gc = {
+    automatic = true;
+    dates = "weekly";
+  };
 
    
   nix.settings = {
@@ -199,7 +201,7 @@ environment.systemPackages = with pkgs; [
   # networking.firewall.allowedTCPPorts = [ ... ];
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
+  networking.firewall.enable = false;
 
   # Copy the NixOS configuration file and link it from the resulting system
   # (/run/current-system/configuration.nix). This is useful in case you
