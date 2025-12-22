@@ -56,6 +56,7 @@
   # Exclude unused GNOME packages
   environment.gnome.excludePackages = with pkgs; [
     gnome-calendar
+    gnome-characters
     gnome-clocks
     gnome-console
     gnome-contacts
@@ -68,7 +69,9 @@
     baobab
     decibels
     epiphany
+    file-roller
     geary
+    seahorse
     simple-scan
     totem
   ];
@@ -110,7 +113,7 @@
       home-manager
     ];
   };
-  environment.systemPackages = with pkgs; [
+  environment.systemPackages = (with pkgs; [
     btop
     direnv
     discord
@@ -126,15 +129,16 @@
     vivaldi
     wget
     yarn
+    yazi
     zellij
     zsh
     gnome-terminal
     gnome-tweaks
-    gnomeExtensions.appindicator
-    gnomeExtensions.blur-my-shell
-    gnomeExtensions.dock-from-dash
-    gnomeExtensions.just-perfection
-  ];
+  ]) ++ (with pkgs.gnomeExtensions; [
+    appindicator
+    dock-from-dash
+    just-perfection
+  ]);
 
   services.udev.packages = with pkgs; [ 
     gnome-settings-daemon
@@ -182,6 +186,7 @@
     # Keep direnv stuff
     keep-derivations = true;
     keep-outputs = true;
+    cores = 12;
   };  
 
   # Some programs need SUID wrappers, can be configured further or are
