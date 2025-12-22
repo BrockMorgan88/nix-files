@@ -367,16 +367,16 @@
           format_above_threshold = "Warning! CPU 1m: %1min 5m: %5min";
         };
       };
-      "battery 0" = {
+      "battery all" = {
         enable = true;
         position = num_modules;
         settings = {
-          format = "%status %remaining (%emptytime %consumption)";
+          format = "%status %remaining (%percentage %consumption)";
           format_down = "No battery!";
           format_percentage = "%.02f%s";
           low_threshold = 30;
           threshold_type = "time";
-          path = "/sys/class/power_supply/BAT0/uevent";
+          path = "/sys/class/power_supply/BAT%d/uevent";
         };
       };
       "time" = {
