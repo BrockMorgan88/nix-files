@@ -337,16 +337,6 @@
           unit = "auto";
         };
       };
-      "cpu_temperature 0" = {
-        enable = true;
-        position = num_modules - 4;
-        settings = {
-          format = "Temp: %degreesC";
-          max_threshold = 80;
-          format_above_threshold = "Warning! High Temp: %degrees C";
-          path = "/sys/devices/platform/coretemp.0/hwmon/hwmon8/temp1_input";
-        };
-      };
       "cpu_usage" = {
         enable = true;
         position = num_modules - 3;
