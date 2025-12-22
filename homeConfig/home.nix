@@ -203,7 +203,7 @@
     enable = true;
     config = 
     let 
-      workspace-1 = "1:  ";
+      workspace-1 = "1:  ";
       workspace-2 = "2:  ";
       workspace-3 = "3:  ";
       workspace-4 = "4";
@@ -283,6 +283,18 @@
           };
         };
       } ];
+      startup = [
+      {
+        always = true;
+        command = "Discord";
+        notification = false;
+      }
+      {
+        always = true;
+        command = "kitty";
+        notification = false;
+      }
+      ];
     };
   };
 
