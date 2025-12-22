@@ -58,6 +58,7 @@
     gnome-calendar
     gnome-characters
     gnome-clocks
+    gnome-connections
     gnome-console
     gnome-contacts
     gnome-maps
@@ -74,6 +75,7 @@
     seahorse
     simple-scan
     totem
+    yelp
   ];
 
   # Configure keymap in X11
