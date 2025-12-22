@@ -48,35 +48,11 @@
   services.xserver = {
     enable = true;
     excludePackages = [ pkgs.xterm ];
-    # GNOME Desktop Environment.
+    # GDM Login.
     displayManager.gdm.enable = true;
-    desktopManager.gnome.enable = true;
+    # i3 Tiling window manager
+    windowManager.i3.enable = true;
   };
-  
-  # Exclude unused GNOME packages
-  environment.gnome.excludePackages = with pkgs; [
-    gnome-calendar
-    gnome-characters
-    gnome-clocks
-    gnome-connections
-    gnome-console
-    gnome-contacts
-    gnome-maps
-    gnome-music
-    gnome-system-monitor
-    gnome-tour
-    gnome-weather
-
-    baobab
-    decibels
-    epiphany
-    file-roller
-    geary
-    seahorse
-    simple-scan
-    totem
-    yelp
-  ];
 
   # Configure keymap in X11
   services.xserver.xkb = {
@@ -119,31 +95,31 @@
     btop
     direnv
     discord
+    evince  # Gnome document viewer
     git
     gh
     kicad-unstable-small
+    kitty   # Terminal
     libreoffice-fresh
     platformio
     python3
     spotify
     vscode.fhs
-    vite
+    vite    # For web dev stuff
     vivaldi
     wget
-    yarn
-    yazi
+    yarn    # For web dev stuff
+    yazi    # CLI file browser
     zellij
     zsh
-    gnome-terminal
-    gnome-tweaks
-  ]) ++ (with pkgs.gnomeExtensions; [
-    appindicator
-    dock-from-dash
-    just-perfection
-  ]);
+    ]);
+
+  fonts.packages = with pkgs; [
+    nerd-fonts.iosevka
+    nerd-fonts.shure-tech-mono
+  ];
 
   services.udev.packages = with pkgs; [ 
-    gnome-settings-daemon
     platformio-core
     openocd
   ];

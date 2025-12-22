@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
   # Home Manager needs a bit of information about you and the paths it should
@@ -18,10 +18,7 @@
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = with pkgs; [
-    bash
     curl
-    dconf
-    dconf-editor
     ethtool
     tree
     usbutils
@@ -196,19 +193,207 @@
         "workbench.secondarySideBar.defaultVisibility" = "hidden";
         "workbench.iconTheme" = "vscode-icons";
         "svelte.enable-ts-plugin" = true;
+        "editor.fontFamily" = "'Iosevka Nerd Font', 'Regular'";
+        "editor.fontSize" = 14;
       };
     };
   };
 
-  dconf = {
-    settings = {
-      "org/gnome/shell/extensions/appindicator" = {
-        icon-brightness = 0.0;
-        icon-contrast = 0;
-        icon-opacity = 255;
-        icon-saturation = 0.0;
-        icon-size = 0;
+  xsession.windowManager.i3 = {
+    enable = true;
+    config = 
+    let 
+      workspace-1 = "1:  ";
+      workspace-2 = "2:  ";
+      workspace-3 = "3:  ";
+      workspace-4 = "4";
+      workspace-0 = "0:  ";
+    in {
+      modifier = "Mod4";
+      fonts = {
+        names = [ "Iosevka Nerd Font" ];
+        style = "Regular";
+        size = 11.0;
       };
+      window = {
+        titlebar = false;
+        hideEdgeBorders = "both";
+      };
+      keybindings = 
+      let 
+        modifier = config.xsession.windowManager.i3.config.modifier;
+      in lib.mkOptionDefault {
+        "${modifier}+1" = "workspace ${workspace-1}";
+        "${modifier}+Shift+1" = "move container to workspace ${workspace-1}";
+        "${modifier}+2" = "workspace ${workspace-2}";
+        "${modifier}+Shift+2" = "move container to workspace ${workspace-2}";
+        "${modifier}+3" = "workspace ${workspace-3}";
+        "${modifier}+Shift+3" = "move container to workspace ${workspace-3}";
+        "${modifier}+4" = "workspace ${workspace-4}";
+        "${modifier}+Shift+4" = "move container to workspace ${workspace-4}";
+        "${modifier}+0" = "workspace ${workspace-0}";
+        "${modifier}+Shift+0" = "move container to workspace ${workspace-0}";
+      };
+      assigns = {
+        "${workspace-1}" = [{class = "Vivaldi-stable"; }];
+        "${workspace-2}" = [{class = "kitty";}];
+        "${workspace-3}" = [{class = "code";}];
+        "${workspace-0}" = [{class = "discord";}];
+      };
+      bars = [ {
+        fonts = {
+          names = [ "Iosevka Nerd Font" ];
+          style = "Regular";
+          size = 9.0;
+        };
+        mode = "dock";
+        position = "top";
+        statusCommand = "${pkgs.i3status}/bin/i3status";
+        workspaceButtons = true;
+        workspaceNumbers = true;
+        trayOutput = "primary";
+        colors = {
+          background = "#000000";
+          statusline = "#FFFFFF";
+          separator = "#666666";
+          focusedWorkspace = {
+            border = "#4C7899";
+            background = "#285577";
+            text = "#FFFFFF";
+          };
+          activeWorkspace = {
+            border = "#333333";
+            background = "#5F676A";
+            text = "#FFFFFF";
+          };
+          inactiveWorkspace = {
+            border = "#333333";
+            background = "#222222";
+            text = "#888888";
+          };
+          urgentWorkspace = {
+            border = "#2F343A";
+            background = "#900000";
+            text = "#FFFFFF";
+          };
+          bindingMode = {
+            border = "#2F343A";
+            background = "#900000";
+            text = "#FFFFFF";
+          };
+        };
+      } ];
+    };
+  };
+
+  programs.i3status = {
+    enable = true;
+    enableDefault = false;
+    general = {
+      colors = true;
+      color_good = "#47bd5f";
+      color_bad = "#FF0000";
+      color_degraded = "#9b410d";
+      interval = 10;
+    };
+    modules = 
+    let 
+      num_modules = 6;
+    in {
+      "disk /" = {
+        enable = true;
+        position = num_modules - 8;
+        settings = {
+          format = "Disk: %percentage_used used %percentage_free free %percentage_avail available";
+          prefix_type = "custom";
+          low_threshold = 10;
+          threshold_type = "percentage_free";
+          format_below_threshold = "Warning! Disk: %percentage_avail available";
+        };
+      };
+      "wireless wlp0s20f3" = {
+        enable = true;
+        position = num_modules - 7;
+        settings = {
+          format_up = "WiFi: Quality %quality %essid %bitrate %frequency %ip";
+          format_down = "WiFi down";
+          format_quality = "%02d%s";
+        };
+      };
+      "ethernet enp0s31f6" = {
+        enable = true;
+        position = num_modules - 6;
+        settings = {
+          format_up = "Eth: %ip (%speed)";
+          format_down = "Eth: down";
+        };
+      };
+      "memory" = {
+        enable = true;
+        position = num_modules - 5;
+        settings = {
+          memory_used_method = "classical";
+          format = "RAM %free free %available available %used/%total used";
+          unit = "auto";
+        };
+      };
+      "cpu_temperature 0" = {
+        enable = true;
+        position = num_modules - 4;
+        settings = {
+          format = "Temp: %degreesC";
+          max_threshold = 80;
+          format_above_threshold = "Warning! High Temp: %degrees C";
+          path = "/sys/devices/platform/coretemp.0/hwmon/hwmon8/temp1_input";
+        };
+      };
+      "cpu_usage" = {
+        enable = true;
+        position = num_modules - 3;
+        settings = {
+          format = "CPU Usage: %usage";
+          max_threshold = 75;
+          format_above_threshold = "Warning! CPU Usage: %usage";
+          degraded_threshold = 25;
+          format_above_degraded_threshold = "Degraded! CPU Usage: %usage";
+        };
+      };
+      "load" = {
+        enable = true;
+        position = num_modules - 2;
+        settings = {
+          format = "CPU Load 1m: %1min 5m: %5min";
+          max_threshold = 10;
+          format_above_threshold = "Warning! CPU 1m: %1min 5m: %5min";
+        };
+      };
+      "battery 0" = {
+        enable = true;
+        position = num_modules;
+        settings = {
+          format = "%status %remaining (%emptytime %consumption)";
+          format_down = "No battery!";
+          format_percentage = "%.02f%s";
+          low_threshold = 30;
+          threshold_type = "time";
+          path = "/sys/class/power_supply/BAT0/uevent";
+        };
+      };
+      "time" = {
+        enable = true;
+        position = num_modules;
+        settings = {
+          format = "%d-%m-%Y %H:%M";
+        };
+      };
+    };
+  };
+
+  programs.kitty = {
+    enable = true;
+    font = {
+      name = "Iosevka Nerd Font";
+      size = 11;
     };
   };
 
