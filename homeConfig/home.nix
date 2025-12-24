@@ -47,7 +47,7 @@
     shellAliases = {
       nrsf = "sudo nixos-rebuild switch --flake ~/nix-files/";
       ngc = "sudo nix-collect-garbage --delete-older-than 7d";
-      ngca = "sudo nix-collect-garbage -d";
+      ngca = "nix-collect-garbage -d && sudo nix-collect-garbage -d";
     };
     initExtra = ''
       eval "$(direnv hook bash)"
