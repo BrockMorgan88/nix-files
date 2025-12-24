@@ -45,7 +45,7 @@
     enable = true;
     enableCompletion = true;
     shellAliases = {
-      nrsf = "sudo nixos-rebuild switch --flake ~/nix-files/";
+      nrsf = "sudo nixos-rebuild switch --flake ~/nix-files/ && sudo /run/current-system/bin/switch-to-configuration boot";
       ngc = "sudo nix-collect-garbage --delete-older-than 7d";
       ngca = "nix-collect-garbage -d && sudo nix-collect-garbage -d";
     };
