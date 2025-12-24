@@ -24,7 +24,7 @@
     usbutils
     zip
   ];
-
+  
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
   home.file = {
@@ -163,6 +163,14 @@
         hash = "sha256-jpdRmTUfwbyJI8ruqHQEcSFwht7HSPrI9r+ZAaNf5Q4=";
       };
     };
+    xkb-symbols = pkgs.vscode-utils.buildVscodeMarketplaceExtension {
+      mktplcRef = {
+        name = "xkb";
+        publisher = "compilouit";
+        version = "0.1.2";
+        hash = "sha256-k8EmkiebEKB8hDaJqT3KVXy1d9Cc5aUDL9gP1mOBN88=";
+      };
+    };
     
     otherexts = [
       better-cpp-syntax
@@ -174,6 +182,7 @@
       ros2
       python-environment-mgr
       git-patch
+      xkb-symbols
     ];
   in {
     enable = true;
@@ -285,12 +294,12 @@
       } ];
       startup = [
       {
-        always = true;
+        always = false;
         command = "Discord";
         notification = false;
       }
       {
-        always = true;
+        always = false;
         command = "kitty";
         notification = false;
       }
@@ -397,6 +406,7 @@
       name = "Iosevka Nerd Font";
       size = 11;
     };
+    themeFile = "Hybrid";
   };
 
   # Home Manager can also manage your environment variables through

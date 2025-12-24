@@ -96,8 +96,10 @@
     direnv
     discord
     evince  # Gnome document viewer
+    flameshot # Screenshots
     git
     gh
+    gnome-calculator
     kicad-unstable-small
     kitty   # Terminal
     libreoffice-fresh
@@ -108,6 +110,7 @@
     vite    # For web dev stuff
     vivaldi
     wget
+    xorg.setxkbmap
     yarn    # For web dev stuff
     yazi    # CLI file browser
     zellij
