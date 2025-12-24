@@ -44,12 +44,15 @@
     LC_TIME = "en_AU.UTF-8";
   };
 
+  services.displayManager.ly = {
+    enable = true;
+    # x11Support = true; # Default is true, for some reason this throws an error
+  };
+
   # X11 windowing system.
   services.xserver = {
     enable = true;
     excludePackages = [ pkgs.xterm ];
-    # GDM Login.
-    displayManager.gdm.enable = true;
     # i3 Tiling window manager
     windowManager.i3.enable = true;
   };
