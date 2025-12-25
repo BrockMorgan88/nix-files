@@ -46,8 +46,8 @@
     enableCompletion = true;
     shellAliases = {
       nrsf = "sudo nixos-rebuild switch --flake ~/nix-files/ && sudo /run/current-system/bin/switch-to-configuration boot";
-      ngc = "sudo nix-collect-garbage --delete-older-than 7d";
-      ngca = "nix-collect-garbage -d && sudo nix-collect-garbage -d";
+      ngc = "sudo nix-collect-garbage --delete-older-than 7d && sudo /run/current-system/bin/switch-to-configuration boot";
+      ngca = "nix-collect-garbage -d && sudo nix-collect-garbage -d && sudo /run/current-system/bin/switch-to-configuration boot";
     };
     initExtra = ''
       eval "$(direnv hook bash)"
@@ -325,19 +325,19 @@
         enable = true;
         position = num_modules - 8;
         settings = {
-          format = "Disk: %percentage_used used %percentage_free free %percentage_avail available";
+          format = "  %percentage_used used %percentage_free free %percentage_avail available";
           prefix_type = "custom";
           low_threshold = 10;
           threshold_type = "percentage_free";
-          format_below_threshold = "Warning! Disk: %percentage_avail available";
+          format_below_threshold = "    %percentage_avail available";
         };
       };
       "wireless wlp0s20f3" = {
         enable = true;
         position = num_modules - 7;
         settings = {
-          format_up = "WiFi: Quality %quality %essid %bitrate %frequency %ip";
-          format_down = "WiFi down";
+          format_up = "  Quality %quality %essid %bitrate %frequency %ip";
+          format_down = "󰖪 ";
           format_quality = "%02d%s";
         };
       };
@@ -345,8 +345,8 @@
         enable = true;
         position = num_modules - 6;
         settings = {
-          format_up = "Eth: %ip (%speed)";
-          format_down = "Eth: down";
+          format_up = "󰈁 %ip (%speed)";
+          format_down = "󰈂 ";
         };
       };
       "memory" = {
@@ -354,7 +354,7 @@
         position = num_modules - 5;
         settings = {
           memory_used_method = "classical";
-          format = "RAM %free free %available available %used/%total used";
+          format = "  %free free %available available %used/%total used";
           unit = "auto";
         };
       };
@@ -362,20 +362,18 @@
         enable = true;
         position = num_modules - 3;
         settings = {
-          format = "CPU Usage: %usage";
+          format = "  %usage";
           max_threshold = 75;
-          format_above_threshold = "Warning! CPU Usage: %usage";
-          degraded_threshold = 25;
-          format_above_degraded_threshold = "Degraded! CPU Usage: %usage";
+          format_above_threshold = "    %usage";
         };
       };
       "load" = {
         enable = true;
         position = num_modules - 2;
         settings = {
-          format = "CPU Load 1m: %1min 5m: %5min";
+          format = "1m: %1min 5m: %5min";
           max_threshold = 10;
-          format_above_threshold = "Warning! CPU 1m: %1min 5m: %5min";
+          format_above_threshold = "  1m: %1min 5m: %5min";
         };
       };
       "battery all" = {
@@ -385,8 +383,12 @@
           format = "%status %remaining (%percentage %consumption)";
           format_down = "No battery!";
           format_percentage = "%.02f%s";
-          low_threshold = 30;
-          threshold_type = "time";
+          status_chr = "󰂄";
+          status_bat = "󰁾";
+          status_unk = "󰂃";
+          status_full = "󰁹";
+          low_threshold = 10;
+          threshold_type = "percent";
           path = "/sys/class/power_supply/BAT%d/uevent";
         };
       };
