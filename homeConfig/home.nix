@@ -47,7 +47,7 @@
     shellAliases = {
       nrsf = "sudo nixos-rebuild switch --flake ~/nix-files/ && sudo /run/current-system/bin/switch-to-configuration boot";
       ngc = "sudo nix-collect-garbage --delete-older-than 7d && sudo /run/current-system/bin/switch-to-configuration boot";
-      ngca = "nix-collect-garbage -d && sudo nix-collect-garbage -d && sudo /run/current-system/bin/switch-to-configuration boot";
+      ngca = "sudo nix-collect-garbage -d && nix-collect-garbage -d && sudo /run/current-system/bin/switch-to-configuration boot";
     };
     initExtra = ''
       eval "$(direnv hook bash)"
@@ -215,10 +215,11 @@
       workspace-1 = "1:  ";
       workspace-2 = "2:  ";
       workspace-3 = "3:  ";
-      workspace-4 = "4";
+      workspace-4 = "4:  ";
       workspace-0 = "0:  ";
     in {
       modifier = "Mod4";
+      menu = "${pkgs.rofi}/bin/rofi -show drun";
       fonts = {
         names = [ "Iosevka Nerd Font" ];
         style = "Regular";
@@ -247,6 +248,7 @@
         "${workspace-1}" = [{class = "Vivaldi-stable"; }];
         "${workspace-2}" = [{class = "kitty";}];
         "${workspace-3}" = [{class = "code";}];
+        "${workspace-4}" = [{class = "spotify";}];
         "${workspace-0}" = [{class = "discord";}];
       };
       bars = [ {
@@ -257,7 +259,7 @@
         };
         mode = "dock";
         position = "top";
-        statusCommand = "${pkgs.i3status}/bin/i3status";
+        statusCommand = "${pkgs.i3blocks}/bin/i3blocks";
         workspaceButtons = true;
         workspaceNumbers = true;
         trayOutput = "primary";
@@ -308,7 +310,51 @@
         command = "feh --bg-scale ~/nix-files/homeConfig/Background2.jpg";
         notification = false;
       }
+      {
+        always = true;
+        command = "picom";
+        notification = false;
+      }
       ];
+    };
+  };
+
+  services.picom = {
+    enable = true;
+    inactiveOpacity = 0.95;
+    vSync = true;
+  };
+
+  programs.i3blocks = {
+    enable = true;
+    bars = {
+      config = {
+        wifi = {
+          command = "~/nix-files/homeConfig/scripts/wifi.sh";
+          interval = 10;
+        };
+        ethernet = lib.hm.dag.entryAfter [ "wifi" ] {
+          command = "~/nix-files/homeConfig/scripts/ethernet.sh";
+          interval = 10;
+        };
+        ram = lib.hm.dag.entryAfter [ "ethernet" ] {
+          command = "~/nix-files/homeConfig/scripts/ram.sh";
+          interval = 10;
+        };
+        cpu = lib.hm.dag.entryAfter [ "ram" ] {
+          command = "~/nix-files/homeConfig/scripts/cpu.sh";
+          interval = 10;
+        };
+        battery = lib.hm.dag.entryAfter [ "cpu" ] {
+          command = "~/nix-files/homeConfig/scripts/battery.sh";
+          interval = 10;
+        };
+        time = lib.hm.dag.entryAfter [ "battery" ] {
+          command = "date +'%d-%m-%Y %H:%M'";
+          interval = 10;
+          color = "#FFFFFF";
+        };
+      };
     };
   };
 
@@ -352,56 +398,6 @@
         settings = {
           format_up = "󰈁 %ip (%speed)";
           format_down = "󰈂 ";
-        };
-      };
-      "memory" = {
-        enable = true;
-        position = num_modules - 5;
-        settings = {
-          memory_used_method = "classical";
-          format = "  %free free %available available %used/%total used";
-          unit = "auto";
-        };
-      };
-      "cpu_usage" = {
-        enable = true;
-        position = num_modules - 3;
-        settings = {
-          format = "  %usage";
-          max_threshold = 75;
-          format_above_threshold = "    %usage";
-        };
-      };
-      "load" = {
-        enable = true;
-        position = num_modules - 2;
-        settings = {
-          format = "1m: %1min 5m: %5min";
-          max_threshold = 10;
-          format_above_threshold = "  1m: %1min 5m: %5min";
-        };
-      };
-      "battery all" = {
-        enable = true;
-        position = num_modules;
-        settings = {
-          format = "%status %remaining (%percentage %consumption)";
-          format_down = "No battery!";
-          format_percentage = "%.02f%s";
-          status_chr = "󰂄";
-          status_bat = "󰁾";
-          status_unk = "󰂃";
-          status_full = "󰁹";
-          low_threshold = 10;
-          threshold_type = "percent";
-          path = "/sys/class/power_supply/BAT%d/uevent";
-        };
-      };
-      "time" = {
-        enable = true;
-        position = num_modules;
-        settings = {
-          format = "%d-%m-%Y %H:%M";
         };
       };
     };

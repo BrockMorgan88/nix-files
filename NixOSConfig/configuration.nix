@@ -61,12 +61,6 @@
     # x11Support = true; # Default is true, for some reason this throws an error
   };
 
-  services.picom = {
-    enable = true;
-    vSync = true;
-    inactiveOpacity = 0.8;
-  };
-
   # X11 windowing system.
   services.xserver = {
     enable = true;
@@ -123,13 +117,17 @@
     git
     gh
     gnome-calculator
+    i3blocks
     kicad-unstable-small
     kitty   # Terminal
     libreoffice-fresh
     pavucontrol # Audio control
+    picom
     platformio
     python3
+    rofi
     spotify
+    sysstat
     vscode.fhs
     vite    # For web dev stuff
     vivaldi
