@@ -44,9 +44,27 @@
     LC_TIME = "en_AU.UTF-8";
   };
 
+  # Systemd bluetooth daemon
+  systemd.user.services.bluetooth = {
+    enable = true;
+    after = [ "bluetooth.target" ];
+    wantedBy = [ "default.target" ];
+    description = "Bluetooth daemon";
+    serviceConfig = {
+      Type = "simple";
+      ExecStart = "/run/current-system/sw/bin/bluetoothd";
+    };
+  };
+
   services.displayManager.ly = {
     enable = true;
     # x11Support = true; # Default is true, for some reason this throws an error
+  };
+
+  services.picom = {
+    enable = true;
+    vSync = true;
+    inactiveOpacity = 0.8;
   };
 
   # X11 windowing system.
@@ -100,6 +118,7 @@
     direnv
     discord
     evince  # Gnome document viewer
+    feh # Image viewer - background
     flameshot # Screenshots
     git
     gh
