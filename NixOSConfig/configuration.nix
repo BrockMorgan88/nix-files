@@ -126,6 +126,7 @@
     kicad-unstable-small
     kitty   # Terminal
     libreoffice-fresh
+    pavucontrol # Audio control
     platformio
     python3
     spotify
@@ -142,7 +143,6 @@
 
   fonts.packages = with pkgs; [
     nerd-fonts.iosevka
-    nerd-fonts.shure-tech-mono
   ];
 
   services.udev.packages = with pkgs; [ 

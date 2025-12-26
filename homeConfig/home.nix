@@ -303,6 +303,11 @@
         command = "kitty";
         notification = false;
       }
+      {
+        always = true;
+        command = "feh --bg-scale ~/nix-files/homeConfig/Background2.jpg";
+        notification = false;
+      }
       ];
     };
   };
