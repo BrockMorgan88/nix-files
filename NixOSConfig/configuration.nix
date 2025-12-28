@@ -111,6 +111,7 @@
     kicad-unstable-small
     kitty   # Terminal
     libreoffice-fresh
+    libnotify
     pavucontrol # Audio control
     picom # Compositor for i3
     platformio

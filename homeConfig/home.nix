@@ -56,8 +56,10 @@
 
   programs.git = {
     enable = true;
-    userName = "BrockMorgan88";
-    userEmail = "brockjamesmorgan@gmail.com";
+    settings.user = {
+      name = "BrockMorgan88";
+      email = "brockjamesmorgan@gmail.com";
+    };
   };
 
   programs.direnv = {

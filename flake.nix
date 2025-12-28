@@ -23,11 +23,13 @@
 
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
     home-manager = {
-      url = "github:nix-community/home-manager/release-25.05";
+      url = "github:nix-community/home-manager/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs-master.url = "github:NixOS/nixpkgs/master";
   };
   
   
@@ -106,9 +108,28 @@
   # Work-in-progress: refer to parent/sibling flakes in the same repository
   # inputs.c-hello.url = "path:../c-hello";
 
-  outputs = { self, nixpkgs, home-manager, ... }@inputs: 
+  outputs = { 
+    self,
+    nixpkgs, 
+    home-manager,
+    nixpkgs-unstable,
+    nixpkgs-master,
+    ...
+  }@inputs: 
     let
       system = "x86_64-linux";
+      pkgs = import nixpkgs {
+        inherit system;
+        overlays = [
+          (import ./overlays/unstable.nix)
+        ];
+      };
+      pkgs-unstable = import nixpkgs-unstable {
+        inherit system;
+      };
+      pkgs-master = import nixpkgs-master {
+        inherit system;
+      };
     in {
     nixosConfigurations."brock-thinkpad-nixos" = nixpkgs.lib.nixosSystem {
       inherit system;
