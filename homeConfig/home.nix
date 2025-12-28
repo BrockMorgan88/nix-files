@@ -329,7 +329,11 @@
     enable = true;
     bars = {
       config = {
-        wifi = {
+        disk = {
+          command = "~/nix-files/homeConfig/scripts/disk.sh";
+          interval = 10;
+        };
+        wifi = lib.hm.dag.entryAfter [ "disk" ] {
           command = "~/nix-files/homeConfig/scripts/wifi.sh";
           interval = 10;
         };
@@ -341,7 +345,11 @@
           command = "~/nix-files/homeConfig/scripts/ram.sh";
           interval = 10;
         };
-        cpu = lib.hm.dag.entryAfter [ "ram" ] {
+        swap = lib.hm.dag.entryAfter [ "ram" ] {
+          command = "~/nix-files/homeConfig/scripts/swap.sh";
+          interval = 10;
+        };
+        cpu = lib.hm.dag.entryAfter [ "swap" ] {
           command = "~/nix-files/homeConfig/scripts/cpu.sh";
           interval = 10;
         };
@@ -372,26 +380,6 @@
     let 
       num_modules = 6;
     in {
-      "disk /" = {
-        enable = true;
-        position = num_modules - 8;
-        settings = {
-          format = "  %percentage_used used %percentage_free free %percentage_avail available";
-          prefix_type = "custom";
-          low_threshold = 10;
-          threshold_type = "percentage_free";
-          format_below_threshold = "    %percentage_avail available";
-        };
-      };
-      "wireless wlp0s20f3" = {
-        enable = true;
-        position = num_modules - 7;
-        settings = {
-          format_up = "  Quality %quality %essid %bitrate %frequency %ip";
-          format_down = "󰖪 ";
-          format_quality = "%02d%s";
-        };
-      };
       "ethernet enp0s31f6" = {
         enable = true;
         position = num_modules - 6;

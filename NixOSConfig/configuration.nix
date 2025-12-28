@@ -100,6 +100,7 @@
     btop
     direnv
     discord
+    dunst # Notifications
     evince  # Gnome document viewer
     feh # Image viewer - background
     flameshot # Screenshots
@@ -111,16 +112,17 @@
     kitty   # Terminal
     libreoffice-fresh
     pavucontrol # Audio control
-    picom
+    picom # Compositor for i3
     platformio
     python3
-    rofi
+    rofi # Package searcher for i3
     spotify
     sysstat
     vscode.fhs
     vite    # For web dev stuff
     vivaldi
     wget
+    wirelesstools
     xorg.setxkbmap
     yarn    # For web dev stuff
     yazi    # CLI file browser
