@@ -81,8 +81,6 @@
     ];
     msexts = with pkgs.vscode-extensions.ms-vscode; [
       cpptools
-      cpptools-extension-pack
-      #cpptools-themes
       cmake-tools
       makefile-tools
     ];
@@ -245,6 +243,7 @@
         "${modifier}+Shift+4" = "move container to workspace ${workspace-4}";
         "${modifier}+0" = "workspace ${workspace-0}";
         "${modifier}+Shift+0" = "move container to workspace ${workspace-0}";
+        "Control+${modifier}+T" = "exec --no-startup-id kitty";
       };
       assigns = {
         "${workspace-1}" = [{class = "Vivaldi-stable"; }];
@@ -260,7 +259,7 @@
           size = 9.0;
         };
         mode = "dock";
-        position = "top";
+        position = "bottom";
         statusCommand = "${pkgs.i3blocks}/bin/i3blocks";
         workspaceButtons = true;
         workspaceNumbers = true;
