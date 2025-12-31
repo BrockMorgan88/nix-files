@@ -27,7 +27,7 @@ if [ "$BATTERY_STATUS" = "Discharging" ]; then
         echo "󰂁 $BATTERY_CAPACITY%"
     elif [ "$BATTERY_CAPACITY" -lt 90 ]; then
         echo "󰂂 $BATTERY_CAPACITY%"
-    elif [ "$BATTERY_CAPACITY" -lt 100 ]; then
+    else
         echo "󰁹 $BATTERY_CAPACITY%"
     fi
 elif [ "$BATTERY_STATUS" = "Charging" ]; then
@@ -50,7 +50,7 @@ elif [ "$BATTERY_STATUS" = "Charging" ]; then
         echo "󰂊 $BATTERY_CAPACITY%"
     elif [ "$BATTERY_CAPACITY" -lt 90 ]; then
         echo "󰂋 $BATTERY_CAPACITY%"
-    elif [ "$BATTERY_CAPACITY" -lt 100 ]; then
+    else
         echo "󰂅 $BATTERY_CAPACITY%"
     fi
 fi

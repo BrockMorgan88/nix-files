@@ -252,7 +252,8 @@
         "${workspace-4}" = [{class = "spotify";}];
         "${workspace-0}" = [{class = "discord";}];
       };
-      bars = [ {
+      bars = [ 
+      {
         fonts = {
           names = [ "Iosevka Nerd Font" ];
           style = "Regular";
@@ -294,6 +295,9 @@
             text = "#FFFFFF";
           };
         };
+      } {
+        position = "top";
+        mode = "invisible";
       } ];
       startup = [
       {
@@ -327,6 +331,9 @@
     fadeDelta = 2;
     menuOpacity = 0.85;
     vSync = true;
+    opacityRules = [
+      "30:name ='CustomBarHidden'"
+    ];
   };
 
   programs.i3blocks = {
