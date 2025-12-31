@@ -247,9 +247,7 @@
       };
       assigns = {
         "${workspace-1}" = [{class = "Vivaldi-stable"; }];
-        "${workspace-2}" = [{class = "kitty";}];
-        "${workspace-3}" = [{class = "code";}];
-        "${workspace-4}" = [{class = "spotify";}];
+        "${workspace-4}" = [{class = "Spotify";}];
         "${workspace-0}" = [{class = "discord";}];
       };
       bars = [ 
