@@ -129,7 +129,8 @@
     yazi    # CLI file browser
     zellij
     zsh
-    ]);
+    ] ++ (with unstable; [
+    ]));
 
   fonts.packages = with pkgs; [
     nerd-fonts.iosevka

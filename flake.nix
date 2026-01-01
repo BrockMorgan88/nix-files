@@ -123,17 +123,43 @@
         overlays = [
           (import ./overlays/unstable.nix)
         ];
+        config = {
+          allowUnfree = true;
+        };
       };
       pkgs-unstable = import nixpkgs-unstable {
         inherit system;
+        config = {
+          allowUnfree = true;
+        };
       };
       pkgs-master = import nixpkgs-master {
         inherit system;
+        config = {
+          allowUnfree = true;
+        };
       };
+      lib = nixpkgs.lib;
+      overlays = import ./overlays/unstable.nix (
+        inputs 
+        // {
+          inherit
+          pkgs
+          pkgs-unstable
+          pkgs-master
+          lib;
+        }
+      );
     in {
-    nixosConfigurations."brock-thinkpad-nixos" = nixpkgs.lib.nixosSystem {
+    nixosConfigurations."brock-thinkpad-nixos" = lib.nixosSystem {
       inherit system;
       modules = [
+        (
+          { config, pkgs, ... }:
+          {
+            nixpkgs.overlays = overlays;
+          }
+        )
         ./NixOSConfig/configuration.nix
         home-manager.nixosModules.home-manager {
           home-manager.useGlobalPkgs = true;

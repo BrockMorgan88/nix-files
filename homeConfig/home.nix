@@ -196,7 +196,7 @@
     vSync = true;
     opacityRules = [
       "30:name ='CustomBarHidden'"
-      "100:name ='CustomBar"
+      "100:name ='CustomBar'"
     ];
   };
 
