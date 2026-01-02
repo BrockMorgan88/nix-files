@@ -265,14 +265,18 @@
       };
     };
   };
-
-  programs.kitty = {
+  programs.alacritty = {
     enable = true;
-    font = {
-      name = "Iosevka Nerd Font";
-      size = 11;
+    settings = {
+      env.WINIT_X11_SCALE_FACTOR = "0.9";
+      font = {
+        normal = {
+          family = "Iosevka Nerd Font";
+          style = "Regular";
+        };
+        size = 11;
+      };
     };
-    themeFile = "Hybrid";
   };
 
   # Home Manager can also manage your environment variables through

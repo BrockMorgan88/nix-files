@@ -101,6 +101,7 @@
       home-manager
     ];
   };
+
   environment.systemPackages = (with pkgs; [
     bluez
     btop
@@ -115,7 +116,6 @@
     gnome-calculator
     i3blocks
     kicad-unstable-small
-    kitty   # Terminal
     libreoffice-fresh
     libnotify
     pavucontrol # Audio control
