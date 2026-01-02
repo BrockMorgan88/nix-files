@@ -53,7 +53,10 @@ elif [ "$BATTERY_STATUS" = "Charging" ]; then
     else
         echo "󰂅 $BATTERY_CAPACITY%"
     fi
-fi
+elif [ "$BATTERY_STATUS" = "Not charging" ]; then
+    COLOUR="#00FF00"
+    echo "󰂅 100%"
+fi    
 
 echo "$BATTERY_CAPACITY"
 echo "$COLOUR"

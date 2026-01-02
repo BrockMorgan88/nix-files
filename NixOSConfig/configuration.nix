@@ -83,6 +83,12 @@
   };
   hardware.bluetooth.enable = true;
 
+  documentation = {
+    enable = true;
+    man.enable = true;
+    info.enable = true;
+  };
+
   # Enable touchpad support (enabled default in most desktopManager).
   services.libinput.enable = true;
 
