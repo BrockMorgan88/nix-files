@@ -44,21 +44,11 @@
 
   services.displayManager.ly = {
     enable = true;
-    # x11Support = true; # Default is true, for some reason this throws an error
   };
 
-  # X11 windowing system.
-  services.xserver = {
+  programs.sway = {
     enable = true;
-    excludePackages = [ pkgs.xterm ];
-    # i3 Tiling window manager
-    windowManager.i3.enable = true;
-  };
-
-  # Configure keymap in X11
-  services.xserver.xkb = {
-    layout = "au";
-    variant = "";
+    extraPackages = [];
   };
   
   # Enable CUPS to print documents.

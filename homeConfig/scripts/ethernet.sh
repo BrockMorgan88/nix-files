@@ -13,4 +13,3 @@ elif [ "$ETHERNET_CONN" = "connected" ]; then
 else
     echo "ERROR"
 fi
-return 0

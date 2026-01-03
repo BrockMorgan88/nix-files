@@ -60,5 +60,3 @@ fi
 
 echo "$BATTERY_CAPACITY"
 echo "$COLOUR"
-
-return 0

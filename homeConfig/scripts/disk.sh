@@ -6,5 +6,3 @@ DISK_PERCENT=$(awk '{printf "%.1f", $1*100/$2}' <<< "$DISK_USAGE $DISK_TOTAL")
 echo "  $DISK_USAGE/$DISK_TOTAL GiB $DISK_PERCENT%"
 echo "$DISK_USAGE MiB"
 echo "#FFFFFF"
-
-return 0

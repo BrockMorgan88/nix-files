@@ -76,21 +76,23 @@
     '';
   };
 
-  xsession.windowManager.i3 = {
+  wayland.windowManager.sway = {
+    checkConfig = true;
     enable = true;
     config = 
     let 
-      workspace-1 = "1:  ";
-      workspace-2 = "2:  ";
-      workspace-3 = "3:  ";
-      workspace-4 = "4:  ";
-      workspace-0 = "0:  ";
-    in {
+      workspace-1 = "1: ";
+      workspace-2 = "2: ";
+      workspace-3 = "3: ";
+      workspace-4 = "4: ";
+      workspace-0 = "0: ";
       modifier = "Mod4";
+    in {
+      inherit modifier;
       menu = "${pkgs.rofi}/bin/rofi -show drun";
       fonts = {
         names = [ "Iosevka Nerd Font" ];
-        style = "Regular";
+        style = "Propo";
         size = 11.0;
       };
       window = {
@@ -99,7 +101,6 @@
       };
       keybindings = 
       let 
-        modifier = config.xsession.windowManager.i3.config.modifier;
       in lib.mkOptionDefault {
         "${modifier}+1" = "workspace ${workspace-1}";
         "${modifier}+Shift+1" = "move container to workspace ${workspace-1}";
@@ -111,7 +112,8 @@
         "${modifier}+Shift+4" = "move container to workspace ${workspace-4}";
         "${modifier}+0" = "workspace ${workspace-0}";
         "${modifier}+Shift+0" = "move container to workspace ${workspace-0}";
-        "Control+${modifier}+T" = "exec --no-startup-id kitty";
+        "Control+${modifier}+T" = "exec --no-startup-id alacritty";
+        "${modifier}+Return" = "exec --no-startup-id alacritty";
       };
       assigns = {
         "${workspace-1}" = [{class = "Vivaldi-stable"; }];
@@ -122,7 +124,7 @@
       {
         fonts = {
           names = [ "Iosevka Nerd Font" ];
-          style = "Regular";
+          style = "Propo";
           size = 9.0;
         };
         mode = "dock";
@@ -166,41 +168,20 @@
       {
         always = false;
         command = "Discord";
-        notification = false;
       }
       {
         always = false;
-        command = "kitty";
-        notification = false;
+        command = "alacritty";
       }
       {
         always = true;
         command = "feh --bg-scale ~/nix-files/homeConfig/Background2.jpg";
-        notification = false;
-      }
-      {
-        always = true;
-        command = "picom";
-        notification = false;
       }
       ];
     };
   };
-
-  services.picom = {
-    enable = true;
-    inactiveOpacity = 0.95;
-    fade = true;
-    fadeDelta = 2;
-    menuOpacity = 0.85;
-    vSync = true;
-    opacityRules = [
-      "30:name ='CustomBarHidden'"
-      "100:name ='CustomBar'"
-    ];
-  };
-
-  programs.i3blocks = {
+  
+programs.i3blocks = {
     enable = true;
     bars = {
       config = {
@@ -241,30 +222,6 @@
     };
   };
 
-  programs.i3status = {
-    enable = true;
-    enableDefault = false;
-    general = {
-      colors = true;
-      color_good = "#47bd5f";
-      color_bad = "#FF0000";
-      color_degraded = "#9b410d";
-      interval = 10;
-    };
-    modules = 
-    let 
-      num_modules = 6;
-    in {
-      "ethernet enp0s31f6" = {
-        enable = true;
-        position = num_modules - 6;
-        settings = {
-          format_up = "󰈁 %ip (%speed)";
-          format_down = "󰈂 ";
-        };
-      };
-    };
-  };
   programs.alacritty = {
     enable = true;
     settings = {

@@ -13,5 +13,3 @@ else
 fi
 
 echo "$COLOUR"
-
-return 0

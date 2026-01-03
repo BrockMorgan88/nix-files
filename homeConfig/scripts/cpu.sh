@@ -10,5 +10,3 @@ if [ $(awk '{print $1*$2}' <<< "${CPU_USAGE} 100") -gt 9000 ]; then
 else
     echo "#FFFFFF"
 fi
-
-return 0

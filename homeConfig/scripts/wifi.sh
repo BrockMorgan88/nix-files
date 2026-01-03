@@ -20,4 +20,3 @@ else
     echo
     echo "#FF0000"
 fi
-return 0
