@@ -2,7 +2,7 @@
 # your system. Help is available in the configuration.nix(5) man page, on
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
 
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, ... }@inputs:
 
 {
   imports =
@@ -23,8 +23,6 @@
 
   networking.hostName = "brock-thinkpad-nixos"; # Define your hostname.
   networking.networkmanager.enable = true;  # Enables wireless support via wpa_supplicant.
-
-  nixpkgs.config.allowUnfree = true; # Allow Unfree packages (e.g. vscode, discord, etc)
 
   # Set your time zone.
   time.timeZone = "Australia/Brisbane";
@@ -125,7 +123,7 @@
     rofi # Package searcher for i3
     spotify
     sysstat
-    vscode.fhs
+    vscode
     vite    # For web dev stuff
     vivaldi
     wget
@@ -141,19 +139,6 @@
   fonts.packages = with pkgs; [
     nerd-fonts.iosevka
   ];
-
-  services.udev.packages = with pkgs; [ 
-    platformio-core
-    openocd
-  ];
-
-  programs.nix-ld = {
-    enable = true;
-    libraries = with pkgs; [
-      python3
-      pipenv
-    ];
-  };
 
   nix.gc = {
     automatic = true;

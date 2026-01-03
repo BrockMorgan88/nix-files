@@ -117,6 +117,7 @@
     ...
   }@inputs: 
     let
+      unfreeAllowed = true;
       system = "x86_64-linux";
       pkgs = import nixpkgs {
         inherit system;
@@ -124,19 +125,19 @@
           (import ./overlays/unstable.nix)
         ];
         config = {
-          allowUnfree = true;
+          allowUnfree = unfreeAllowed;
         };
       };
       pkgs-unstable = import nixpkgs-unstable {
         inherit system;
         config = {
-          allowUnfree = true;
+          allowUnfree = unfreeAllowed;
         };
       };
       pkgs-master = import nixpkgs-master {
         inherit system;
         config = {
-          allowUnfree = true;
+          allowUnfree = unfreeAllowed;
         };
       };
       lib = nixpkgs.lib;
@@ -158,6 +159,7 @@
           { config, pkgs, ... }:
           {
             nixpkgs.overlays = overlays;
+            nixpkgs.config.allowUnfree = unfreeAllowed;
           }
         )
         ./NixOSConfig/configuration.nix
