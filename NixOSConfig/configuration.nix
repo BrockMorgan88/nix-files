@@ -102,6 +102,7 @@
     git
     gh
     gnome-calculator
+    gnome-text-editor
     i3blocks
     kicad-unstable-small
     libreoffice-fresh
