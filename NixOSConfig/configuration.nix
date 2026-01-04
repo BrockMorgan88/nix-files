@@ -107,6 +107,7 @@
     kicad-unstable-small
     libreoffice-fresh
     libnotify
+    lm_sensors
     pavucontrol # Audio control
     platformio
     python3
