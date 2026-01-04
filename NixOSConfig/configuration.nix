@@ -107,10 +107,9 @@
     libreoffice-fresh
     libnotify
     pavucontrol # Audio control
-    picom # Compositor for i3
     platformio
     python3
-    rofi # Package searcher for i3
+    rofi # Package searcher
     spotify
     sysstat
     vscode
@@ -162,6 +161,7 @@
     # Keep direnv stuff
     keep-derivations = true;
     keep-outputs = true;
+    
     cores = 12;
   };  
 

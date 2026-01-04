@@ -120,6 +120,13 @@
         "${workspace-4}" = [{class = "Spotify";}];
         "${workspace-0}" = [{class = "discord";}];
       };
+      input = {
+        "type:touchpad" = {
+          dwt = "enabled";
+          tap = "enabled";
+          middle_emulation = "enabled";
+        };
+      };
       bars = [ 
       {
         fonts = {
