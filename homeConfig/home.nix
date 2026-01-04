@@ -139,7 +139,7 @@
         statusCommand = "${pkgs.i3blocks}/bin/i3blocks";
         workspaceButtons = true;
         workspaceNumbers = true;
-        trayOutput = "primary";
+        trayOutput = "*";
         colors = {
           background = "#000000";
           statusline = "#FFFFFF";
