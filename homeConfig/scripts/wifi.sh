@@ -8,7 +8,7 @@ FREQ=$(/run/current-system/sw/bin/iwlist wlp0s20f3 frequency | grep "Current" | 
 UP=$(ip link list | grep "wlp0s20f3" | grep ",UP")
 UP_EXISTS=$0
 if [ "$WIFI_CONN" = "connected" -a $UP_EXISTS ]; then
-    echo "  ${IP} ${SSID} ${SPEED} ${FREQ}"
+    echo " ${IP} ${SSID} ${SPEED} ${FREQ}"
     echo " "
     echo "#00FF00"
 elif [ "$WIFI_CONN" = "unavailable" ]; then
