@@ -46,9 +46,8 @@
     enable = true;
   };
 
-  programs.sway = {
+  programs.hyprland = {
     enable = true;
-    extraPackages = [];
   };
   
   # Enable CUPS to print documents.
