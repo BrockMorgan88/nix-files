@@ -121,9 +121,6 @@
       system = "x86_64-linux";
       pkgs = import nixpkgs {
         inherit system;
-        overlays = [
-          (import ./overlays/unstable.nix)
-        ];
         config = {
           allowUnfree = unfreeAllowed;
         };
@@ -141,14 +138,10 @@
         };
       };
       lib = nixpkgs.lib;
-      overlays = import ./overlays/unstable.nix (
-        inputs 
-        // {
+      overlays = import ./overlays/unstable.nix ({
           inherit
-          pkgs
           pkgs-unstable
-          pkgs-master
-          lib;
+          pkgs-master;
         }
       );
     in {
@@ -158,8 +151,8 @@
         (
           { config, pkgs, ... }:
           {
-            nixpkgs.overlays = overlays;
-            nixpkgs.config.allowUnfree = unfreeAllowed;
+            pkgs.overlays = overlays;
+            pkgs.config.allowUnfree = unfreeAllowed;
           }
         )
         ./NixOSConfig/configuration.nix
@@ -211,18 +204,12 @@
     # # Same idea as nixosModule but a list or attrset of them.
     # nixosModules = { exampleModule = self.nixosModule; };
 
-    # # Used with `nixos-rebuild --flake .#<hostname>`
-    # # nixosConfigurations."<hostname>".config.system.build.toplevel must be a derivation
-    # nixosConfigurations.example = nixpkgs.lib.nixosSystem {
-    #   system = "x86_64-linux";
-    #   modules = [{boot.isContainer=true;}] ;
-    # };
-
-    # # Utilized by `nix develop`
-    # devShell.x86_64-linux = rust-web-server.devShell.x86_64-linux;
-
-    # # Utilized by `nix develop .#<name>`
-    # devShells.x86_64-linux.example = self.devShell.x86_64-linux;
+    devShells.x86_64-linux = {
+      default = pkgs.mkShell {
+        name = "devShell";
+        packages = with pkgs; [ man-pages man-pages-posix stdmanpages wev ];
+      };
+    };
 
     # # Utilized by Hydra build jobs
     # hydraJobs.example.x86_64-linux = self.defaultPackage.x86_64-linux;

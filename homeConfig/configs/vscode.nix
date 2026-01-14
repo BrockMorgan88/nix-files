@@ -98,6 +98,14 @@
         hash = "sha256-k8EmkiebEKB8hDaJqT3KVXy1d9Cc5aUDL9gP1mOBN88=";
       };
     };
+    vim = pkgs.vscode-utils.buildVscodeMarketplaceExtension {
+      mktplcRef = {
+        name = "vim";
+        publisher = "vscodevim";
+        version = "1.32.4";
+        hash = "sha256-+hyJZinWsa6U+s0fdrx2wUi6tOV3FNKf8O1qMMZEdkQ=";
+      };
+    };
     
     otherexts = [
       better-cpp-syntax
@@ -110,6 +118,7 @@
       python-environment-mgr
       git-patch
       xkb-symbols
+      vim
     ];
   in {
     enable = true;

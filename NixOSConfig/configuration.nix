@@ -70,12 +70,6 @@
   };
   hardware.bluetooth.enable = true;
 
-  documentation = {
-    enable = true;
-    man.enable = true;
-    info.enable = true;
-  };
-
   # Enable touchpad support (enabled default in most desktopManager).
   services.libinput.enable = true;
 
@@ -139,7 +133,7 @@
   nix.settings = {
 
     auto-optimise-store = true;
-
+    download-buffer-size = 134217728;
     # To be able to run nix "command" instead of nix-command and to use flakes 
     experimental-features = [ "nix-command" "flakes" ];
     

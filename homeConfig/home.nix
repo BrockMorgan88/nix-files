@@ -91,12 +91,13 @@
       "Discord"   # 10
     ];
   in {
+    systemd.variables = ["--all"];
     enable = true;
     settings = {
       "$mod" = "SUPER";
       bind = [
         "$mod, Return, exec, kitty"
-        "$mod, R, exec, ${pkgs.rofi}/bin/rofi -show drun"
+        "$mod, S, exec, ${pkgs.rofi}/bin/rofi -show drun"
         "$mod, Q, killactive"
         "$mod+SHIFT, Q, forcekillactive"
         "$mod, V, exec, vivaldi"
@@ -108,6 +109,13 @@
         "$mod, code:114, movefocus, r"
         "$mod, code:111, movefocus, u"
         "$mod, code:116, movefocus, d"
+        "$mod+SHIFT, code:113, movewindow, l"
+        "$mod+SHIFT, code:114, movewindow, r"
+        "$mod+SHIFT, code:111, movewindow, u"
+        "$mod+SHIFT, code:116, movewindow, d"
+        "$mod, L, exec, hyprlock"
+        ", switch:on:Lid Switch, exec, hyprlock"
+        "$mod, R, submap, resize"
       ] ++ (
         builtins.concatLists (builtins.genList (i:
         let ws = i + 1;
@@ -125,7 +133,7 @@
         vfr = true;
       };
       monitor = [
-        "eDP-1, 1920x1080@120, 0x0, 1"
+        "eDP-1, 1920x1200@120, 0x0, 1"
       ];
       animation = [
         "workspaces, 1, 0.5, default"
@@ -144,6 +152,18 @@
         10)
       );
     };
+    submaps = {
+      resize = {
+        settings = {
+          bind = [ ", code:113, resizeactive, -20 0"
+          ", code:114, resizeactive, 20 0"
+          ", code:111, resizeactive, 0 -20"
+          ", code:116, resizeactive, 0 20"
+          ", Escape, submap, reset"
+          ];
+        };
+      };
+    };
   };
 
   gtk = {
@@ -157,119 +177,8 @@
       size = 12;
     };
   };
-  # wayland.windowManager.sway = {
-  #   checkConfig = true;
-  #   enable = true;
-  #   config = 
-  #   let 
-  #     workspace-1 = "1: ";
-  #     workspace-2 = "2: ";
-  #     workspace-3 = "3: ";
-  #     workspace-4 = "4: ";
-  #     workspace-0 = "0: ";
-  #     modifier = "Mod4";
-  #   in {
-  #     inherit modifier;
-  #     menu = "${pkgs.rofi}/bin/rofi -show drun";
-  #     fonts = {
-  #       names = [ "Iosevka Nerd Font" ];
-  #       style = "Propo";
-  #       size = 11.0;
-  #     };
-  #     window = {
-  #       titlebar = false;
-  #       hideEdgeBorders = "both";
-  #     };
-  #     keybindings = 
-  #     let 
-  #     in lib.mkOptionDefault {
-  #       "${modifier}+1" = "workspace ${workspace-1}";
-  #       "${modifier}+Shift+1" = "move container to workspace ${workspace-1}";
-  #       "${modifier}+2" = "workspace ${workspace-2}";
-  #       "${modifier}+Shift+2" = "move container to workspace ${workspace-2}";
-  #       "${modifier}+3" = "workspace ${workspace-3}";
-  #       "${modifier}+Shift+3" = "move container to workspace ${workspace-3}";
-  #       "${modifier}+4" = "workspace ${workspace-4}";
-  #       "${modifier}+Shift+4" = "move container to workspace ${workspace-4}";
-  #       "${modifier}+0" = "workspace ${workspace-0}";
-  #       "${modifier}+Shift+0" = "move container to workspace ${workspace-0}";
-  #       "Control+${modifier}+T" = "exec --no-startup-id alacritty";
-  #       "${modifier}+Return" = "exec --no-startup-id alacritty";
-  #     };
-  #     assigns = {
-  #       "${workspace-1}" = [{class = "Vivaldi-stable"; }];
-  #       "${workspace-4}" = [{class = "Spotify";}];
-  #       "${workspace-0}" = [{class = "discord";}];
-  #     };
-  #     input = {
-  #       "type:touchpad" = {
-  #         dwt = "enabled";
-  #         tap = "enabled";
-  #         middle_emulation = "enabled";
-  #       };
-  #     };
-  #     bars = [ 
-  #     {
-  #       fonts = {
-  #         names = [ "Iosevka Nerd Font" ];
-  #         style = "Propo";
-  #         size = 9.0;
-  #       };
-  #       mode = "dock";
-  #       position = "bottom";
-  #       statusCommand = "${pkgs.i3blocks}/bin/i3blocks";
-  #       workspaceButtons = true;
-  #       workspaceNumbers = true;
-  #       trayOutput = "*";
-  #       colors = {
-  #         background = "#000000";
-  #         statusline = "#FFFFFF";
-  #         separator = "#666666";
-  #         focusedWorkspace = {
-  #           border = "#4C7899";
-  #           background = "#285577";
-  #           text = "#FFFFFF";
-  #         };
-  #         activeWorkspace = {
-  #           border = "#333333";
-  #           background = "#5F676A";
-  #           text = "#FFFFFF";
-  #         };
-  #         inactiveWorkspace = {
-  #           border = "#333333";
-  #           background = "#222222";
-  #           text = "#888888";
-  #         };
-  #         urgentWorkspace = {
-  #           border = "#2F343A";
-  #           background = "#900000";
-  #           text = "#FFFFFF";
-  #         };
-  #         bindingMode = {
-  #           border = "#2F343A";
-  #           background = "#900000";
-  #           text = "#FFFFFF";
-  #         };
-  #       };
-  #     }];
-  #     startup = [
-  #     {
-  #       always = false;
-  #       command = "Discord";
-  #     }
-  #     {
-  #       always = false;
-  #       command = "alacritty";
-  #     }
-  #     {
-  #       always = true;
-  #       command = "feh --bg-scale ~/nix-files/homeConfig/Background2.jpg";
-  #     }
-  #     ];
-  #   };
-  # };
   
-programs.i3blocks = {
+  programs.i3blocks = {
     enable = true;
     bars = {
       config = {
@@ -310,6 +219,38 @@ programs.i3blocks = {
     };
   };
 
+  programs.waybar = {
+    enable = true;
+    settings = {
+      mainbar = {
+        layer = "top";
+        position = "bottom";
+        height = 22;
+        output = [
+          "eDP-1"
+        ];
+        modules-left = [ "hyprland/workspaces" ];
+        modules-center = [ "clock" ];
+        modules-right = [ "battery" "cpu" "tray" ];
+        "battery" = {
+          "format" = "BAT: {capacity}%";
+          "on-discharding-20" = "notify-send --urgency=critical --app-name=i3blocks 'BATTERY LOW' 'Plug in your battery now!'";
+        };
+        "cpu" = {
+          "format" = "CPU: {usage}%";
+        };
+      };
+    };
+    systemd = {
+      enable = true;
+      target = "hyprland-session.target";
+    };
+  };
+
+  programs.hyprlock = {
+    enable = true;
+  };
+
   programs.kitty = {
     enable = true;
     font = {
@@ -318,22 +259,6 @@ programs.i3blocks = {
     };
   };
 
-  # Home Manager can also manage your environment variables through
-  # 'home.sessionVariables'. These will be explicitly sourced when using a
-  # shell provided by Home Manager. If you don't want to manage your shell
-  # through Home Manager then you have to manually source 'hm-session-vars.sh'
-  # located at either
-  #
-  #  ~/.nix-profile/etc/profile.d/hm-session-vars.sh
-  #
-  # or
-  #
-  #  ~/.local/state/nix/profiles/profile/etc/profile.d/hm-session-vars.sh
-  #
-  # or
-  #
-  #  /etc/profiles/per-user/brock/etc/profile.d/hm-session-vars.sh
-  #
   home.sessionVariables = {
     # EDITOR = "emacs";
   };
