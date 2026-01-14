@@ -1,14 +1,15 @@
 {
   description = "Home Manager configuration of brock";
 
-  inputs = 
-  let
-    mainflake = import ./../flake.nix;
-    mainflakeinputs = mainflake.inputs;
-  in {
-    nixpkgs = mainflakeinputs.nixpkgs;
-    home-manager = mainflakeinputs.home-manager;
-  };
+  inputs =
+    let
+      mainflake = import ./../flake.nix;
+      mainflakeinputs = mainflake.inputs;
+    in
+    {
+      nixpkgs = mainflakeinputs.nixpkgs;
+      home-manager = mainflakeinputs.home-manager;
+    };
 
   outputs =
     { nixpkgs, home-manager, ... }@inputs:

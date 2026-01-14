@@ -2,18 +2,25 @@
 # your system. Help is available in the configuration.nix(5) man page, on
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
 
-{ config, lib, pkgs, ... }@inputs:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}@inputs:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+  ];
 
   # Swap partition
-  swapDevices = [ {
-    device = "/dev/nvme0n1p5";
-  } ];
+  swapDevices = [
+    {
+      device = "/dev/nvme0n1p5";
+    }
+  ];
 
   # EFI boot loader.
   boot.loader = {
@@ -22,7 +29,9 @@
   };
 
   networking.hostName = "brock-thinkpad-nixos"; # Define your hostname.
-  networking.networkmanager.enable = true;  # Enables wireless support via wpa_supplicant.
+  networking.networkmanager.enable = true; # Enables wireless support via wpa_supplicant.
+
+  nixpkgs.config.allowUnfree = true;
 
   # Set your time zone.
   time.timeZone = "Australia/Brisbane";
@@ -49,7 +58,7 @@
   programs.hyprland = {
     enable = true;
   };
-  
+
   # Enable CUPS to print documents.
   services.printing.enable = true;
 
@@ -77,48 +86,56 @@
   users.users.brock = {
     isNormalUser = true;
     description = "Brock Morgan";
-    extraGroups = [ "networkmanager" "wheel" "dialout" ];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+      "dialout"
+    ];
     packages = with pkgs; [
       home-manager
     ];
   };
 
-  environment.systemPackages = (with pkgs; [
-    bluez
-    btop
-    direnv
-    discord
-    dunst # Notifications
-    evince  # Gnome document viewer
-    feh # Image viewer - background
-    flameshot # Screenshots
-    git
-    gh
-    gnome-calculator
-    gnome-text-editor
-    i3blocks
-    kicad-unstable-small
-    libreoffice-fresh
-    libnotify
-    lm_sensors
-    pavucontrol # Audio control
-    platformio
-    python3
-    rofi # Package searcher
-    spotify
-    sysstat
-    vscode
-    vite    # For web dev stuff
-    vivaldi
-    wget
-    wirelesstools
-    xorg.setxkbmap
-    yarn    # For web dev stuff
-    yazi    # CLI file browser
-    zellij
-    zsh
-    ] ++ (with unstable; [
-    ]));
+  environment.systemPackages = (
+    with pkgs;
+    [
+      bluez
+      btop
+      direnv
+      discord
+      dunst # Notifications
+      evince # Gnome document viewer
+      feh # Image viewer - background
+      flameshot # Screenshots
+      git
+      gh
+      gnome-calculator
+      gnome-text-editor
+      i3blocks
+      kicad-unstable-small
+      libreoffice-fresh
+      libnotify
+      lm_sensors
+      pavucontrol # Audio control
+      platformio
+      python3
+      rofi # Package searcher
+      spotify
+      sysstat
+      vscode
+      vite # For web dev stuff
+      vivaldi
+      wget
+      wirelesstools
+      xorg.setxkbmap
+      yarn # For web dev stuff
+      yazi # CLI file browser
+      zellij
+      zsh
+    ]
+    ++ (with unstable; [
+    ])
+  );
 
   fonts.packages = with pkgs; [
     nerd-fonts.iosevka
@@ -129,14 +146,16 @@
     dates = "weekly";
   };
 
-   
   nix.settings = {
 
     auto-optimise-store = true;
     download-buffer-size = 134217728;
-    # To be able to run nix "command" instead of nix-command and to use flakes 
-    experimental-features = [ "nix-command" "flakes" ];
-    
+    # To be able to run nix "command" instead of nix-command and to use flakes
+    experimental-features = [
+      "nix-command"
+      "flakes"
+    ];
+
     warn-dirty = false;
 
     trusted-users = [
@@ -156,9 +175,9 @@
     # Keep direnv stuff
     keep-derivations = true;
     keep-outputs = true;
-    
+
     cores = 12;
-  };  
+  };
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -204,4 +223,3 @@
   system.stateVersion = "25.05"; # Did you read the comment?
 
 }
-

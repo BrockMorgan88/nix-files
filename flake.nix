@@ -21,7 +21,6 @@
   # inputs.nixpkgsRegistryOverride.url = "nixpkgs/a3a3dda3bacf61e8a39258a0ed9c924eeca8e293";
   # The master branch of the NixOS/nixpkgs repository on GitHub.
 
-
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
     home-manager = {
@@ -31,8 +30,7 @@
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixpkgs-master.url = "github:NixOS/nixpkgs/master";
   };
-  
-  
+
   # The nixos-20.09 branch of the NixOS/nixpkgs repository on GitHub.
   # inputs.nixpkgsGitHubBranch.url = "github:NixOS/nixpkgs/nixos-20.09";
 
@@ -108,14 +106,15 @@
   # Work-in-progress: refer to parent/sibling flakes in the same repository
   # inputs.c-hello.url = "path:../c-hello";
 
-  outputs = { 
-    self,
-    nixpkgs, 
-    home-manager,
-    nixpkgs-unstable,
-    nixpkgs-master,
-    ...
-  }@inputs: 
+  outputs =
+    {
+      self,
+      nixpkgs,
+      home-manager,
+      nixpkgs-unstable,
+      nixpkgs-master,
+      ...
+    }@inputs:
     let
       unfreeAllowed = true;
       system = "x86_64-linux";
@@ -139,88 +138,98 @@
       };
       lib = nixpkgs.lib;
       overlays = import ./overlays/unstable.nix ({
-          inherit
+        inherit
+          pkgs
           pkgs-unstable
-          pkgs-master;
-        }
-      );
-    in {
-    nixosConfigurations."brock-thinkpad-nixos" = lib.nixosSystem {
-      inherit system;
-      modules = [
-        (
-          { config, pkgs, ... }:
+          pkgs-master
+          lib
+          ;
+      });
+    in
+    {
+      nixosConfigurations."brock-thinkpad-nixos" = lib.nixosSystem {
+        inherit system;
+        modules = [
+          (
+            { config, pkgs, ... }:
+            {
+              nixpkgs.overlays = overlays;
+              nixpkgs.config.allowUnfree = unfreeAllowed;
+            }
+          )
+          ./NixOSConfig/configuration.nix
+          home-manager.nixosModules.home-manager
           {
-            pkgs.overlays = overlays;
-            pkgs.config.allowUnfree = unfreeAllowed;
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.backupFileExtension = ".bak";
+            home-manager.users.brock = import ./homeConfig/home.nix;
           }
-        )
-        ./NixOSConfig/configuration.nix
-        home-manager.nixosModules.home-manager {
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
-          home-manager.backupFileExtension = ".bak";
-          home-manager.users.brock = import ./homeConfig/home.nix;
-        }
-      ];
-    };
-
-    # # Utilized by `nix flake check`
-    # checks.x86_64-linux.test = c-hello.checks.x86_64-linux.test;
-
-    # # Utilized by `nix build .`
-    # defaultPackage.x86_64-linux = c-hello.defaultPackage.x86_64-linux;
-
-    # # Utilized by `nix build`
-    # packages.x86_64-linux.hello = c-hello.packages.x86_64-linux.hello;
-
-    # # Utilized by `nix run .#<name>`
-    # apps.x86_64-linux.hello = {
-    #   type = "app";
-    #   program = c-hello.packages.x86_64-linux.hello;
-    # };
-
-    # # Utilized by `nix bundle -- .#<name>` (should be a .drv input, not program path?)
-    # bundlers.x86_64-linux.example = nix-bundle.bundlers.x86_64-linux.toArx;
-
-    # # Utilized by `nix bundle -- .#<name>`
-    # defaultBundler.x86_64-linux = self.bundlers.x86_64-linux.example;
-
-    # # Utilized by `nix run . -- <args?>`
-    # defaultApp.x86_64-linux = self.apps.x86_64-linux.hello;
-
-    # # Utilized for nixpkgs packages, also utilized by `nix build .#<name>`
-    # legacyPackages.x86_64-linux.hello = c-hello.defaultPackage.x86_64-linux;
-
-    # # Default overlay, for use in dependent flakes
-    # overlay = final: prev: { };
-
-    # # # Same idea as overlay but a list or attrset of them.
-    # overlays = { exampleOverlay = self.overlay; };
-
-    # # Default module, for use in dependent flakes. Deprecated, use nixosModules.default instead.
-    # nixosModule = { config, ... }: { options = {}; config = {}; };
-
-    # # Same idea as nixosModule but a list or attrset of them.
-    # nixosModules = { exampleModule = self.nixosModule; };
-
-    devShells.x86_64-linux = {
-      default = pkgs.mkShell {
-        name = "devShell";
-        packages = with pkgs; [ man-pages man-pages-posix stdmanpages wev ];
+        ];
       };
+
+      # # Utilized by `nix flake check`
+      # checks.x86_64-linux.test = c-hello.checks.x86_64-linux.test;
+
+      # # Utilized by `nix build .`
+      # defaultPackage.x86_64-linux = c-hello.defaultPackage.x86_64-linux;
+
+      # # Utilized by `nix build`
+      # packages.x86_64-linux.hello = c-hello.packages.x86_64-linux.hello;
+
+      # # Utilized by `nix run .#<name>`
+      # apps.x86_64-linux.hello = {
+      #   type = "app";
+      #   program = c-hello.packages.x86_64-linux.hello;
+      # };
+
+      # # Utilized by `nix bundle -- .#<name>` (should be a .drv input, not program path?)
+      # bundlers.x86_64-linux.example = nix-bundle.bundlers.x86_64-linux.toArx;
+
+      # # Utilized by `nix bundle -- .#<name>`
+      # defaultBundler.x86_64-linux = self.bundlers.x86_64-linux.example;
+
+      # # Utilized by `nix run . -- <args?>`
+      # defaultApp.x86_64-linux = self.apps.x86_64-linux.hello;
+
+      # # Utilized for nixpkgs packages, also utilized by `nix build .#<name>`
+      # legacyPackages.x86_64-linux.hello = c-hello.defaultPackage.x86_64-linux;
+
+      # # Default overlay, for use in dependent flakes
+      # overlay = final: prev: { };
+
+      # # # Same idea as overlay but a list or attrset of them.
+      # overlays = { exampleOverlay = self.overlay; };
+
+      # # Default module, for use in dependent flakes. Deprecated, use nixosModules.default instead.
+      # nixosModule = { config, ... }: { options = {}; config = {}; };
+
+      # # Same idea as nixosModule but a list or attrset of them.
+      # nixosModules = { exampleModule = self.nixosModule; };
+
+      devShells.x86_64-linux = {
+        default = pkgs.mkShell {
+          name = "devShell";
+          packages = with pkgs; [
+            man-pages
+            man-pages-posix
+            stdmanpages
+            wev
+            nixfmt-tree
+          ];
+        };
+      };
+
+      # # Utilized by Hydra build jobs
+      # hydraJobs.example.x86_64-linux = self.defaultPackage.x86_64-linux;
+
+      # # Utilized by `nix flake init -t <flake>`
+      # defaultTemplate = {
+      #   path = c-hello;
+      #   description = "template description";
+      # };
+
+      # # Utilized by `nix flake init -t <flake>#<name>`
+      # templates.example = self.defaultTemplate;
     };
-
-    # # Utilized by Hydra build jobs
-    # hydraJobs.example.x86_64-linux = self.defaultPackage.x86_64-linux;
-
-    # # Utilized by `nix flake init -t <flake>`
-    # defaultTemplate = {
-    #   path = c-hello;
-    #   description = "template description";
-    # };
-
-    # # Utilized by `nix flake init -t <flake>#<name>`
-    # templates.example = self.defaultTemplate;
-  };
 }
