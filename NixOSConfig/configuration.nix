@@ -99,11 +99,10 @@
   environment.systemPackages = (
     with pkgs;
     [
-      bluez
+      bluez # Bluetooth
       btop
       direnv
       discord
-      dunst # Notifications
       evince # Gnome document viewer
       feh # Image viewer - background
       flameshot # Screenshots
@@ -113,11 +112,9 @@
       i3blocks
       kicad-unstable-small
       libreoffice-fresh
-      libnotify
+      libnotify # Notify-send
       lm_sensors
       pavucontrol # Audio control
-      platformio
-      python3
       rofi # Package searcher
       spotify
       sysstat
