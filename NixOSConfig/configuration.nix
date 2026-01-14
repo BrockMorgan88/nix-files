@@ -108,7 +108,6 @@
       feh # Image viewer - background
       flameshot # Screenshots
       git
-      gh
       gnome-calculator
       gnome-text-editor
       i3blocks
