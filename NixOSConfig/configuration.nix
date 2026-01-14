@@ -101,7 +101,6 @@
     [
       bluez # Bluetooth
       btop
-      direnv
       discord
       evince # Gnome document viewer
       feh # Image viewer - background
@@ -109,7 +108,6 @@
       git
       gnome-calculator
       gnome-text-editor
-      i3blocks
       kicad-unstable-small
       libreoffice-fresh
       libnotify # Notify-send
