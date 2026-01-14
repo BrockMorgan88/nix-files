@@ -142,9 +142,12 @@
         position = "bottom";
         height = 22;
         output = [
-          "eDP-1"
+          "*"
         ];
-        modules-left = [ "hyprland/workspaces" ];
+        modules-left = [
+          "hyprland/workspaces"
+          "hyprland/submap"
+        ];
         modules-center = [ "clock" ];
         modules-right = [
           "battery"
@@ -161,6 +164,16 @@
         };
       };
     };
+    style = ''
+      #workspaces button {
+          background-color: rgba(0, 0, 0, 0);
+          color: rgba(255, 255, 255, 0.5);
+      }
+      #workspaces button.active {
+          background-color: rgba(0, 0, 0, 0);
+          color: rgba(255, 255, 255, 0.9);
+      }
+    '';
     systemd = {
       enable = true;
       target = "hyprland-session.target";

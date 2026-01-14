@@ -109,8 +109,8 @@
   outputs =
     {
       self,
-      nixpkgs,
       home-manager,
+      nixpkgs,
       nixpkgs-unstable,
       nixpkgs-master,
       ...

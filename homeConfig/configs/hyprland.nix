@@ -7,11 +7,11 @@
         "Terminal" # 2
         "VSCode" # 3
         "Spotify" # 4
-        "" # 5
-        "" # 6
-        "" # 7
-        "" # 8
-        "" # 9
+        "5" # 5
+        "6" # 6
+        "7" # 7
+        "8" # 8
+        "9" # 9
         "Discord" # 10
       ];
     in
@@ -40,7 +40,7 @@
           "$mod+SHIFT, code:116, movewindow, d"
           "$mod, L, exec, hyprlock"
           ", switch:on:Lid Switch, exec, hyprlock"
-          "$mod, R, submap, resize"
+          "$mod, R, submap, Resize"
         ]
         ++ (builtins.concatLists (
           builtins.genList (
@@ -86,7 +86,7 @@
         ));
       };
       submaps = {
-        resize = {
+        Resize = {
           settings = {
             bind = [
               ", code:113, resizeactive, -20 0"
