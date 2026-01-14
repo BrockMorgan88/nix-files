@@ -153,7 +153,7 @@
         ];
         "battery" = {
           "format" = "BAT: {capacity}%";
-          "on-discharding-20" =
+          "on-discharging-20" =
             "notify-send --urgency=critical --app-name=i3blocks 'BATTERY LOW' 'Plug in your battery now!'";
         };
         "cpu" = {
