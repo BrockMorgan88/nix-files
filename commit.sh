@@ -1,6 +1,4 @@
 #!/usr/bin/env bash
-
-treefmt
-
 git add .
+treefmt
 git commit -m "$1"

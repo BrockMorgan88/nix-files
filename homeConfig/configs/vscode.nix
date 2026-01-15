@@ -14,7 +14,7 @@
       ];
       codeexts = with pkgs.vscode-extensions; [
         mkhl.direnv
-        bbenoist.nix
+        jnoortheen.nix-ide
         platformio.platformio-vscode-ide
         christian-kohler.path-intellisense
         vscode-icons-team.vscode-icons
@@ -148,6 +148,14 @@
           "svelte.enable-ts-plugin" = true;
           "editor.fontFamily" = "'Iosevka Nerd Font', 'Regular'";
           "editor.fontSize" = 14;
+          "nix.serverPath" = "nixd";
+          "nix.enableLanguageServer" = true;
+          "nixpkgs" = {
+            "command" = "import <nixpkgs> { }";
+          };
+          "formatting" = {
+            "command" = [ "nixfmt-tree" ];
+          };
         };
       };
     };
