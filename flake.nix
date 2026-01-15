@@ -180,7 +180,6 @@
             }
           ];
         };
-
     in
     {
       nixosConfigurations = (lib.attrsets.mapAttrs createSystem systems);
