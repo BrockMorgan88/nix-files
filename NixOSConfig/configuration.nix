@@ -7,7 +7,7 @@
   lib,
   pkgs,
   ...
-}@inputs:
+}:
 
 {
   # EFI boot loader.
@@ -100,6 +100,7 @@
       libreoffice-fresh
       libnotify # Notify-send
       lm_sensors
+      nixd
       pavucontrol # Audio control
       rofi # Package searcher
       spotify
