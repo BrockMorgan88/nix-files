@@ -145,28 +145,90 @@
           lib
           ;
       });
+      systems = {
+        brock-thinkpad-nixos = {
+          machine-config = ./NixOSConfig/machine-specific-configuration/thinkpad.nix;
+          hardware-config = ./NixOSConfig/hardware-configuration/thinkpad.nix;
+        };
+        brock-pc-nixos = {
+          machine-config = ./NixOSConfig/machine-specific-configuration/pc.nix;
+          hardware-config = ./NixOSConfig/hardware-configuration/pc.nix;
+        };
+      };
+      createSystem =
+        name: value:
+
+        lib.nixosSystem {
+          inherit system;
+          modules = [
+            (
+              { config, pkgs, ... }:
+              {
+                nixpkgs.overlays = overlays;
+                nixpkgs.config.allowUnfree = unfreeAllowed;
+              }
+            )
+            ./NixOSConfig/configuration.nix
+            value.hardware-config
+            value.machine-config
+            home-manager.nixosModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.backupFileExtension = ".bak";
+              home-manager.users.brock = import ./homeConfig/home.nix;
+            }
+          ];
+        };
+
     in
     {
-      nixosConfigurations."brock-thinkpad-nixos" = lib.nixosSystem {
-        inherit system;
-        modules = [
-          (
-            { config, pkgs, ... }:
-            {
-              nixpkgs.overlays = overlays;
-              nixpkgs.config.allowUnfree = unfreeAllowed;
-            }
-          )
-          ./NixOSConfig/configuration.nix
-          home-manager.nixosModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.backupFileExtension = ".bak";
-            home-manager.users.brock = import ./homeConfig/home.nix;
-          }
-        ];
-      };
+      nixosConfigurations = (lib.attrsets.mapAttrs createSystem systems);
+      # nixosConfigurations."brock-thinkpad-nixos" = lib.nixosSystem {
+      #   inherit system;
+      #   modules = [
+      #     (
+      #       { config, pkgs, ... }:
+      #       {
+      #         nixpkgs.overlays = overlays;
+      #         nixpkgs.config.allowUnfree = unfreeAllowed;
+      #       }
+      #     )
+      #     ./NixOSConfig/configuration.nix
+      #     ./NixOSConfig/hardware-configuration/thinkpad.nix
+      #     ./NixOSConfig/machine-specific-configuration/thinkpad.nix
+      #     home-manager.nixosModules.home-manager
+      #     {
+      #       home-manager.useGlobalPkgs = true;
+      #       home-manager.useUserPackages = true;
+      #       home-manager.backupFileExtension = ".bak";
+      #       home-manager.users.brock = import ./homeConfig/home.nix;
+      #     }
+      #   ];
+      # };
+
+      # nixosConfigurations."brock-pc-nixos" = lib.nixosSystem {
+      #   inherit system;
+      #   modules = [
+      #     (
+      #       { config, pkgs, ... }:
+      #       {
+      #         nixpkgs.overlays = overlays;
+      #         nixpkgs.config.allowUnfree = unfreeAllowed;
+      #       }
+      #     )
+      #     ./NixOSConfig/configuration.nix
+      #     ./NixOSConfig/hardware-configuration/pc.nix
+      #     ./NixOSConfig/machine-specific-configuration/pc.nix
+      #     home-manager.nixosModules.home-manager
+      #     {
+      #       home-manager.useGlobalPkgs = true;
+      #       home-manager.useUserPackages = true;
+      #       home-manager.backupFileExtension = ".bak";
+      #       home-manager.users.brock = import ./homeConfig/home.nix;
+      #     }
+      #   ];
+      # };
 
       # # Utilized by `nix flake check`
       # checks.x86_64-linux.test = c-hello.checks.x86_64-linux.test;

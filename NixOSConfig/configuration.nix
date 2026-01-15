@@ -10,25 +10,12 @@
 }@inputs:
 
 {
-  imports = [
-    # Include the results of the hardware scan.
-    ./hardware-configuration.nix
-  ];
-
-  # Swap partition
-  swapDevices = [
-    {
-      device = "/dev/nvme0n1p5";
-    }
-  ];
-
   # EFI boot loader.
   boot.loader = {
     systemd-boot.enable = true;
     efi.canTouchEfiVariables = true;
   };
 
-  networking.hostName = "brock-thinkpad-nixos"; # Define your hostname.
   networking.networkmanager.enable = true; # Enables wireless support via wpa_supplicant.
 
   nixpkgs.config.allowUnfree = true;
@@ -106,6 +93,7 @@
       feh # Image viewer - background
       flameshot # Screenshots
       git
+      git-credential-manager
       gnome-calculator
       gnome-text-editor
       kicad-unstable-small
