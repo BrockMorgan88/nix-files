@@ -113,7 +113,6 @@
       libnotify # Notify-send
       lm_sensors
       pavucontrol # Audio control
-      rofi # Package searcher
       spotify
       sysstat
       vscode

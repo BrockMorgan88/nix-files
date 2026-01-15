@@ -140,7 +140,7 @@
       mainbar = {
         layer = "top";
         position = "bottom";
-        height = 22;
+        height = 28;
         output = [
           "*"
         ];
@@ -156,8 +156,14 @@
         ];
         "battery" = {
           "format" = "BAT: {capacity}%";
-          "on-discharging-20" =
-            "notify-send --urgency=critical --app-name=i3blocks 'BATTERY LOW' 'Plug in your battery now!'";
+          "states" = {
+            "warning" = 30;
+            "critical" = 15;
+          };
+          "events" = {
+            "on-discharging-warning" = "notify-send -u 'BATTERY LOW'";
+            "on-discharging-critical" = "notify-send -u 'BATTERY CRITICAL' 'Plug in your battery now!'";
+          };
         };
         "cpu" = {
           "format" = "CPU: {usage}%";
@@ -194,6 +200,12 @@
       size = 11;
       name = "Iosevka Nerd Font";
     };
+  };
+
+  programs.rofi = {
+    enable = true;
+    font = "Iosevka Nerd Font Mono 12";
+    theme = "Arc-Dark";
   };
 
   programs.home-manager.enable = true;
