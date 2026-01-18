@@ -183,51 +183,12 @@
     in
     {
       nixosConfigurations = (lib.attrsets.mapAttrs createSystem systems);
-      # nixosConfigurations."brock-thinkpad-nixos" = lib.nixosSystem {
-      #   inherit system;
-      #   modules = [
-      #     (
-      #       { config, pkgs, ... }:
-      #       {
-      #         nixpkgs.overlays = overlays;
-      #         nixpkgs.config.allowUnfree = unfreeAllowed;
-      #       }
-      #     )
-      #     ./NixOSConfig/configuration.nix
-      #     ./NixOSConfig/hardware-configuration/thinkpad.nix
-      #     ./NixOSConfig/machine-specific-configuration/thinkpad.nix
-      #     home-manager.nixosModules.home-manager
-      #     {
-      #       home-manager.useGlobalPkgs = true;
-      #       home-manager.useUserPackages = true;
-      #       home-manager.backupFileExtension = ".bak";
-      #       home-manager.users.brock = import ./homeConfig/home.nix;
-      #     }
-      #   ];
-      # };
-
-      # nixosConfigurations."brock-pc-nixos" = lib.nixosSystem {
-      #   inherit system;
-      #   modules = [
-      #     (
-      #       { config, pkgs, ... }:
-      #       {
-      #         nixpkgs.overlays = overlays;
-      #         nixpkgs.config.allowUnfree = unfreeAllowed;
-      #       }
-      #     )
-      #     ./NixOSConfig/configuration.nix
-      #     ./NixOSConfig/hardware-configuration/pc.nix
-      #     ./NixOSConfig/machine-specific-configuration/pc.nix
-      #     home-manager.nixosModules.home-manager
-      #     {
-      #       home-manager.useGlobalPkgs = true;
-      #       home-manager.useUserPackages = true;
-      #       home-manager.backupFileExtension = ".bak";
-      #       home-manager.users.brock = import ./homeConfig/home.nix;
-      #     }
-      #   ];
-      # };
+      homeConfigurations.brock = home-manager.lib.homeManagerConfiguration {
+        inherit pkgs;
+        modules = [
+          (import ./homeConfig/home.nix)
+        ];
+      };
 
       # # Utilized by `nix flake check`
       # checks.x86_64-linux.test = c-hello.checks.x86_64-linux.test;

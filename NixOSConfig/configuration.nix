@@ -109,7 +109,6 @@
       vivaldi
       wget
       wirelesstools
-      xorg.setxkbmap
       yarn # For web dev stuff
       yazi # CLI file browser
       zellij
