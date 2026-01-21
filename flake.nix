@@ -108,13 +108,12 @@
 
   outputs =
     {
-      self,
       home-manager,
       nixpkgs,
       nixpkgs-unstable,
       nixpkgs-master,
       ...
-    }@inputs:
+    }:
     let
       unfreeAllowed = true;
       system = "x86_64-linux";
@@ -137,14 +136,14 @@
         };
       };
       lib = nixpkgs.lib;
-      overlays = import ./overlays/unstable.nix ({
+      overlays = import ./overlays/unstable.nix {
         inherit
           pkgs
           pkgs-unstable
           pkgs-master
           lib
           ;
-      });
+      };
       systems = {
         brock-thinkpad-nixos = {
           machine-config = ./NixOSConfig/machine-specific-configuration/thinkpad.nix;
@@ -162,7 +161,7 @@
           inherit system;
           modules = [
             (
-              { config, pkgs, ... }:
+              { ... }:
               {
                 nixpkgs.overlays = overlays;
                 nixpkgs.config.allowUnfree = unfreeAllowed;

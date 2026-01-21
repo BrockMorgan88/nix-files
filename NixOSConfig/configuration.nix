@@ -3,8 +3,6 @@
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
 
 {
-  config,
-  lib,
   pkgs,
   ...
 }:
@@ -114,8 +112,8 @@
       zellij
       zsh
     ]
-    ++ (with unstable; [
-    ])
+    # ++ (with unstable; [
+    # ])
   );
 
   fonts.packages = with pkgs; [
@@ -138,10 +136,6 @@
     ];
 
     warn-dirty = false;
-
-    trusted-users = [
-      "brock"
-    ];
 
     # Setup trusted substituters for perseus repo
     trusted-substituters = [
