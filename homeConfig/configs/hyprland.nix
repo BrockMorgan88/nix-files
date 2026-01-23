@@ -40,8 +40,8 @@
           "$mod+SHIFT, code:114, movewindow, r"
           "$mod+SHIFT, code:111, movewindow, u"
           "$mod+SHIFT, code:116, movewindow, d"
-          "$mod, L, exec, hyprlock"
-          ", switch:on:Lid Switch, exec, hyprlock"
+          "$mod, L, exec, loginctl lock-session"
+          ", switch:on:Lid Switch, exec, loginctl lock-session"
           "$mod, R, submap, Resize"
         ]
         ++ (builtins.concatLists (
@@ -86,6 +86,9 @@
             ]
           ) 10
         ));
+        exec-once = [
+          "${pkgs.swaybg}/bin/swaybg -i /home/brock/nix-files/homeConfig/configs/Background.png "
+        ];
       };
       submaps = {
         Resize = {
