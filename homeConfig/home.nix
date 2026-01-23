@@ -25,7 +25,6 @@
     ethtool
     tree
     usbutils
-    zip
   ];
 
   imports = [
