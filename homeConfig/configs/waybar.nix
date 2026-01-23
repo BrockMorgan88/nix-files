@@ -1,0 +1,55 @@
+{ ... }:
+{
+  programs.waybar = {
+    enable = true;
+    settings = {
+      mainbar = {
+        layer = "top";
+        position = "bottom";
+        height = 28;
+        output = [
+          "*"
+        ];
+        modules-left = [
+          "hyprland/workspaces"
+          "hyprland/submap"
+        ];
+        modules-center = [ "clock" ];
+        modules-right = [
+          "disk"
+          "memory"
+          "battery"
+          "cpu"
+          "tray"
+        ];
+        "disk" = {
+          "format" = "Disk: {used}/{total} ({percentage_used}%)";
+        };
+        "memory" = {
+          "format" = "RAM: {percentage}%";
+        };
+        "battery" = {
+          "format" = "BAT: {capacity}%";
+          "states" = {
+            "warning" = 30;
+            "critical" = 15;
+          };
+          "events" = {
+            "on-discharging-warning" = "notify-send -u normal 'BATTERY LOW' 'Find your charger'";
+            "on-discharging-critical" =
+              "notify-send -u critical 'BATTERY CRITICAL' 'Plug in your battery now!'";
+          };
+        };
+        "cpu" = {
+          "format" = "CPU: {usage}%";
+        };
+      };
+    };
+    style = ./style.css;
+    systemd = {
+      enable = true;
+      enableDebug = true;
+      target = "hyprland-session.target";
+    };
+  };
+}

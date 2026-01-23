@@ -16,8 +16,10 @@
       ];
     in
     {
+      portalPackage = pkgs.xdg-desktop-portal-gtk;
       systemd.variables = [ "--all" ];
       enable = true;
+      package = null;
       settings = {
         "$mod" = "SUPER";
         bind = [

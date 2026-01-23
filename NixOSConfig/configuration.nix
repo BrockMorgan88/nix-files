@@ -87,6 +87,7 @@
       bluez # Bluetooth
       btop
       discord
+      dunst
       evince # Gnome document viewer
       feh # Image viewer - background
       flameshot # Screenshots

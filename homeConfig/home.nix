@@ -1,6 +1,5 @@
 {
   pkgs,
-  lib,
   ...
 }:
 
@@ -48,6 +47,22 @@
     # '';
   };
 
+  xdg.portal = {
+    enable = true;
+    configPackages = with pkgs; [
+      xdg-desktop-portal-gtk
+      xdg-desktop-portal-hyprland
+    ];
+    config = {
+      common = {
+        default = [
+          "gtk"
+          "hyprland"
+        ];
+      };
+    };
+  };
+
   # Programs and program configuration
   programs.bash = {
     enable = true;
@@ -91,103 +106,7 @@
       name = "Iosevka Nerd Font";
       size = 12;
     };
-  };
-
-  programs.i3blocks = {
-    enable = true;
-    bars = {
-      config = {
-        disk = {
-          command = "~/nix-files/homeConfig/scripts/disk.sh";
-          interval = 10;
-        };
-        wifi = lib.hm.dag.entryAfter [ "disk" ] {
-          command = "~/nix-files/homeConfig/scripts/wifi.sh";
-          interval = 10;
-        };
-        ethernet = lib.hm.dag.entryAfter [ "wifi" ] {
-          command = "~/nix-files/homeConfig/scripts/ethernet.sh";
-          interval = 10;
-        };
-        ram = lib.hm.dag.entryAfter [ "ethernet" ] {
-          command = "~/nix-files/homeConfig/scripts/ram.sh";
-          interval = 10;
-        };
-        swap = lib.hm.dag.entryAfter [ "ram" ] {
-          command = "~/nix-files/homeConfig/scripts/swap.sh";
-          interval = 10;
-        };
-        cpu = lib.hm.dag.entryAfter [ "swap" ] {
-          command = "~/nix-files/homeConfig/scripts/cpu.sh";
-          interval = 10;
-        };
-        battery = lib.hm.dag.entryAfter [ "cpu" ] {
-          command = "~/nix-files/homeConfig/scripts/battery.sh";
-          interval = 10;
-        };
-        time = lib.hm.dag.entryAfter [ "battery" ] {
-          command = "date +'%d-%m-%Y %H:%M'";
-          interval = 10;
-          color = "#FFFFFF";
-        };
-      };
-    };
-  };
-
-  programs.waybar = {
-    enable = true;
-    settings = {
-      mainbar = {
-        layer = "top";
-        position = "bottom";
-        height = 28;
-        output = [
-          "*"
-        ];
-        modules-left = [
-          "hyprland/workspaces"
-          "hyprland/submap"
-        ];
-        modules-center = [ "clock" ];
-        modules-right = [
-          "battery"
-          "cpu"
-          "tray"
-        ];
-        "battery" = {
-          "format" = "BAT: {capacity}%";
-          "states" = {
-            "warning" = 30;
-            "critical" = 15;
-          };
-          "events" = {
-            "on-discharging-warning" = "notify-send -u 'BATTERY LOW'";
-            "on-discharging-critical" = "notify-send -u 'BATTERY CRITICAL' 'Plug in your battery now!'";
-          };
-        };
-        "cpu" = {
-          "format" = "CPU: {usage}%";
-        };
-      };
-    };
-    style = ''
-      #workspaces button {
-          background-color: rgba(0, 0, 0, 0);
-          color: rgba(255, 255, 255, 0.5);
-      }
-      #workspaces button.active {
-          background-color: rgba(0, 0, 0, 0);
-          color: rgba(255, 255, 255, 0.9);
-      }
-      #submap {
-          background-color: rgba(255, 255, 255, 0.1);
-          color: rgba(180, 0, 0, 1);
-      }
-    '';
-    systemd = {
-      enable = true;
-      target = "hyprland-session.target";
-    };
+    colorScheme = "dark";
   };
 
   programs.hyprlock = {
