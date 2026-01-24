@@ -6,7 +6,7 @@
       mainbar = {
         layer = "top";
         position = "bottom";
-        height = 28;
+        height = 22;
         output = [
           "*"
         ];

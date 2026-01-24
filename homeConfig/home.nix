@@ -105,7 +105,7 @@
     };
     font = {
       name = "Iosevka Nerd Font";
-      size = 12;
+      size = 10.5;
     };
     colorScheme = "dark";
   };
@@ -117,9 +117,11 @@
   programs.kitty = {
     enable = true;
     font = {
-      size = 11;
-      name = "Iosevka Nerd Font";
+      size = 10.5;
+      name = "Iosevka Nerd Font Mono";
     };
+    enableGitIntegration = true;
+    shellIntegration.enableBashIntegration = true;
   };
 
   programs.rofi = {
