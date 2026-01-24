@@ -101,6 +101,7 @@
       flameshot # Screenshots
       git
       git-credential-manager
+      gh
       gnome-calculator
       gnome-text-editor
       kicad-unstable-small

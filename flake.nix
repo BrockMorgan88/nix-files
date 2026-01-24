@@ -145,13 +145,13 @@
           ;
       };
       systems = {
-        brock-thinkpad-nixos = {
+        brock-thinkpad = {
           machine-config = ./NixOSConfig/machine-specific-configuration/thinkpad.nix;
           hardware-config = ./NixOSConfig/hardware-configuration/thinkpad.nix;
         };
-        brock-pc-nixos = {
-          machine-config = ./NixOSConfig/machine-specific-configuration/pc.nix;
-          hardware-config = ./NixOSConfig/hardware-configuration/pc.nix;
+        brock-desktop = {
+          machine-config = ./NixOSConfig/machine-specific-configuration/desktop.nix;
+          hardware-config = ./NixOSConfig/hardware-configuration/desktop.nix;
         };
       };
       createSystem =
