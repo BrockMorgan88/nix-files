@@ -18,6 +18,9 @@
         platformio.platformio-vscode-ide
         christian-kohler.path-intellisense
         vscode-icons-team.vscode-icons
+        vscodevim.vim
+        jeff-hykin.better-nix-syntax
+        svelte.svelte-vscode
       ];
       better-cpp-syntax = pkgs.vscode-utils.buildVscodeMarketplaceExtension {
         mktplcRef = {
@@ -49,14 +52,6 @@
           publisher = "ibecker";
           version = "2.2.1";
           hash = "sha256-3kyEznwTWqdHdCWtoChGBCwRL7tMjtdLI+SQ7TqJh9I=";
-        };
-      };
-      svelte = pkgs.vscode-utils.buildVscodeMarketplaceExtension {
-        mktplcRef = {
-          name = "svelte-vscode";
-          publisher = "svelte";
-          version = "109.12.0";
-          hash = "sha256-pPzpP7xYZ2cxj1euA3jj6d0g0c+tK+1is+o4zeMdT/Q=";
         };
       };
       python-environments = pkgs.vscode-utils.buildVscodeMarketplaceExtension {
@@ -91,45 +86,20 @@
           hash = "sha256-jpdRmTUfwbyJI8ruqHQEcSFwht7HSPrI9r+ZAaNf5Q4=";
         };
       };
-      xkb-symbols = pkgs.vscode-utils.buildVscodeMarketplaceExtension {
-        mktplcRef = {
-          name = "xkb";
-          publisher = "compilouit";
-          version = "0.1.2";
-          hash = "sha256-k8EmkiebEKB8hDaJqT3KVXy1d9Cc5aUDL9gP1mOBN88=";
-        };
-      };
-      vim = pkgs.vscode-utils.buildVscodeMarketplaceExtension {
-        mktplcRef = {
-          name = "vim";
-          publisher = "vscodevim";
-          version = "1.32.4";
-          hash = "sha256-+hyJZinWsa6U+s0fdrx2wUi6tOV3FNKf8O1qMMZEdkQ=";
-        };
-      };
 
       otherexts = [
         better-cpp-syntax
         doxdocgen
         msg
         treefmt
-        svelte
         python-environments
         ros2
         python-environment-mgr
         git-patch
-        xkb-symbols
-        vim
       ];
     in
     {
       enable = true;
-      package = pkgs.vscode.fhsWithPackages (
-        ps: with ps; [
-          platformio-core
-          avrdude
-        ]
-      );
       mutableExtensionsDir = false;
       profiles.default = {
         enableUpdateCheck = false;

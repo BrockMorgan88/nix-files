@@ -10,8 +10,16 @@
 {
   # EFI boot loader.
   boot.loader = {
-    systemd-boot.enable = true;
+    systemd-boot.enable = false;
+    grub = {
+      enable = true;
+      default = "saved";
+      device = "nodev";
+      useOSProber = true;
+      efiSupport = true;
+    };
     efi.canTouchEfiVariables = true;
+    efi.efiSysMountPoint = "/boot";
   };
 
   networking.networkmanager.enable = true; # Enables wireless support via wpa_supplicant.
@@ -196,6 +204,6 @@
   # and migrated your data accordingly.
   #
   # For more information, see `man configuration.nix` or https://nixos.org/manual/nixos/stable/options#opt-system.stateVersion .
-  system.stateVersion = "25.05"; # Did you read the comment?
+  system.stateVersion = "25.11"; # Did you read the comment?
 
 }
