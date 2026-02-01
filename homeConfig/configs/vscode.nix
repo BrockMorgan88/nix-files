@@ -21,6 +21,7 @@
         vscodevim.vim
         jeff-hykin.better-nix-syntax
         svelte.svelte-vscode
+        tamasfe.even-better-toml
       ];
       better-cpp-syntax = pkgs.vscode-utils.buildVscodeMarketplaceExtension {
         mktplcRef = {
