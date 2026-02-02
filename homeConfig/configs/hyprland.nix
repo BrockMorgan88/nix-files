@@ -12,17 +12,9 @@
         "7" # 7
         "8" # 8
         "9" # 9
-        "Discord" # 10
+        "10" # 10
         "11" # 11
-        "12" # 12
-        "13" # 13
-        "14" # 14
-        "15" # 15
-        "16" # 16
-        "17" # 17
-        "18" # 18
-        "19" # 19
-        "20" # 20
+        "Discord" # 12
       ];
     in
     {
@@ -35,8 +27,8 @@
         bind = [
           "$mod, Return, exec, kitty"
           "$mod, S, exec, ${pkgs.rofi}/bin/rofi -show drun"
-          "$mod, K, killactive"
-          "$mod+SHIFT, K, forcekillactive"
+          "$mod, Q, killactive"
+          "$mod+SHIFT, Q, forcekillactive"
           "$mod, V, exec, vivaldi"
           "$mod, D, exec, discord"
           "$mod, F, togglefloating, active"
@@ -65,24 +57,11 @@
               ws = i + 1;
             in
             [
-              "$mod, code:1${toString i}, workspace, ${toString ws}"
-              "$mod SHIFT, code:1${toString i}, movetoworkspace, ${toString ws}"
+              "$mod, code:${toString (i + 10)}, workspace, ${toString ws}"
+              "$mod SHIFT, code:1${toString (i + 10)}, movetoworkspace, ${toString ws}"
             ]
-          ) 10
-        ))
-        # Workspaces 11-20 - keys q-p
-        ++ builtins.concatLists (
-          builtins.genList (
-            i:
-            let
-              ws = i + 11;
-            in
-            [
-              "$mod, code:${toString (i + 24)}, workspace, ${toString ws}"
-              "$mod SHIFT, code:${toString (i + 24)}, movetoworkspace, ${toString ws}"
-            ]
-          ) 10
-        );
+          ) 12
+        ));
         decoration = {
           blur.enabled = false;
           shadow.enabled = false;
@@ -113,7 +92,7 @@
             [
               "${toString ws}, gapsout:4, gapsin:4, defaultName:${builtins.elemAt workspaceNames i}"
             ]
-          ) 20
+          ) (builtins.length workspaceNames)
         ));
         exec-once = [
           # Anime girl background :)
