@@ -1,14 +1,5 @@
-{
-  pkgs-unstable,
-  pkgs-master,
-  ...
-}:
-let
-  unstable = final: prev: {
-    unstable = pkgs-unstable;
-    master = pkgs-master;
-  };
-in
-[
-  unstable
-]
+{ pkgs-unstable, pkgs-master }:
+final: prev: {
+  unstable = pkgs-unstable;
+  master = pkgs-master;
+}

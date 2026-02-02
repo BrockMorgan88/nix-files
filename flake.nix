@@ -136,14 +136,11 @@
         };
       };
       lib = nixpkgs.lib;
-      overlays = import ./overlays/unstable.nix {
-        inherit
-          pkgs
-          pkgs-unstable
-          pkgs-master
-          lib
-          ;
-      };
+      overlays = [
+        (import ./overlays/unstable.nix {
+          inherit pkgs-master pkgs-unstable;
+        })
+      ];
       systems = {
         brock-thinkpad = {
           machine-config = ./NixOSConfig/machine-specific-configuration/thinkpad.nix;

@@ -79,7 +79,7 @@
             in
             [
               "$mod, code:${toString (i + 24)}, workspace, ${toString ws}"
-              "$mod SHIFT, code:1${toString (i + 24)}, movetoworkspace, ${toString ws}"
+              "$mod SHIFT, code:${toString (i + 24)}, movetoworkspace, ${toString ws}"
             ]
           ) 10
         );
