@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
-cd ~/nix-files/
-git add .
-treefmt
-git add .
+if ! [[ "$*" == *--no-add* ]]; then
+    cd ~/nix-files/
+    git add .
+    treefmt
+    git add .
+fi
 git commit -m "$1"
