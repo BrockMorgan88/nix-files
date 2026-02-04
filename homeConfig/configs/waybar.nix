@@ -45,7 +45,7 @@
         };
       };
     };
-    style = ./style.css;
+    style = ./dotfiles/style.css;
     systemd = {
       enable = true;
       enableDebug = true;

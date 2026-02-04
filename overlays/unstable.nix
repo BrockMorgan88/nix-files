@@ -1,4 +1,4 @@
-{ pkgs-unstable, pkgs-master }:
+{ pkgs-unstable, pkgs-master, ... }:
 final: prev: {
   unstable = pkgs-unstable;
   master = pkgs-master;

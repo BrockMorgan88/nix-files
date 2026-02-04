@@ -6,7 +6,7 @@
         "Browser" # 1
         "Terminal" # 2
         "VSCode" # 3
-        "Spotify" # 4
+        "4" # 4
         "5" # 5
         "6" # 6
         "7" # 7
@@ -46,10 +46,9 @@
           "$mod+SHIFT, code:116, movewindow, d"
           "$mod, L, exec, hyprlock"
           ", switch:on:Lid Switch, exec, hyprlock"
-          # MOD+\ to resize - '\' doesn't work well when naming it directly as it's a special character
-          "$mod, code:51, submap, Resize"
+          "$mod, R, submap, Resize"
         ]
-        # Workspaces 1-10 - keys 1-0
+        # Workspaces 1-12 - keys 1-=
         ++ (builtins.concatLists (
           builtins.genList (
             i:
@@ -58,7 +57,7 @@
             in
             [
               "$mod, code:${toString (i + 10)}, workspace, ${toString ws}"
-              "$mod SHIFT, code:1${toString (i + 10)}, movetoworkspace, ${toString ws}"
+              "$mod SHIFT, code:${toString (i + 10)}, movetoworkspace, ${toString ws}"
             ]
           ) 12
         ));

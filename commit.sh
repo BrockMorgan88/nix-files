@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+cd ~/nix-files/
 git add .
 treefmt
 git add .

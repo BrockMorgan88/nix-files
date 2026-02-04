@@ -4,6 +4,7 @@
 
 {
   pkgs,
+  hostname,
   ...
 }:
 
@@ -23,9 +24,7 @@
   };
 
   networking.networkmanager.enable = true; # Enables wireless support via wpa_supplicant.
-
-  nixpkgs.config.allowUnfree = true;
-
+  networking.hostName = hostname; # Define your hostname.
   # Set your time zone.
   time.timeZone = "Australia/Brisbane";
 
@@ -84,9 +83,6 @@
       "wheel"
       "dialout"
     ];
-    packages = with pkgs; [
-      home-manager
-    ];
   };
 
   environment.systemPackages = (
@@ -102,6 +98,7 @@
       gh
       gnome-calculator
       gnome-text-editor
+      home-manager
       kicad-unstable-small
       libreoffice-fresh
       libnotify # Notify-send

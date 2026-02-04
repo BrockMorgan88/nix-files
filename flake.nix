@@ -113,7 +113,7 @@
       nixpkgs-unstable,
       nixpkgs-master,
       ...
-    }:
+    }@inputs:
     let
       unfreeAllowed = true;
       system = "x86_64-linux";
@@ -137,9 +137,12 @@
       };
       lib = nixpkgs.lib;
       overlays = [
-        (import ./overlays/unstable.nix {
-          inherit pkgs-master pkgs-unstable;
-        })
+        (import ./overlays/unstable.nix (
+          inputs
+          // {
+            inherit pkgs-master pkgs-unstable;
+          }
+        ))
       ];
       systems = {
         brock-thinkpad = {
@@ -160,29 +163,36 @@
             (
               { ... }:
               {
-                nixpkgs.overlays = overlays;
                 nixpkgs.config.allowUnfree = unfreeAllowed;
+                nixpkgs.overlays = overlays;
               }
             )
             ./NixOSConfig/configuration.nix
             value.hardware-config
             value.machine-config
             home-manager.nixosModules.home-manager
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.backupFileExtension = ".bak";
-              home-manager.users.brock = import ./homeConfig/home.nix;
-            }
+            (
+              { specialArgs, ... }:
+              {
+                home-manager.backupFileExtension = ".bak";
+                home-manager.useGlobalPkgs = true;
+                home-manager.useUserPackages = true;
+                home-manager.users.brock = import ./homeConfig/home.nix;
+                home-manager.extraSpecialArgs = specialArgs;
+              }
+            )
           ];
+          specialArgs = {
+            hostname = name;
+            inherit unfreeAllowed;
+          };
         };
     in
     {
       nixosConfigurations = (lib.attrsets.mapAttrs createSystem systems);
       homeConfigurations.brock = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
         modules = [
-          (import ./homeConfig/home.nix)
+          ./homeConfig/home.nix
         ];
       };
 
