@@ -144,56 +144,56 @@
           }
         ))
       ];
-      systems = {
-        brock-thinkpad = {
-          machine-config = ./NixOSConfig/machine-specific-configuration/thinkpad.nix;
-          hardware-config = ./NixOSConfig/hardware-configuration/thinkpad.nix;
-        };
-        brock-desktop = {
-          machine-config = ./NixOSConfig/machine-specific-configuration/desktop.nix;
-          hardware-config = ./NixOSConfig/hardware-configuration/desktop.nix;
-        };
-      };
-      createSystem =
-        name: value:
-
-        lib.nixosSystem {
+      systems = [
+        "brock-thinkpad"
+        "brock-desktop"
+      ];
+      createSystem = systemName: {
+        name = systemName;
+        value = lib.nixosSystem {
           inherit system;
           modules = [
             (
-              { ... }:
+              { unfreeAllowed, ... }:
               {
                 nixpkgs.config.allowUnfree = unfreeAllowed;
                 nixpkgs.overlays = overlays;
               }
             )
-            ./NixOSConfig/configuration.nix
-            value.hardware-config
-            value.machine-config
+            ./NixOSConfig
             home-manager.nixosModules.home-manager
             (
               { specialArgs, ... }:
               {
-                home-manager.backupFileExtension = ".bak";
-                home-manager.useGlobalPkgs = true;
-                home-manager.useUserPackages = true;
-                home-manager.users.brock = import ./homeConfig/home.nix;
-                home-manager.extraSpecialArgs = specialArgs;
+                home-manager = {
+                  backupFileExtension = ".bak";
+                  useGlobalPkgs = true;
+                  useUserPackages = true;
+                  users.brock = import ./homeConfig/home.nix;
+                  extraSpecialArgs = specialArgs;
+                };
               }
             )
           ];
           specialArgs = {
-            hostname = name;
+            hostName = systemName;
             inherit unfreeAllowed;
           };
         };
+      };
     in
     {
-      nixosConfigurations = (lib.attrsets.mapAttrs createSystem systems);
+      nixosConfigurations = builtins.listToAttrs (lib.map createSystem systems);
       homeConfigurations.brock = home-manager.lib.homeManagerConfiguration {
+        inherit pkgs;
         modules = [
           ./homeConfig/home.nix
         ];
+        extraSpecialArgs = {
+          # Default hostName is "brock-thinkpad"
+          hostName = (builtins.elemAt systems 0);
+          inherit unfreeAllowed;
+        };
       };
 
       # # Utilized by `nix flake check`

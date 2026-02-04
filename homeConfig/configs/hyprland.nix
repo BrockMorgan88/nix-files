@@ -68,8 +68,10 @@
         misc = {
           vfr = true;
         };
+        # Set all unspecified monitors (machine-specific) to their preferred resolution,
+        # on the left of the others, with a scale of 1
         monitor = [
-          "eDP-1, 1920x1200@120, 0x0, 1"
+          ", preferred, left, 1"
         ];
         animation = [
           "workspaces, 1, 0.5, default"

@@ -4,7 +4,7 @@
 
 {
   pkgs,
-  hostname,
+  hostName,
   ...
 }:
 
@@ -19,12 +19,17 @@
       useOSProber = true;
       efiSupport = true;
     };
-    efi.canTouchEfiVariables = true;
-    efi.efiSysMountPoint = "/boot";
+    efi = {
+      canTouchEfiVariables = true;
+      efiSysMountPoint = "/boot";
+    };
   };
 
-  networking.networkmanager.enable = true; # Enables wireless support via wpa_supplicant.
-  networking.hostName = hostname; # Define your hostname.
+  networking = {
+    networkmanager.enable = true; # Enables wireless support via wpa_supplicant.
+    firewall.enable = false;
+    inherit hostName;
+  };
   # Set your time zone.
   time.timeZone = "Australia/Brisbane";
 
@@ -181,7 +186,6 @@
   # networking.firewall.allowedTCPPorts = [ ... ];
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
-  networking.firewall.enable = false;
 
   # Copy the NixOS configuration file and link it from the resulting system
   # (/run/current-system/configuration.nix). This is useful in case you
