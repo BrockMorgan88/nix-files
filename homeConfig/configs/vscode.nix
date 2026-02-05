@@ -128,6 +128,7 @@
             "command" = [ "nixfmt-tree" ];
           };
         };
+        keybindings = ./dotfiles/keybindings.json;
       };
     };
 }
