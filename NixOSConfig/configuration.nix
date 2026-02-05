@@ -5,6 +5,7 @@
 {
   pkgs,
   hostName,
+  userName,
   ...
 }:
 
@@ -80,7 +81,7 @@
   services.libinput.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.brock = {
+  users.users.${userName} = {
     isNormalUser = true;
     description = "Brock Morgan";
     extraGroups = [

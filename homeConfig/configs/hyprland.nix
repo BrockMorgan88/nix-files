@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, userName, ... }:
 {
   wayland.windowManager.hyprland =
     let
@@ -115,7 +115,7 @@
         ));
         exec-once = [
           # Anime girl background :)
-          "${pkgs.swaybg}/bin/swaybg -i /home/brock/nix-files/homeConfig/configs/dotfiles/Background.png "
+          "${pkgs.swaybg}/bin/swaybg -i /home/${userName}/nix-files/homeConfig/configs/dotfiles/Background.png "
         ];
       };
       submaps = {

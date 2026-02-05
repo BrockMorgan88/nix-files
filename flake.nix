@@ -115,6 +115,7 @@
       ...
     }@inputs:
     let
+      userName = "brock";
       unfreeAllowed = true;
       system = "x86_64-linux";
       pkgs = import nixpkgs {
@@ -145,8 +146,8 @@
         ))
       ];
       systems = [
-        "brock-thinkpad"
-        "brock-desktop"
+        "${userName}-thinkpad"
+        "${userName}-desktop"
       ];
       createSystem = systemName: {
         name = systemName;
@@ -169,7 +170,7 @@
                   backupFileExtension = ".bak";
                   useGlobalPkgs = true;
                   useUserPackages = true;
-                  users.brock = import ./homeConfig/home.nix;
+                  users.${userName} = import ./homeConfig/home.nix;
                   extraSpecialArgs = specialArgs;
                 };
               }
@@ -177,19 +178,19 @@
           ];
           specialArgs = {
             hostName = systemName;
-            inherit unfreeAllowed;
+            inherit unfreeAllowed userName;
           };
         };
       };
       createHome = systemName: {
-        name = "brock@${systemName}";
+        name = "${userName}@${systemName}";
         value = home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
           modules = [
             ./homeConfig/home.nix
           ];
           extraSpecialArgs = {
-            inherit unfreeAllowed;
+            inherit unfreeAllowed userName;
             hostName = systemName;
           };
         };
