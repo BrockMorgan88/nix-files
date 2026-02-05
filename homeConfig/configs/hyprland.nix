@@ -28,11 +28,11 @@
           "$mod, Return, exec, kitty"
           "$mod, S, exec, ${pkgs.rofi}/bin/rofi -show drun"
           "$mod, Q, killactive"
-          "$mod+SHIFT, Q, forcekillactive"
+          "$mod&SHIFT, Q, forcekillactive"
           "$mod, V, exec, vivaldi"
           "$mod, D, exec, discord"
           "$mod, F, togglefloating, active"
-          "$mod+SHIFT, R, exec, hyprctl reload"
+          "$mod&SHIFT, R, exec, hyprctl reload"
           "$mod, F12, fullscreen"
           # Arrows and vim keybinds for switching windows
           "$mod, code:113, movefocus, l"
@@ -44,18 +44,27 @@
           "$mod, K, movefocus, u"
           "$mod, J, movefocus, d"
           # Arrows and vim keybinds for moving windows
-          "$mod+SHIFT, code:113, movewindow, l"
-          "$mod+SHIFT, code:114, movewindow, r"
-          "$mod+SHIFT, code:111, movewindow, u"
-          "$mod+SHIFT, code:116, movewindow, d"
-          "$mod+SHIFT, H, movewindow, l"
-          "$mod+SHIFT, L, movewindow, r"
-          "$mod+SHIFT, K, movewindow, u"
-          "$mod+SHIFT, J, movewindow, d"
+          "$mod&SHIFT, code:113, movewindow, l"
+          "$mod&SHIFT, code:114, movewindow, r"
+          "$mod&SHIFT, code:111, movewindow, u"
+          "$mod&SHIFT, code:116, movewindow, d"
+          "$mod&SHIFT, H, movewindow, l"
+          "$mod&SHIFT, L, movewindow, r"
+          "$mod&SHIFT, K, movewindow, u"
+          "$mod&SHIFT, J, movewindow, d"
 
           "CTRL ALT, L, exec, hyprlock"
           ", switch:on:Lid Switch, exec, hyprlock"
           "$mod, R, submap, Resize"
+          # Arrows and vim keybinds for switching workspaces incrementally
+          "$mod&CTRL, code:113, workspace, -1"
+          "$mod&CTRL&SHIFT, code:113, movetoworkspace, -1"
+          "$mod&CTRL, H, workspace, -1"
+          "$mod&CTRL&SHIFT, H, movetoworkspace, -1"
+          "$mod&CTRL, code:114, workspace, +1"
+          "$mod&CTRL&SHIFT, code:114, movetoworkspace, +1"
+          "$mod&CTRL, L, workspace, +1"
+          "$mod&CTRL&SHIFT, L, movetoworkspace, +1"
         ]
         # Workspaces 1-12 - keys 1-=
         ++ (builtins.concatLists (
@@ -106,13 +115,13 @@
         ));
         exec-once = [
           # Anime girl background :)
-          "${pkgs.swaybg}/bin/swaybg -i /home/brock/nix-files/homeConfig/configs/Background.png "
+          "${pkgs.swaybg}/bin/swaybg -i /home/brock/nix-files/homeConfig/configs/dotfiles/Background.png "
         ];
       };
       submaps = {
         Resize = {
           settings = {
-            bind = [
+            binde = [
               ", code:113, resizeactive, -20 0"
               ", code:114, resizeactive, 20 0"
               ", code:111, resizeactive, 0 -20"
