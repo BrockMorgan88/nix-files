@@ -34,17 +34,26 @@
           "$mod, F, togglefloating, active"
           "$mod+SHIFT, R, exec, hyprctl reload"
           "$mod, F12, fullscreen"
-          # Arrows for switching windows
+          # Arrows and vim keybinds for switching windows
           "$mod, code:113, movefocus, l"
           "$mod, code:114, movefocus, r"
           "$mod, code:111, movefocus, u"
           "$mod, code:116, movefocus, d"
-          # Arrows for moving windows
+          "$mod, H, movefocus, l"
+          "$mod, L, movefocus, r"
+          "$mod, K, movefocus, u"
+          "$mod, J, movefocus, d"
+          # Arrows and vim keybinds for moving windows
           "$mod+SHIFT, code:113, movewindow, l"
           "$mod+SHIFT, code:114, movewindow, r"
           "$mod+SHIFT, code:111, movewindow, u"
           "$mod+SHIFT, code:116, movewindow, d"
-          "$mod, L, exec, hyprlock"
+          "$mod+SHIFT, H, movewindow, l"
+          "$mod+SHIFT, L, movewindow, r"
+          "$mod+SHIFT, K, movewindow, u"
+          "$mod+SHIFT, J, movewindow, d"
+
+          "CTRL ALT, L, exec, hyprlock"
           ", switch:on:Lid Switch, exec, hyprlock"
           "$mod, R, submap, Resize"
         ]
@@ -71,7 +80,7 @@
         # Set all unspecified monitors (machine-specific) to their preferred resolution,
         # on the left of the others, with a scale of 1
         monitor = [
-          ", preferred, left, 1"
+          ", preferred, auto-left, 1"
         ];
         animation = [
           "workspaces, 1, 0.5, default"
@@ -108,14 +117,26 @@
               ", code:114, resizeactive, 20 0"
               ", code:111, resizeactive, 0 -20"
               ", code:116, resizeactive, 0 20"
+              ", H, resizeactive, -20 0"
+              ", L, resizeactive, 20 0"
+              ", K, resizeactive, 0 -20"
+              ", J, resizeactive, 0 20"
               "SHIFT, code:113, resizeactive, -100 0"
               "SHIFT, code:114, resizeactive, 100 0"
               "SHIFT, code:111, resizeactive, 0 -100"
               "SHIFT, code:116, resizeactive, 0 100"
+              "SHIFT, H, resizeactive, -100 0"
+              "SHIFT, L, resizeactive, 100 0"
+              "SHIFT, K, resizeactive, 0 -100"
+              "SHIFT, J, resizeactive, 0 100"
               ", Escape, submap, reset"
             ];
           };
         };
       };
     };
+
+  programs.hyprlock = {
+    enable = true;
+  };
 }

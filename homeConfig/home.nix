@@ -57,6 +57,11 @@
     # '';
   };
 
+  programs.vim = {
+    enable = true;
+    defaultEditor = true;
+  };
+
   xdg.portal = {
     enable = true;
     configPackages = with pkgs; [
@@ -118,10 +123,6 @@
       size = 10.5;
     };
     colorScheme = "dark";
-  };
-
-  programs.hyprlock = {
-    enable = true;
   };
 
   programs.kitty = {
