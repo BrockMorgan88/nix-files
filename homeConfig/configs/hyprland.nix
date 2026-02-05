@@ -115,7 +115,7 @@
         ));
         exec-once = [
           # Anime girl background :)
-          "${pkgs.swaybg}/bin/swaybg -i /home/${userName}/nix-files/homeConfig/configs/dotfiles/Background.png "
+          "${pkgs.swaybg}/bin/swaybg -i /home/${userName}/nix-files/homeConfig/configs/non-nix/Background.png "
         ];
       };
       submaps = {

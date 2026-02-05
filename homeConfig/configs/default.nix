@@ -4,6 +4,6 @@
     ./vscode.nix
     ./hyprland.nix
     ./waybar.nix
-    ./machine-specific-home-configurations
+    ./machine-specific-home-configuration
   ];
 }
