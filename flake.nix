@@ -181,21 +181,23 @@
           };
         };
       };
+      createHome = systemName: {
+        name = "brock@${systemName}";
+        value = home-manager.lib.homeManagerConfiguration {
+          inherit pkgs;
+          modules = [
+            ./homeConfig/home.nix
+          ];
+          extraSpecialArgs = {
+            inherit unfreeAllowed;
+            hostName = systemName;
+          };
+        };
+      };
     in
     {
       nixosConfigurations = builtins.listToAttrs (lib.map createSystem systems);
-      homeConfigurations.brock = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
-        modules = [
-          ./homeConfig/home.nix
-        ];
-        extraSpecialArgs = {
-          # Default hostName is "brock-thinkpad"
-          hostName = (builtins.elemAt systems 0);
-          inherit unfreeAllowed;
-        };
-      };
-
+      homeConfigurations = builtins.listToAttrs (lib.map createHome systems);
       # # Utilized by `nix flake check`
       # checks.x86_64-linux.test = c-hello.checks.x86_64-linux.test;
 

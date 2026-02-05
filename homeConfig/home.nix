@@ -94,14 +94,6 @@
     '';
   };
 
-  programs.git = {
-    enable = true;
-    settings.user = {
-      name = "BrockMorgan88";
-      email = "brockjamesmorgan@gmail.com";
-    };
-  };
-
   programs.direnv = {
     enable = true;
     enableBashIntegration = true;
