@@ -23,81 +23,74 @@
         svelte.svelte-vscode
         tamasfe.even-better-toml
       ];
-      better-cpp-syntax = pkgs.vscode-utils.buildVscodeMarketplaceExtension {
-        mktplcRef = {
-          name = "better-cpp-syntax";
-          publisher = "jeff-hykin";
-          version = "1.27.1";
-          hash = "sha256-GO/ooq50KLFsiEuimqTbD/mauQYcD/p2keHYo/6L9gw=";
-        };
-      };
-      doxdocgen = pkgs.vscode-utils.buildVscodeMarketplaceExtension {
-        mktplcRef = {
-          name = "doxdocgen";
-          publisher = "cschlosser";
-          version = "1.4.0";
-          hash = "sha256-InEfF1X7AgtsV47h8WWq5DZh6k/wxYhl2r/pLZz9JbU=";
-        };
-      };
-      msg = pkgs.vscode-utils.buildVscodeMarketplaceExtension {
-        mktplcRef = {
-          name = "msg";
-          publisher = "ajshort";
-          version = "0.1.1";
-          hash = "sha256-aL2znsL/iANHn/xCzAgjsysRTL3k1KxaBtmW/zGCYEI=";
-        };
-      };
-      treefmt = pkgs.vscode-utils.buildVscodeMarketplaceExtension {
-        mktplcRef = {
-          name = "treefmt-vscode";
-          publisher = "ibecker";
-          version = "2.2.1";
-          hash = "sha256-3kyEznwTWqdHdCWtoChGBCwRL7tMjtdLI+SQ7TqJh9I=";
-        };
-      };
-      python-environments = pkgs.vscode-utils.buildVscodeMarketplaceExtension {
-        mktplcRef = {
-          name = "vscode-python-envs";
-          publisher = "ms-python";
-          version = "1.12.0";
-          hash = "sha256-8dCnGBuxv+8QwP0FrUZIKFxllVOR2z+wIhyyJgxsRns=";
-        };
-      };
-      ros2 = pkgs.vscode-utils.buildVscodeMarketplaceExtension {
-        mktplcRef = {
-          name = "vscode-ros2";
-          publisher = "jaehyunshim";
-          version = "0.0.9";
-          hash = "sha256-g0r/IuvAPVYEODAIVql0u2k3uyuK4dYC/tnFgyl4WQQ=";
-        };
-      };
-      python-environment-mgr = pkgs.vscode-utils.buildVscodeMarketplaceExtension {
-        mktplcRef = {
-          name = "python-environment-manager";
-          publisher = "donjayamanne";
-          version = "1.2.7";
-          hash = "sha256-w3csu6rJm/Z6invC/TR7tx6Aq5DD77VM62nem8/QMlg=";
-        };
-      };
-      git-patch = pkgs.vscode-utils.buildVscodeMarketplaceExtension {
-        mktplcRef = {
-          name = "gitpatch";
-          publisher = "paragdiwan";
-          version = "0.2.1";
-          hash = "sha256-jpdRmTUfwbyJI8ruqHQEcSFwht7HSPrI9r+ZAaNf5Q4=";
-        };
-      };
-
-      otherexts = [
-        better-cpp-syntax
-        doxdocgen
-        msg
-        treefmt
-        python-environments
-        ros2
-        python-environment-mgr
-        git-patch
-      ];
+      otherexts =
+        let
+          better-cpp-syntax = pkgs.vscode-utils.buildVscodeMarketplaceExtension {
+            mktplcRef = {
+              name = "better-cpp-syntax";
+              publisher = "jeff-hykin";
+              version = "1.27.1";
+              hash = "sha256-GO/ooq50KLFsiEuimqTbD/mauQYcD/p2keHYo/6L9gw=";
+            };
+          };
+          doxdocgen = pkgs.vscode-utils.buildVscodeMarketplaceExtension {
+            mktplcRef = {
+              name = "doxdocgen";
+              publisher = "cschlosser";
+              version = "1.4.0";
+              hash = "sha256-InEfF1X7AgtsV47h8WWq5DZh6k/wxYhl2r/pLZz9JbU=";
+            };
+          };
+          treefmt = pkgs.vscode-utils.buildVscodeMarketplaceExtension {
+            mktplcRef = {
+              name = "treefmt-vscode";
+              publisher = "ibecker";
+              version = "2.2.1";
+              hash = "sha256-3kyEznwTWqdHdCWtoChGBCwRL7tMjtdLI+SQ7TqJh9I=";
+            };
+          };
+          python-environments = pkgs.vscode-utils.buildVscodeMarketplaceExtension {
+            mktplcRef = {
+              name = "vscode-python-envs";
+              publisher = "ms-python";
+              version = "1.12.0";
+              hash = "sha256-8dCnGBuxv+8QwP0FrUZIKFxllVOR2z+wIhyyJgxsRns=";
+            };
+          };
+          ros2 = pkgs.vscode-utils.buildVscodeMarketplaceExtension {
+            mktplcRef = {
+              name = "vscode-ros2";
+              publisher = "jaehyunshim";
+              version = "0.0.9";
+              hash = "sha256-g0r/IuvAPVYEODAIVql0u2k3uyuK4dYC/tnFgyl4WQQ=";
+            };
+          };
+          python-environment-mgr = pkgs.vscode-utils.buildVscodeMarketplaceExtension {
+            mktplcRef = {
+              name = "python-environment-manager";
+              publisher = "donjayamanne";
+              version = "1.2.7";
+              hash = "sha256-w3csu6rJm/Z6invC/TR7tx6Aq5DD77VM62nem8/QMlg=";
+            };
+          };
+          git-patch = pkgs.vscode-utils.buildVscodeMarketplaceExtension {
+            mktplcRef = {
+              name = "gitpatch";
+              publisher = "paragdiwan";
+              version = "0.2.1";
+              hash = "sha256-jpdRmTUfwbyJI8ruqHQEcSFwht7HSPrI9r+ZAaNf5Q4=";
+            };
+          };
+        in
+        [
+          better-cpp-syntax
+          doxdocgen
+          treefmt
+          python-environments
+          ros2
+          python-environment-mgr
+          git-patch
+        ];
     in
     {
       enable = true;
@@ -121,9 +114,6 @@
           "editor.fontSize" = 14;
           "nix.serverPath" = "nixd";
           "nix.enableLanguageServer" = true;
-          "nixpkgs" = {
-            "command" = "import <nixpkgs> { }";
-          };
           "formatting" = {
             "command" = [ "nixfmt-tree" ];
           };

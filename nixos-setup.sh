@@ -33,3 +33,5 @@ echo "{ ... }:
 }" > ./homeConfig/configs/machine-specific-home-configuration/"$MACHINE_NAME"/default.nix
 
 sed -i -e '/systems = \[/a\' -e \"\${userName}-$1\" ./flake.nix
+
+nixos-rebuild switch --flake ~/nix-files
