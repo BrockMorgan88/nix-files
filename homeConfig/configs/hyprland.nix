@@ -52,19 +52,19 @@
           "$mod&SHIFT, L, movewindow, r"
           "$mod&SHIFT, K, movewindow, u"
           "$mod&SHIFT, J, movewindow, d"
+          # Arrows and vim keybinds for switching workspaces incrementally
+          "$mod&CTRL, code:113, workspace, -1"
+          "$mod&CTRL, code:114, workspace, +1"
+          "$mod&CTRL, H, workspace, -1"
+          "$mod&CTRL, L, workspace, +1"
+          "$mod&CTRL&SHIFT, code:113, movetoworkspace, -1"
+          "$mod&CTRL&SHIFT, code:114, movetoworkspace, +1"
+          "$mod&CTRL&SHIFT, H, movetoworkspace, -1"
+          "$mod&CTRL&SHIFT, L, movetoworkspace, +1"
 
           "CTRL ALT, L, exec, hyprlock"
           ", switch:on:Lid Switch, exec, hyprlock"
           "$mod, R, submap, Resize"
-          # Arrows and vim keybinds for switching workspaces incrementally
-          "$mod&CTRL, code:113, workspace, -1"
-          "$mod&CTRL&SHIFT, code:113, movetoworkspace, -1"
-          "$mod&CTRL, H, workspace, -1"
-          "$mod&CTRL&SHIFT, H, movetoworkspace, -1"
-          "$mod&CTRL, code:114, workspace, +1"
-          "$mod&CTRL&SHIFT, code:114, movetoworkspace, +1"
-          "$mod&CTRL, L, workspace, +1"
-          "$mod&CTRL&SHIFT, L, movetoworkspace, +1"
         ]
         # Workspaces 1-12 - keys 1-=
         ++ (builtins.concatLists (

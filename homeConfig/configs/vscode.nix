@@ -81,6 +81,14 @@
               hash = "sha256-jpdRmTUfwbyJI8ruqHQEcSFwht7HSPrI9r+ZAaNf5Q4=";
             };
           };
+          kdl = pkgs.vscode-utils.buildVscodeMarketplaceExtension {
+            mktplcRef = {
+              name = "kdl";
+              publisher = "kdl-org";
+              version = "2.1.3";
+              hash = "sha256-Jssmb5owrgNWlmLFSKCgqMJKp3sPpOrlEUBwzZSSpbM=";
+            };
+          };
         in
         [
           better-cpp-syntax
@@ -90,6 +98,7 @@
           ros2
           python-environment-mgr
           git-patch
+          kdl
         ];
     in
     {
