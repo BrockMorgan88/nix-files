@@ -10,10 +10,10 @@ fi
 
 cd ~
 if ! [ -d "nix-files" ]; then
-    echo "Nix-files repo not found! Cloning now"
-    nix-shell -p gh --command "gh auth login; gh repo clone https://github.com/BrockMorgan88/nix-files.git"
+  echo "Nix-files repo not found! Cloning now"
+  nix-shell -p gh --command "gh auth login; gh repo clone https://github.com/BrockMorgan88/nix-files.git"
 else
-    echo "Nix-files repo already cloned. Continuing"
+  echo "Nix-files repo already cloned. Continuing"
 fi
 
 cd ~/nix-files
@@ -25,13 +25,13 @@ mkdir -p ./homeConfig/configs/machine-specific-home-configuration/"$MACHINE_NAME
 echo "{ ... }:
 {
 
-}" > ./NixOSConfig/machine-specific-configuration/"$MACHINE_NAME"/default.nix
+}" >./NixOSConfig/machine-specific-configuration/"$MACHINE_NAME"/default.nix
 
 echo "{ ... }:
 {
 
-}" > ./homeConfig/configs/machine-specific-home-configuration/"$MACHINE_NAME"/default.nix
+}" >./homeConfig/configs/machine-specific-home-configuration/"$MACHINE_NAME"/default.nix
 
-sed -i -e '/systems = \[/a\' -e \"\${userName}-$1\" ./flake.nix
+eval "sed -i -e '/systems = \[/a\' -e \"\${userName}-$1\" ./flake.nix"
 
 nixos-rebuild switch --flake ~/nix-files

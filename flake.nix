@@ -29,6 +29,10 @@
     };
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixpkgs-master.url = "github:NixOS/nixpkgs/master";
+    treefmt-nix = {
+      url = "github:numtide/treefmt-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   # The nixos-20.09 branch of the NixOS/nixpkgs repository on GitHub.
@@ -112,6 +116,7 @@
       nixpkgs,
       nixpkgs-unstable,
       nixpkgs-master,
+      treefmt-nix,
       ...
     }@inputs:
     let
@@ -195,6 +200,16 @@
           };
         };
       };
+      treefmtEval = treefmt-nix.lib.evalModule pkgs ./treefmt.nix;
+      treefmt-write-config = pkgs.writeShellScriptBin "treefmt-write-config" ''
+        cd "$(git rev-parse --show-toplevel)"
+        cp ${treefmtEval.config.build.configFile} ./treefmt.toml
+        chmod +w treefmt.toml
+        # strip out Nix store prefix path from the config,
+        # along with ruff-check (it just causes errors when trying to "format" in VSCode,
+        # since it's a linter)
+        sed -i -e 's,command.*/,command = ",' -e "/\[formatter\.ruff-check\]/,/^$/d" treefmt.toml
+      '';
     in
     {
       nixosConfigurations = builtins.listToAttrs (lib.map createSystem systems);
@@ -246,11 +261,24 @@
             man-pages-posix
             stdmanpages
             wev
-            nixfmt-tree
           ];
         };
       };
 
+      formatter.x86_64-linux = treefmtEval.config.build.wrapper;
+      packages.x86_64-linux = {
+        default = pkgs.callPackage ./default.nix { };
+        tools =
+          pkgs.runCommand "tools"
+            {
+              passthru = {
+                inherit treefmt-write-config;
+              };
+            }
+            ''
+              mkdir $out
+            '';
+      };
       # # Utilized by Hydra build jobs
       # hydraJobs.example.x86_64-linux = self.defaultPackage.x86_64-linux;
 
