@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
+set -euo pipefail
 if ! [[ $* == *--no-add* ]]; then
-  cd ~/nix-files/ || exit
+  cd "$(git rev-parse --show-toplevel)"
   git add .
   nix fmt
   git add .
