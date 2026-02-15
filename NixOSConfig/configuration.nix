@@ -101,33 +101,22 @@
     with pkgs;
     [
       bluez # Bluetooth
+      brightnessctl
       btop
-      discord
-      dunst
-      evince # Gnome document viewer
+      dunst # Notifications
       git
-      git-credential-manager
       gh
-      gnome-calculator
-      gnome-text-editor
       home-manager
-      kicad-unstable-small
-      libreoffice-fresh
       libnotify # Notify-send
       lm_sensors
       nixd
       pavucontrol # Audio control
-      spotify
       sysstat
-      vscode
-      vite # For web dev stuff
+      usbutils
       vivaldi
       wget
       wirelesstools
-      yarn # For web dev stuff
       yazi # CLI file browser
-      zellij
-      zsh
     ]
     # ++ (with unstable; [
     # ])
@@ -192,12 +181,6 @@
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
   # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-
-  # Copy the NixOS configuration file and link it from the resulting system
-  # (/run/current-system/configuration.nix). This is useful in case you
-  # accidentally delete configuration.nix.
-  # system.copySystemConfiguration = true;
 
   # This option defines the first version of NixOS you have installed on this particular machine,
   # and is used to maintain compatibility with application data (e.g. databases) created on older NixOS versions.

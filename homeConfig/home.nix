@@ -24,15 +24,20 @@
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = with pkgs; [
-    brightnessctl
     curl
+    discord
     ethtool
+    evince # Gnome document viewer
+    kicad-unstable-small
+    gnome-calculator
+    gnome-text-editor
+    libreoffice-fresh
     swaybg
-    tree
-    usbutils
-    slurp
-    grim
-    wl-clipboard
+    slurp # Part of screenshot
+    spotify
+    grim # Part of screenshot
+    wl-clipboard # Part of screenshot
+    zellij
   ];
 
   imports = [
@@ -58,6 +63,7 @@
     # '';
   };
 
+  # This is a cry for help
   programs.vim = {
     enable = true;
     defaultEditor = true;
@@ -79,7 +85,6 @@
     };
   };
 
-  # Programs and program configuration
   programs.bash = {
     enable = true;
     enableCompletion = true;
