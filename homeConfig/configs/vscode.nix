@@ -100,14 +100,15 @@
           git-patch
           kdl
         ];
+      extensions = pythonexts ++ msexts ++ codeexts ++ otherexts;
     in
     {
       enable = true;
       mutableExtensionsDir = false;
       profiles.default = {
+        inherit extensions;
         enableUpdateCheck = false;
         enableExtensionUpdateCheck = false;
-        extensions = pythonexts ++ msexts ++ codeexts ++ otherexts;
         userSettings = {
           "editor.formatOnSave" = true;
           "editor.defaultFormatter" = "clang-format";
