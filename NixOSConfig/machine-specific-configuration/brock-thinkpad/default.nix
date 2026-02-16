@@ -1,10 +1,9 @@
 { ... }:
 {
-
-  # # Swap partition
-  # swapDevices = [
-  #   {
-  #     device = "/dev/nvme0n1p5";
-  #   }
-  # ];
+  swapDevices = [
+    {
+      device = "/swapfile";
+      size = 16 * 1024;
+    }
+  ];
 }
