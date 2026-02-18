@@ -7,7 +7,7 @@
   settings = {
     auto-optimise-store = true;
     download-buffer-size = 134217728;
-    # To be able to run nix "command" instead of nix-command and to use flakes
+    # To be able to run "nix command" instead of "nix-command" and to use flakes
     experimental-features = [
       "nix-command"
       "flakes"
@@ -25,9 +25,6 @@
       "roar-qutrc.cachix.org-1:ZKgHZSSHH2hOAN7+83gv1gkraXze5LSEzdocPAEBNnA="
       "ros.cachix.org-1:dSyZxI8geDCJrwgvCOHDoAfOm5sV1wCPjBkKL+38Rvo="
       "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
-    ];
-    extra-substituters = [
-      "https://hyprland.cachix.org"
     ];
 
     # Keep direnv stuff

@@ -83,7 +83,7 @@
                   backupFileExtension = ".bak";
                   useGlobalPkgs = true;
                   useUserPackages = true;
-                  users.${userName} = import ./homeConfig/home.nix;
+                  users.${userName} = import ./homeConfig;
                   extraSpecialArgs = specialArgs;
                 };
               }
@@ -100,7 +100,7 @@
         value = home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
           modules = [
-            ./homeConfig/home.nix
+            ./homeConfig
           ];
           extraSpecialArgs = {
             inherit unfreeAllowed userName;
