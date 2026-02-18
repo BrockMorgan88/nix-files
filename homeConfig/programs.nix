@@ -48,7 +48,6 @@
       font = "Iosevka Nerd Font Mono 12";
       theme = "Arc-Dark";
     };
+    home-manager.enable = true;
   };
-
-  programs.home-manager.enable = true;
 }
