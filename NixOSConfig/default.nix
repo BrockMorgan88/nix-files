@@ -2,7 +2,7 @@
 {
   imports = [
     ./configuration.nix
-    ./hardware-configuration/${hostName}/hardware-configuration.nix
+    ./hardware-configuration/${hostName}
     ./machine-specific-configuration/${hostName}
   ];
 }
