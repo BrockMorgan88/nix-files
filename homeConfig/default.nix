@@ -6,5 +6,6 @@
     ./waybar.nix
     ./machine-specific-home-configuration
     ./other.nix
+    ./home-settings.nix
   ];
 }

@@ -128,8 +128,6 @@
 
   programs.steam.enable = true;
 
-  nix = import ./nix-settings.nix;
-
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
