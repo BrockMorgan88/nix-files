@@ -11,7 +11,7 @@ while getopts ":nh:" option; do
     ;;
   esac
 done
-echo "$HOSTNAME"
+
 TOP_LEVEL=$(git rev-parse --show-toplevel)
 HARDWARE_CONFIG_DIR="$TOP_LEVEL/NixOSConfig/hardware-configuration/$HOSTNAME/"
 mkdir -p "$HARDWARE_CONFIG_DIR"

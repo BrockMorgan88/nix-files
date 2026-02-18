@@ -5,7 +5,7 @@
 
   # enable formatters and linters
   programs.actionlint.enable = true;
-  programs.dos2unix.enable = true;
+  # programs.dos2unix.enable = true; # Useful if doing patches
   programs.keep-sorted.enable = true;
   programs.ruff-check.enable = true;
   programs.ruff-format.enable = true;

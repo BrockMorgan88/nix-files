@@ -137,7 +137,6 @@
 
       formatter.x86_64-linux = treefmtEval.config.build.wrapper;
       packages.x86_64-linux = {
-        default = pkgs.callPackage ./default.nix { };
         tools =
           pkgs.runCommand "tools"
             {
