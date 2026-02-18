@@ -20,7 +20,7 @@ cd ~/nix-files
 
 MACHINE_NAME="brock-$1"
 mkdir -p ./NixOSConfig/machine-specific-configuration/"$MACHINE_NAME"
-mkdir -p ./homeConfig/configs/machine-specific-home-configuration/"$MACHINE_NAME"
+mkdir -p ./homeConfig/machine-specific-home-configuration/"$MACHINE_NAME"
 
 echo "{ ... }:
 {
@@ -30,7 +30,7 @@ echo "{ ... }:
 echo "{ ... }:
 {
 
-}" >./homeConfig/configs/machine-specific-home-configuration/"$MACHINE_NAME"/default.nix
+}" >./homeConfig/machine-specific-home-configuration/"$MACHINE_NAME"/default.nix
 
 eval "sed -i -e '/systems = \[/a\' -e \"\${userName}-$1\" ./flake.nix"
 

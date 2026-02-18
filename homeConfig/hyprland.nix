@@ -1,4 +1,4 @@
-{ pkgs, userName, ... }:
+{ pkgs, ... }:
 {
   wayland.windowManager.hyprland =
     let
@@ -16,6 +16,9 @@
         "11" # 11
         "Discord" # 12
       ];
+      # Since paths are first-class citizens in nix, this is
+      # automatically converted to an absolute path at runtime
+      backgroundPhotoDir = ./non-nix/Background.png;
     in
     {
       portalPackage = pkgs.xdg-desktop-portal-gtk;
@@ -115,7 +118,7 @@
         ));
         exec-once = [
           # Anime girl background :)
-          "${pkgs.swaybg}/bin/swaybg -i /home/${userName}/nix-files/homeConfig/configs/non-nix/Background.png "
+          "${pkgs.swaybg}/bin/swaybg -i ${backgroundPhotoDir}"
         ];
       };
       submaps = {
