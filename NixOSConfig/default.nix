@@ -1,8 +1,9 @@
 { hostName, ... }:
 {
   imports = [
-    ./configuration.nix
+    ./other.nix
     ./nix-settings.nix
+    ./services.nix
     ./hardware-configuration/${hostName}
     ./machine-specific-configuration/${hostName}
   ];

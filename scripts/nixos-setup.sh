@@ -18,20 +18,25 @@ fi
 
 cd ~/nix-files
 
-MACHINE_NAME="brock-$1"
-mkdir -p ./NixOSConfig/machine-specific-configuration/"$MACHINE_NAME"
-mkdir -p ./homeConfig/machine-specific-home-configuration/"$MACHINE_NAME"
+HOSTNAME="brock-$1"
+mkdir -p ./NixOSConfig/machine-specific-configuration/"$HOSTNAME"
+mkdir -p ./homeConfig/machine-specific-home-configuration/"$HOSTNAME"
 
 echo "{ ... }:
 {
 
-}" >./NixOSConfig/machine-specific-configuration/"$MACHINE_NAME"/default.nix
+}" >./NixOSConfig/machine-specific-configuration/"$HOSTNAME"/default.nix
 
 echo "{ ... }:
 {
 
-}" >./homeConfig/machine-specific-home-configuration/"$MACHINE_NAME"/default.nix
+}" >./homeConfig/machine-specific-home-configuration/"$HOSTNAME"/default.nix
 
+./scripts/regenerate-hardware-config.sh -h "$1"
 eval "sed -i -e '/systems = \[/a\' -e \"\${userName}-$1\" ./flake.nix"
 
+nix fmt
+
 nixos-rebuild switch --flake ~/nix-files
+
+direnv allow

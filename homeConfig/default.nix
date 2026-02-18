@@ -7,5 +7,6 @@
     ./machine-specific-home-configuration
     ./other.nix
     ./home-settings.nix
+    ./programs.nix
   ];
 }

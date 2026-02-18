@@ -7,7 +7,7 @@ while getopts ":nh:" option; do
   h) HOSTNAME="brock-$OPTARG" ;;
   *)
     echo "ERROR! Incorrect flag!"
-    exit
+    exit 1
     ;;
   esac
 done
