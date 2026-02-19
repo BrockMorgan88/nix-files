@@ -15,9 +15,7 @@
     # The home.packages option allows you to install Nix packages into your
     # environment.
     packages = with pkgs; [
-      curl
       discord
-      ethtool
       evince # Gnome document viewer
       kicad-unstable-small
       gnome-calculator
@@ -38,6 +36,8 @@
       # # the Nix store. Activating the configuration will then make '~/.screenrc' a
       # # symlink to the Nix store copy.
       # ".screenrc".source = dotfiles/screenrc;
+
+      # To allow nix-shell -p to access unfree packages without hacing to mess with environment variables
       ".config/nixpkgs/config.nix".text = ''
         {
           allowUnfree = ${lib.boolToString unfreeAllowed};
@@ -45,7 +45,7 @@
       '';
     };
     shellAliases = {
-      nrsf = "sudo nixos-rebuild switch --flake ~/nix-files/";
+      nrsf = "sudo nixos-rebuild switch --flake ~/nix-files";
       hmsf = "home-manager switch --flake ~/nix-files/";
       ngc = "sudo nix-collect-garbage --delete-older-than 7d && nix-collect-garbage --delete-older-than 7d && sudo /run/current-system/bin/switch-to-configuration boot";
       ngca = "sudo nix-collect-garbage -d && nix-collect-garbage -d && sudo /run/current-system/bin/switch-to-configuration boot";
