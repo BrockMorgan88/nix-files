@@ -1,5 +1,7 @@
 { ... }:
 {
+  # If changing this file, make sure to run `nix run .#tools.treefmt-write-config`
+
   # Used to find the project root
   projectRootFile = "flake.nix";
 

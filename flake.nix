@@ -70,8 +70,10 @@
             (
               { unfreeAllowed, ... }:
               {
-                nixpkgs.config.allowUnfree = unfreeAllowed;
-                nixpkgs.overlays = overlays;
+                nixpkgs = {
+                  inherit overlays;
+                  config.allowUnfree = unfreeAllowed;
+                };
               }
             )
             ./NixOSConfig
@@ -90,8 +92,8 @@
             )
           ];
           specialArgs = {
-            hostName = systemName;
             inherit unfreeAllowed userName;
+            hostName = systemName;
           };
         };
       };

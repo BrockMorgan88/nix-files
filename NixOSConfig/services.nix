@@ -25,7 +25,6 @@
     displayManager.ly = {
       enable = true;
       settings = {
-        battery_id = "BAT0";
         bigclock = "en";
         vi_mode = true;
         vi_default_mode = "insert";
