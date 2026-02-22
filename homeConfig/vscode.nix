@@ -73,12 +73,12 @@
               hash = "sha256-w3csu6rJm/Z6invC/TR7tx6Aq5DD77VM62nem8/QMlg=";
             };
           };
-          git-patch = pkgs.vscode-utils.buildVscodeMarketplaceExtension {
+          diff = pkgs.vscode-utils.buildVscodeMarketplaceExtension {
             mktplcRef = {
-              name = "gitpatch";
-              publisher = "paragdiwan";
-              version = "0.2.1";
-              hash = "sha256-jpdRmTUfwbyJI8ruqHQEcSFwht7HSPrI9r+ZAaNf5Q4=";
+              name = "diff";
+              publisher = "rafaelmaiolla";
+              version = "0.0.1";
+              hash = "sha256-vPLrDA32bA3olQdCEbzMYGiRXNkfU7g3XJAzhW1Zy+8=";
             };
           };
           kdl = pkgs.vscode-utils.buildVscodeMarketplaceExtension {
@@ -97,7 +97,7 @@
           python-environments
           ros2
           python-environment-mgr
-          git-patch
+          diff
           kdl
         ];
       extensions = pythonexts ++ msexts ++ codeexts ++ otherexts;
