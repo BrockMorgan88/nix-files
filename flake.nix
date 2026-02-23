@@ -16,6 +16,9 @@
       url = "github:numtide/treefmt-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    flake-utils = {
+      url = "github:numtide/flake-utils";
+    };
   };
 
   outputs =
@@ -25,130 +28,161 @@
       nixpkgs-unstable,
       nixpkgs-master,
       treefmt-nix,
+      flake-utils,
       ...
     }@inputs:
     let
-      userName = "brock";
-      unfreeAllowed = true;
-      system = "x86_64-linux";
-      pkgs = import nixpkgs {
-        inherit system;
-        config = {
-          allowUnfree = unfreeAllowed;
-        };
-      };
-      pkgs-unstable = import nixpkgs-unstable {
-        inherit system;
-        config = {
-          allowUnfree = unfreeAllowed;
-        };
-      };
-      pkgs-master = import nixpkgs-master {
-        inherit system;
-        config = {
-          allowUnfree = unfreeAllowed;
-        };
-      };
+      defaultUserName = "brock";
+      allowUnfree = true;
       lib = nixpkgs.lib;
-      overlays = [
+      mkOverlays = system: [
         (import ./overlays/unstable.nix (
           inputs
           // {
-            inherit pkgs-master pkgs-unstable;
+            inherit
+              nixpkgs-master
+              nixpkgs-unstable
+              system
+              allowUnfree
+              ;
           }
         ))
       ];
       systems = [
-        "${userName}-thinkpad"
-        "${userName}-desktop"
+        rec {
+          hostName = "${userName}-thinkpad";
+          system = "x86_64-linux";
+          userName = defaultUserName;
+        }
+        rec {
+          hostName = "${userName}-desktop";
+          system = "x86_64-linux";
+          userName = defaultUserName;
+        }
       ];
-      createSystem = systemName: {
-        name = systemName;
-        value = lib.nixosSystem {
-          inherit system;
-          modules = [
-            (
-              { unfreeAllowed, ... }:
-              {
-                nixpkgs = {
-                  inherit overlays;
-                  config.allowUnfree = unfreeAllowed;
-                };
-              }
-            )
-            ./NixOSConfig
-            home-manager.nixosModules.home-manager
-            (
-              { specialArgs, ... }:
-              {
-                home-manager = {
-                  backupFileExtension = ".bak";
-                  useGlobalPkgs = true;
-                  useUserPackages = true;
-                  users.${userName} = import ./homeConfig;
-                  extraSpecialArgs = specialArgs;
-                };
-              }
-            )
-          ];
-          specialArgs = {
-            inherit unfreeAllowed userName;
-            hostName = systemName;
+      createSystem =
+        {
+          hostName,
+          system,
+          userName ? defaultUserName,
+          ...
+        }:
+        {
+          name = hostName;
+          value = lib.nixosSystem {
+            inherit system;
+            modules = [
+              (
+                { allowUnfree, ... }:
+                {
+                  nixpkgs = {
+                    overlays = mkOverlays system;
+                    config = {
+                      inherit allowUnfree;
+                    };
+                  };
+                }
+              )
+              ./NixOSConfig
+              home-manager.nixosModules.home-manager
+              (
+                { specialArgs, ... }:
+                {
+                  home-manager = {
+                    backupFileExtension = ".bak";
+                    useGlobalPkgs = true;
+                    useUserPackages = true;
+                    users.${userName} = import ./homeConfig;
+                    extraSpecialArgs = specialArgs;
+                  };
+                }
+              )
+            ];
+            specialArgs = {
+              inherit allowUnfree userName;
+              inherit hostName;
+            };
           };
         };
-      };
-      createHome = systemName: {
-        name = "${userName}@${systemName}";
-        value = home-manager.lib.homeManagerConfiguration {
-          inherit pkgs;
-          modules = [
-            ./homeConfig
-          ];
-          extraSpecialArgs = {
-            inherit unfreeAllowed userName;
-            hostName = systemName;
+      createHome =
+        {
+          hostName,
+          system,
+          userName ? defaultUserName,
+          ...
+        }:
+        {
+          name = "${userName}@${hostName}";
+          value = home-manager.lib.homeManagerConfiguration {
+            pkgs = import nixpkgs {
+              inherit system;
+              overlays = mkOverlays system;
+              config = {
+                inherit allowUnfree;
+              };
+            };
+            modules = [
+              ./homeConfig
+            ];
+            extraSpecialArgs = {
+              inherit allowUnfree userName;
+              inherit hostName;
+            };
           };
         };
-      };
-      treefmtEval = treefmt-nix.lib.evalModule pkgs ./treefmt.nix;
-      treefmt-write-config = pkgs.writeShellScriptBin "treefmt-write-config" ''
-        cd "$(git rev-parse --show-toplevel)"
-        cp ${treefmtEval.config.build.configFile} ./treefmt.toml
-        chmod +w treefmt.toml
-        # strip out Nix store prefix path from the config,
-        # along with ruff-check (it just causes errors when trying to "format" in VSCode,
-        # since it's a linter)
-        sed -i -e 's,command.*/,command = ",' -e "/\[formatter\.ruff-check\]/,/^$/d" treefmt.toml
-      '';
     in
     {
       nixosConfigurations = builtins.listToAttrs (lib.map createSystem systems);
       homeConfigurations = builtins.listToAttrs (lib.map createHome systems);
-
-      devShells.x86_64-linux = {
-        default = pkgs.mkShell {
-          name = "devShell";
-          packages = with pkgs; [
-            man-pages
-            man-pages-posix
-            stdmanpages
-            wev
-          ];
+    }
+    // flake-utils.lib.eachDefaultSystem (
+      system:
+      let
+        pkgs = import nixpkgs {
+          overlays = mkOverlays system;
+          inherit system;
+          config = {
+            inherit allowUnfree;
+          };
         };
-      };
 
-      formatter.x86_64-linux = treefmtEval.config.build.wrapper;
-      packages.x86_64-linux = {
-        tools =
-          pkgs.runCommand "tools"
-            {
-              passthru = {
-                inherit treefmt-write-config;
-              };
-            }
-            ''
-              mkdir $out
-            '';
-      };
-    };
+        treefmtEval = treefmt-nix.lib.evalModule pkgs ./treefmt.nix;
+        treefmt-write-config = pkgs.writeShellScriptBin "treefmt-write-config" ''
+          cd "$(git rev-parse --show-toplevel)"
+          cp ${treefmtEval.config.build.configFile} ./treefmt.toml
+          chmod +w treefmt.toml
+          # strip out Nix store prefix path from the config,
+          # along with ruff-check (it just causes errors when trying to "format" in VSCode,
+          # since it's a linter)
+          sed -i -e 's,command.*/,command = ",' -e "/\[formatter\.ruff-check\]/,/^$/d" treefmt.toml
+        '';
+      in
+      {
+        devShells = {
+          default = pkgs.mkShell {
+            name = "devShell";
+            packages = with pkgs; [
+              man-pages
+              man-pages-posix
+              stdmanpages
+              wev
+            ];
+          };
+        };
+
+        formatter = treefmtEval.config.build.wrapper;
+        packages = {
+          tools =
+            pkgs.runCommand "tools"
+              {
+                passthru = {
+                  inherit treefmt-write-config;
+                };
+              }
+              ''
+                mkdir $out
+              '';
+        };
+      }
+    );
 }

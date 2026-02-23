@@ -1,5 +1,21 @@
-{ pkgs-unstable, pkgs-master, ... }:
+{
+  nixpkgs-unstable,
+  nixpkgs-master,
+  system,
+  allowUnfree,
+  ...
+}:
 final: prev: {
-  unstable = pkgs-unstable;
-  master = pkgs-master;
+  unstable = import nixpkgs-unstable {
+    inherit system;
+    config = {
+      inherit allowUnfree;
+    };
+  };
+  master = import nixpkgs-master {
+    inherit system;
+    config = {
+      inherit allowUnfree;
+    };
+  };
 }

@@ -1,7 +1,7 @@
 {
   lib,
   pkgs,
-  unfreeAllowed,
+  allowUnfree,
   userName,
   ...
 }:
@@ -40,7 +40,7 @@
       # To allow nix-shell -p to access unfree packages without hacing to mess with environment variables
       ".config/nixpkgs/config.nix".text = ''
         {
-          allowUnfree = ${lib.boolToString unfreeAllowed};
+          allowUnfree = ${lib.boolToString allowUnfree};
         }
       '';
     };
