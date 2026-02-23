@@ -1,9 +1,6 @@
 {
   description = "My NixOS config";
 
-  # Inputs
-  # https://nixos.org/manual/nix/unstable/command-ref/new-cli/nix3-flake.html#flake-inputs
-
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
     home-manager = {
@@ -32,14 +29,17 @@
       ...
     }@inputs:
     let
-      defaultUserName = "brock";
-      allowUnfree = true;
+      defaultUserName = "brock"; # Default to username "brock" when not supplied
+      allowUnfree = true; # Specify this once, then make all other references to unfree stuff reference this value
       lib = nixpkgs.lib;
+
+      # Need this to be a function so it can be architecture-independent
       mkOverlays = system: [
+        # Allow accessing pkgs.unstable or pkgs.master for really new stuff
         (import ./overlays/unstable.nix (
           inputs
           // {
-            inherit
+            inherit # TODO: clean this up. It looks like it could be done better
               nixpkgs-master
               nixpkgs-unstable
               system
@@ -49,6 +49,7 @@
         ))
       ];
       systems = [
+        # All of my current systems
         rec {
           hostName = "${userName}-thinkpad";
           system = "x86_64-linux";
@@ -60,7 +61,7 @@
           userName = defaultUserName;
         }
       ];
-      createSystem =
+      createSystem = # Create a NixOS system
         {
           hostName,
           system,
@@ -68,12 +69,11 @@
           ...
         }:
         {
-          name = hostName;
-          value = lib.nixosSystem {
+          ${hostName} = lib.nixosSystem {
             inherit system;
             modules = [
               (
-                { allowUnfree, ... }:
+                { allowUnfree, ... }: # Nixpkgs configuration. This should be first (logically, not necessarily) because it is supplied to all the other modules
                 {
                   nixpkgs = {
                     overlays = mkOverlays system;
@@ -83,8 +83,8 @@
                   };
                 }
               )
-              ./NixOSConfig
-              home-manager.nixosModules.home-manager
+              ./NixOSConfig # All the system-level configuration
+              home-manager.nixosModules.home-manager # Home manager configuration
               (
                 { specialArgs, ... }:
                 {
@@ -92,19 +92,19 @@
                     backupFileExtension = ".bak";
                     useGlobalPkgs = true;
                     useUserPackages = true;
-                    users.${userName} = import ./homeConfig;
-                    extraSpecialArgs = specialArgs;
+                    users.${userName} = import ./homeConfig; # All the home-level configuration
+                    extraSpecialArgs = specialArgs; # Pass all the NixOS module args to the Home manager modules
                   };
                 }
               )
             ];
             specialArgs = {
-              inherit allowUnfree userName;
-              inherit hostName;
+              # Extra arguments to pass to modules, along with config, options, pkgs, and modulesPath
+              inherit allowUnfree userName hostName;
             };
           };
         };
-      createHome =
+      createHome = # Create a Home manager configuration
         {
           hostName,
           system,
@@ -112,9 +112,9 @@
           ...
         }:
         {
-          name = "${userName}@${hostName}";
-          value = home-manager.lib.homeManagerConfiguration {
+          "${userName}@${hostName}" = home-manager.lib.homeManagerConfiguration {
             pkgs = import nixpkgs {
+              # Home manager requires pkgs to be one of the inputs, but NixOS doesn't - there's probably a reason for it, but it's annoying
               inherit system;
               overlays = mkOverlays system;
               config = {
@@ -122,18 +122,18 @@
               };
             };
             modules = [
-              ./homeConfig
+              ./homeConfig # All the home-level configuration
             ];
             extraSpecialArgs = {
-              inherit allowUnfree userName;
-              inherit hostName;
+              # Extra arguments to pass to modules, along with lib, config, options, and modulesPath (for NixOS)
+              inherit allowUnfree userName hostName;
             };
           };
         };
     in
     {
-      nixosConfigurations = builtins.listToAttrs (lib.map createSystem systems);
-      homeConfigurations = builtins.listToAttrs (lib.map createHome systems);
+      nixosConfigurations = builtins.foldl' (acc: new: acc // new) { } (lib.map createSystem systems);
+      homeConfigurations = builtins.foldl' (acc: new: acc // new) { } (lib.map createHome systems);
     }
     // flake-utils.lib.eachDefaultSystem (
       system:
@@ -160,23 +160,24 @@
       {
         devShells = {
           default = pkgs.mkShell {
-            name = "devShell";
+            # Default shell for working on the config
+            name = "Nix-files-devShell";
             packages = with pkgs; [
               man-pages
               man-pages-posix
               stdmanpages
-              wev
+              wev # Check key presses - useful for hyprland binds
             ];
           };
         };
 
-        formatter = treefmtEval.config.build.wrapper;
+        formatter = treefmtEval.config.build.wrapper; # Formatter, run by nix fmt
         packages = {
           tools =
             pkgs.runCommand "tools"
               {
                 passthru = {
-                  inherit treefmt-write-config;
+                  inherit treefmt-write-config; # Update the formatter config (treefmt.toml) from the nix file (treefmt.nix)
                 };
               }
               ''
