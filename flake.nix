@@ -30,7 +30,14 @@
     }@inputs:
     let
       defaultUserName = "brock"; # Default to username "brock" when not supplied
-      allowUnfree = true; # Specify this once, then make all other references to unfree stuff reference this value
+      allowUnfree = false; # Specify this once, then make all other references to unfree stuff reference this value
+      allowUnfreePredicate = # Same as above
+        pkg:
+        builtins.elem (lib.getName pkg) [
+          "vivaldi"
+          "steam"
+          "steam-unwrapped"
+        ];
       lib = nixpkgs.lib;
 
       # Need this to be a function so it can be architecture-independent
@@ -44,6 +51,7 @@
               nixpkgs-unstable
               system
               allowUnfree
+              allowUnfreePredicate
               ;
           }
         ))
@@ -78,7 +86,7 @@
                   nixpkgs = {
                     overlays = mkOverlays system;
                     config = {
-                      inherit allowUnfree;
+                      inherit allowUnfree allowUnfreePredicate;
                     };
                   };
                 }
@@ -118,7 +126,7 @@
               inherit system;
               overlays = mkOverlays system;
               config = {
-                inherit allowUnfree;
+                inherit allowUnfree allowUnfreePredicate;
               };
             };
             modules = [
@@ -142,7 +150,7 @@
           overlays = mkOverlays system;
           inherit system;
           config = {
-            inherit allowUnfree;
+            inherit allowUnfree allowUnfreePredicate;
           };
         };
 

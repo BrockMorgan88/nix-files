@@ -3,12 +3,12 @@
   programs.vscode =
     let
       pythonexts = with pkgs.vscode-extensions.ms-python; [
-        vscode-pylance
+        # vscode-pylance
         python
         debugpy
       ];
       msexts = with pkgs.vscode-extensions.ms-vscode; [
-        cpptools
+        # cpptools
         cmake-tools
         makefile-tools
       ];
@@ -105,6 +105,7 @@
     {
       enable = true;
       mutableExtensionsDir = false;
+      package = pkgs.vscodium;
       profiles.default = {
         inherit extensions;
         enableUpdateCheck = false;
