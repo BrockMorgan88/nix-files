@@ -23,8 +23,9 @@
       wirelesstools
       yazi # CLI file browser
     ]
-    # ++ (with unstable; [
-    # ])
+    ++ (with unstable; [
+      bambu-studio
+    ])
   );
 
   fonts.packages = with pkgs; [
