@@ -44,11 +44,9 @@
       mkOverlays = system: [
         # Allow accessing pkgs.unstable or pkgs.master for really new stuff
         (import ./overlays/unstable.nix (
-          inputs
+          inputs # All of the flake inputs
           // {
             inherit # TODO: clean this up. It looks like it could be done better
-              nixpkgs-master
-              nixpkgs-unstable
               system
               allowUnfree
               allowUnfreePredicate
@@ -57,7 +55,7 @@
         ))
       ];
       systems = [
-        # All of my current systems
+        # All of my (current) systems
         rec {
           hostName = "${userName}-thinkpad";
           system = "x86_64-linux";
