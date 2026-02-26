@@ -16,6 +16,10 @@
     flake-utils = {
       url = "github:numtide/flake-utils";
     };
+    nixvim = {
+      url = "github:nix-community/nixvim/nixos-25.11";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -26,6 +30,7 @@
       nixpkgs-master,
       treefmt-nix,
       flake-utils,
+      nixvim,
       ...
     }@inputs:
     let
@@ -34,9 +39,13 @@
       allowUnfreePredicate = # Same as above
         pkg:
         builtins.elem (lib.getName pkg) [
-          "vivaldi"
+          "discord" # TODO: Get rid of discord, spotify, and vivaldi
+          "spotify"
           "steam"
           "steam-unwrapped"
+          "vivaldi"
+          "vscode-extension-ms-vscode-cpptools"
+          "vscode-extension-MS-python-vscode-pylance"
         ];
       lib = nixpkgs.lib;
 
@@ -106,7 +115,12 @@
             ];
             specialArgs = {
               # Extra arguments to pass to modules, along with config, options, pkgs, and modulesPath
-              inherit allowUnfree userName hostName;
+              inherit
+                allowUnfree
+                userName
+                hostName
+                inputs
+                ;
             };
           };
         };
@@ -132,7 +146,12 @@
             ];
             extraSpecialArgs = {
               # Extra arguments to pass to modules, along with lib, config, options, and modulesPath (for NixOS)
-              inherit allowUnfree userName hostName;
+              inherit
+                allowUnfree
+                userName
+                hostName
+                inputs
+                ;
             };
           };
         };

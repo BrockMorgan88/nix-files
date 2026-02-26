@@ -1,4 +1,4 @@
-{ ... }:
+{ inputs, ... }:
 {
   imports = [
     ./vscode.nix
@@ -7,6 +7,8 @@
     ./other.nix
     ./home-settings.nix
     ./programs.nix
+    inputs.nixvim.homeModules.nixvim
+    ./nixvim.nix
     ./machine-specific-home-configuration
   ];
 }

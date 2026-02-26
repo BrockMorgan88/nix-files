@@ -15,7 +15,7 @@
     # The home.packages option allows you to install Nix packages into your
     # environment.
     packages = with pkgs; [
-      # discord
+      discord
       evince # Gnome document viewer
       kicad-unstable-small
       gnome-calculator
@@ -23,7 +23,7 @@
       libreoffice-fresh
       swaybg
       slurp # Part of screenshot
-      # spotify
+      spotify
       grim # Part of screenshot
       wl-clipboard # Part of screenshot
       zellij

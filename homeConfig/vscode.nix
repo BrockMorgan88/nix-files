@@ -3,19 +3,19 @@
   programs.vscode =
     let
       pythonexts = with pkgs.vscode-extensions.ms-python; [
-        # vscode-pylance
+        vscode-pylance
         python
         debugpy
       ];
       msexts = with pkgs.vscode-extensions.ms-vscode; [
-        # cpptools
+        cpptools
         cmake-tools
         makefile-tools
       ];
       codeexts = with pkgs.vscode-extensions; [
         mkhl.direnv
         jnoortheen.nix-ide
-        platformio.platformio-vscode-ide
+        # platformio.platformio-vscode-ide
         christian-kohler.path-intellisense
         vscode-icons-team.vscode-icons
         vscodevim.vim

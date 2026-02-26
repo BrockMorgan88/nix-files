@@ -5,7 +5,6 @@
     # This is a cry for help
     vim = {
       enable = true;
-      defaultEditor = true;
     };
 
     bash = {
