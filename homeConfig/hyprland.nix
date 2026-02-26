@@ -82,6 +82,10 @@
             ]
           ) 12
         ));
+        gesture = [
+          "3, horizontal, workspace"
+          "3, vertical, special, dumpWorkspace"
+        ];
         decoration = {
           blur.enabled = false;
           shadow.enabled = false;
