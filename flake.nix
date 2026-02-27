@@ -16,8 +16,8 @@
     flake-utils = {
       url = "github:numtide/flake-utils";
     };
-    nixvim = {
-      url = "github:nix-community/nixvim/nixos-25.11";
+    nvf = {
+      url = "github:notashelf/nvf";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };

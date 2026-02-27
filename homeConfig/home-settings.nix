@@ -21,6 +21,7 @@
       gnome-calculator
       gnome-text-editor
       libreoffice-fresh
+      neovim
       swaybg
       slurp # Part of screenshot
       spotify

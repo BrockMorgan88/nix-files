@@ -14,7 +14,6 @@
       home-manager
       libnotify # Notify-send
       lm_sensors
-      nixd
       pavucontrol # Audio control
       sysstat
       usbutils

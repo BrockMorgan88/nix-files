@@ -1,12 +1,6 @@
 { ... }:
 {
   programs = {
-
-    # This is a cry for help
-    vim = {
-      enable = true;
-    };
-
     bash = {
       enable = true;
       enableCompletion = true;

@@ -7,8 +7,8 @@
     ./other.nix
     ./home-settings.nix
     ./programs.nix
-    inputs.nixvim.homeModules.nixvim
-    ./nixvim.nix
+    inputs.nvf.homeManagerModules.default
+    ./neovim.nix
     ./machine-specific-home-configuration
   ];
 }
