@@ -25,6 +25,9 @@
         size = 10.5;
         name = "Iosevka Nerd Font Mono";
       };
+      environment = {
+        EDITOR = "nvim";
+      };
       themeFile = "gruvbox-dark";
       enableGitIntegration = true;
       shellIntegration.enableBashIntegration = true;

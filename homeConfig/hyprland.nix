@@ -5,7 +5,7 @@
       workspaceNames = [
         "Browser" # 1
         "Terminal" # 2
-        "VSCode" # 3
+        "3" # 3
         "4" # 4
         "5" # 5
         "6" # 6
@@ -18,6 +18,8 @@
       ];
       # Since paths are first-class citizens in nix, this is
       # automatically converted to an absolute path at runtime
+      # so we don't need to specify the absolute path when
+      # referencing this variable
       backgroundPhotoDir = ./non-nix/Background.png;
     in
     {

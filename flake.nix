@@ -44,8 +44,6 @@
           "steam"
           "steam-unwrapped"
           "vivaldi"
-          "vscode-extension-ms-vscode-cpptools"
-          "vscode-extension-MS-python-vscode-pylance"
         ];
       lib = nixpkgs.lib;
 
