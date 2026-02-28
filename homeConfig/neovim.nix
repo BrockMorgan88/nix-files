@@ -8,6 +8,7 @@
       syntaxHighlighting = true;
       bell = "visual"; # No sounds
       git.enable = true;
+      globals.mapleader = " ";
       filetree.nvimTree = {
         enable = true;
         setupOpts = {
@@ -26,7 +27,7 @@
           };
           view.width = {
             # Keep the filetree small
-            min = "20%"; # TODO: Fix this!! It starts off half screen before insert mode, then snaps to the proper size
+            min = "20%"; # TODO: Fix this!! It starts off half screen before insert mode, then snaps to the proper size when editing
             max = "20%";
             padding = 1;
           };
@@ -39,9 +40,10 @@
         inlayHints.enable = true;
       };
       theme = {
-        # Mellow theme - Maybe switch to something else? I'm not vibing with this one
+        # Gruvbox dark theme
         enable = true;
-        name = "mellow";
+        name = "gruvbox";
+        style = "dark";
       };
       autocomplete = {
         # Autocomplete for text. TODO: Configure this properly with no comment complete (?) and proper bindings for selecting a word
@@ -62,21 +64,21 @@
             };
           };
         };
-        sleuth.enable = true; # Figure out the proper indenting for tab automatically
+        sleuth.enable = true; # Figures out the proper indenting for tab automatically
         mkdir.enable = true; # Make all directories when they don't exist down to the file/directory selected
         nix-develop.enable = true; # Enter a nix develop shell. TODO: Configure this with bindings. Right now it's useless
         smart-splits = {
           # Moving around in windows using Alt+hjkl and resizing using Alt+r hjkl
           enable = true;
           keymaps = {
-            move_cursor_down = "<A-j>";
-            move_cursor_up = "<A-k>";
-            move_cursor_left = "<A-h>";
-            move_cursor_right = "<A-l>";
-            resize_down = "<A-r> j";
-            resize_up = "<A-r> k";
-            resize_left = "<A-r> h";
-            resize_right = "<A-r> l";
+            move_cursor_down = "<leader>j";
+            move_cursor_up = "<leader>k";
+            move_cursor_left = "<leader>h";
+            move_cursor_right = "<leader>l";
+            resize_down = "<leader><C-j>";
+            resize_up = "<leader><C-k>";
+            resize_left = "<leader><C-h>";
+            resize_right = "<leader><C-l>";
           };
         };
         undotree.enable = true; # TODO: configure this with bindings. Looks cool, I have no idea how to use it
