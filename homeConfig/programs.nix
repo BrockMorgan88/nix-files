@@ -25,6 +25,7 @@
         size = 10.5;
         name = "Iosevka Nerd Font Mono";
       };
+      themeFile = "gruvbox-dark";
       enableGitIntegration = true;
       shellIntegration.enableBashIntegration = true;
     };
@@ -32,7 +33,7 @@
     rofi = {
       enable = true;
       font = "Iosevka Nerd Font Mono 12";
-      theme = "Arc-Dark";
+      theme = "gruvbox-dark";
     };
     home-manager.enable = true;
   };

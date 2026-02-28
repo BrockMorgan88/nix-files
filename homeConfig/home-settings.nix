@@ -45,6 +45,8 @@
         }
       '';
     };
+
+    shell.enableBashIntegration = true;
     shellAliases = {
       nrsf = "sudo nixos-rebuild switch --flake ~/nix-files";
       hmsf = "home-manager switch --flake ~/nix-files/";
