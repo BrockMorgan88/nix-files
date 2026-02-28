@@ -50,6 +50,12 @@
         # Autocomplete for text. TODO: Configure this properly with no comment complete (?) and proper bindings for selecting a word
         blink-cmp.enable = true;
       };
+      diagnostics = {
+        enable = true;
+        config = {
+          virtual_lines = true;
+        };
+      };
       utility = {
         direnv.enable = true; # Direnv when entering directories
         icon-picker.enable = true; # Pretty icons
