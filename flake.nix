@@ -26,11 +26,8 @@
     {
       home-manager,
       nixpkgs,
-      nixpkgs-unstable,
-      nixpkgs-master,
       treefmt-nix,
       flake-utils,
-      nixvim,
       ...
     }@inputs:
     let
@@ -45,7 +42,7 @@
           "steam-unwrapped"
           "vivaldi"
         ];
-      lib = nixpkgs.lib;
+      inherit (nixpkgs) lib;
 
       # Need this to be a function so it can be architecture-independent
       mkOverlays = system: [
@@ -196,6 +193,11 @@
 
         formatter = treefmtEval.config.build.wrapper; # Formatter, run by nix fmt
         packages = {
+          nvim =
+            (inputs.nvf.lib.neovimConfiguration {
+              pkgs = nixpkgs.legacyPackages.x86_64-linux;
+              modules = [ { config.vim = import ./homeConfig/neovim.nix { inherit pkgs; }; } ];
+            }).neovim;
           tools =
             pkgs.runCommand "tools"
               {

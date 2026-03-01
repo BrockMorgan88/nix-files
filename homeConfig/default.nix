@@ -1,4 +1,4 @@
-{ inputs, ... }:
+{ inputs, pkgs, ... }:
 {
   imports = [
     ./hyprland.nix
@@ -7,7 +7,13 @@
     ./home-settings.nix
     ./programs.nix
     inputs.nvf.homeManagerModules.default
-    ./neovim.nix
+    {
+      programs.nvf = {
+        enable = true;
+        defaultEditor = true;
+        settings.vim = import ./neovim.nix { inherit pkgs; };
+      };
+    }
     ./machine-specific-home-configuration
   ];
 }
