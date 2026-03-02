@@ -102,7 +102,7 @@
   };
   languages = {
     enableDAP = true; # Automatically have Debug Adapters on
-    enableExtraDiagnostics = true; # Who can't use more diagnostics. TODO: configure this. not sure what it does
+    # enableExtraDiagnostics = true; # Who can't use more diagnostics. TODO: configure this. not sure what it does
     enableFormat = true; # Format every language enabled below
     enableTreesitter = true; # Automatically enable treesitter parser for every language enable below
     bash = {
@@ -139,7 +139,10 @@
         enable = true;
         type = [ "ruff" ];
       };
-      lsp.enable = true;
+      lsp = {
+        servers = [ "python-lsp-server" ];
+        enable = true;
+      };
       treesitter = {
         enable = true;
         package = pkgs.vimPlugins.nvim-treesitter-parsers.python; # For some reason the default python treesitter package is empty?

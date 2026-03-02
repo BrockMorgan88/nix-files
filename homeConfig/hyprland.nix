@@ -70,6 +70,7 @@
           "CTRL ALT, L, exec, hyprlock"
           ", switch:on:Lid Switch, exec, hyprlock"
           "$mod, R, submap, Resize"
+          "$mod&SHIFT, code:201, exec, kitty ~/nix-files"
         ]
         # Workspaces 1-12 - keys 1-=
         ++ (builtins.concatLists (
