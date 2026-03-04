@@ -20,4 +20,4 @@ cd "$TOP_LEVEL" || exit
 if ! [[ "$NO_ADD" ]]; then
   git add .
 fi
-nix fmt
+nix fmt --extra-experimental-features nix-command --extra-experimental-features flakes

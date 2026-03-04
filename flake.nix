@@ -37,6 +37,7 @@
         pkg:
         builtins.elem (lib.getName pkg) [
           "discord" # TODO: Get rid of discord, spotify, and vivaldi
+          "spotify"
           "steam"
           "steam-unwrapped"
           "vivaldi"
@@ -59,6 +60,11 @@
       ];
       systems = [
         # All of my (current) systems
+        rec {
+          hostName = "${userName}-vivobook";
+          system = "x86_64-linux";
+          userName = defaultUserName;
+        }
         rec {
           hostName = "${userName}-thinkpad";
           system = "x86_64-linux";
