@@ -37,7 +37,6 @@
         pkg:
         builtins.elem (lib.getName pkg) [
           "discord" # TODO: Get rid of discord, spotify, and vivaldi
-          "spotify"
           "steam"
           "steam-unwrapped"
           "vivaldi"
@@ -195,7 +194,7 @@
         packages = {
           nvim =
             (inputs.nvf.lib.neovimConfiguration {
-              pkgs = nixpkgs.legacyPackages.x86_64-linux;
+              inherit pkgs;
               modules = [ { config.vim = import ./homeConfig/neovim.nix { inherit pkgs; }; } ];
             }).neovim;
           tools =

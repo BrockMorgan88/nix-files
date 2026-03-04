@@ -11,7 +11,7 @@ fi
 cd ~
 if ! [ -d "nix-files" ]; then
   echo "Nix-files repo not found! Cloning now"
-  nix-shell -p gh --command "gh auth login; gh repo clone https://github.com/BrockMorgan88/nix-files.git"
+  nix-shell -p gh git --command "gh auth login; gh repo clone https://github.com/BrockMorgan88/nix-files.git"
 else
   echo "Nix-files repo already cloned. Continuing"
 fi
