@@ -15,7 +15,7 @@ if ! [ -d "nix-files" ]; then
 else
   echo "Nix-files repo already cloned. Continuing"
 fi
-
+sudo chmod +w ~/nix-files
 cd ~/nix-files
 
 HOSTNAME="brock-$1"
@@ -32,10 +32,10 @@ echo "{ ... }:
 
 }" >./homeConfig/machine-specific-home-configuration/"$HOSTNAME"/default.nix
 
-./scripts/regenerate-hardware-config.sh -h "$1"
+nix-shell -p git --command "./scripts/regenerate-hardware-config.sh -h '$1'"
 eval "sed -i -e '/systems = \[/a\' -e \"\${userName}-$1\" ./flake.nix"
 
-nix fmt
+nix fmt --extra-experimental-features nix-command --extra-experimental-features flakes
 
 nixos-rebuild switch --flake ~/nix-files
 
