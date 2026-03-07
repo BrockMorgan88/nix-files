@@ -1,33 +1,21 @@
 { pkgs, ... }:
 {
+  # NVF config
   viAlias = true;
   vimAlias = true;
   syntaxHighlighting = true;
   bell = "visual"; # No sounds
-  git.enable = true;
+  git = {
+    enable = true;
+    git-conflict.enable = true;
+    vim-fugitive.enable = true;
+  };
   globals.mapleader = " ";
-  filetree.nvimTree = {
+  filetree.neo-tree = {
     enable = true;
     setupOpts = {
-      git = {
-        # Git integration for filetree
-        enable = true;
-        show_on_dirs = true;
-        show_on_open_dirs = true;
-      };
-      hijack_cursor = true; # The cursor is stuck at the start of the filename
-      modified.enable = true; # Modifications are shown in filetree ('*' next to filename)
-      renderer = {
-        add_trailing = true; # Trailing '/' for directories
-        group_empty = true; # Directories are collapsed into one when empty
-        indent_markers.enable = true; # Markers for files inside a directory
-      };
-      view.width = {
-        # Keep the filetree small
-        min = "20%"; # TODO: Fix this!! It starts off half screen before insert mode, then snaps to the proper size when editing
-        max = "20%";
-        padding = 1;
-      };
+      enable_cursor_hijack = true; # The cursor is stuck at the start of the filename
+      git_status_async = true;
     };
   };
   lsp = {
@@ -35,6 +23,9 @@
     enable = true; # Automatically set lsp.enable = true for all enabled languages
     formatOnSave = true; # Format on save!
     inlayHints.enable = true;
+    lspkind.enable = true;
+    null-ls.enable = true;
+    # TODO: Start with this section!!
   };
   theme = {
     # Gruvbox dark theme
@@ -52,6 +43,16 @@
       virtual_lines = true;
     };
   };
+  binds = {
+    hardtime-nvim.enable = true;
+    whichKey = {
+      enable = true;
+      setupOpts = {
+        notify = true;
+      };
+    };
+  };
+  autopairs.nvim-autopairs.enable = true;
   utility = {
     direnv.enable = true; # Direnv when entering directories
     icon-picker.enable = true; # Pretty icons
@@ -98,7 +99,6 @@
         hl.underline = true;
       };
     };
-    rainbow-delimiters.enable = true; # TODO: configure this? Doesn't seem to be doing anything
   };
   languages = {
     enableDAP = true; # Automatically have Debug Adapters on
@@ -115,6 +115,10 @@
       lsp.enable = true;
     };
     css = {
+      enable = true;
+      lsp.enable = true;
+    };
+    json = {
       enable = true;
       lsp.enable = true;
     };
