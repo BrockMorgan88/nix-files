@@ -10,6 +10,10 @@
     git-conflict.enable = true;
     vim-fugitive.enable = true;
   };
+  options = {
+    wrap = false;
+    autoindent = true;
+  };
   globals.mapleader = " ";
   filetree.neo-tree = {
     enable = true;
@@ -25,7 +29,6 @@
     inlayHints.enable = true;
     lspkind.enable = true;
     null-ls.enable = true;
-    # TODO: Start with this section!!
   };
   theme = {
     # Gruvbox dark theme
@@ -34,7 +37,7 @@
     style = "dark";
   };
   autocomplete = {
-    # Autocomplete for text. TODO: Configure this properly with no comment complete (?) and proper bindings for selecting a word
+    # Autocomplete for text
     blink-cmp.enable = true;
   };
   diagnostics = {
@@ -70,7 +73,7 @@
     };
     sleuth.enable = true; # Figures out the proper indenting for tab automatically
     mkdir.enable = true; # Make all directories when they don't exist down to the file/directory selected
-    nix-develop.enable = true; # Enter a nix develop shell. TODO: Configure this with bindings. Right now it's useless
+    nix-develop.enable = true;
     smart-splits = {
       # Moving around in windows using Alt+hjkl and resizing using Alt+r hjkl
       enable = true;
