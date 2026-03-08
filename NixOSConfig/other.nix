@@ -26,10 +26,12 @@
   };
 
   networking = {
+    inherit hostName;
+
     networkmanager.enable = true; # Enables wireless support via wpa_supplicant.
     firewall.enable = false;
-    inherit hostName;
   };
+
   # Set your time zone.
   time.timeZone = "Australia/Brisbane";
 
@@ -52,7 +54,6 @@
   security.rtkit.enable = true;
   hardware.bluetooth.enable = true;
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.${userName} = {
     isNormalUser = true;
     extraGroups = [
@@ -61,23 +62,6 @@
       "dialout"
     ];
   };
-
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
-
-  # List services that you want to enable:
-
-  # Enable the OpenSSH daemon.
-  # services.openssh.enable = true;
-
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
 
   # For more information, see `man configuration.nix` or https://nixos.org/manual/nixos/stable/options#opt-system.stateVersion .
   system.stateVersion = "25.11";

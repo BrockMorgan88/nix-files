@@ -24,20 +24,15 @@
         wirelesstools
         yazi # CLI file browser
       ]
-      ++ (with unstable; [
-        bambu-studio
-      ])
     );
-    variables = {
-      EDITOR = "nvim";
-      VISUAL = "nvim";
-    };
   };
 
   fonts.packages = with pkgs; [
     nerd-fonts.iosevka
   ];
 
-  programs.steam.enable = true;
-  programs.hyprland.enable = true;
+  programs = {
+    steam.enable = true;
+    hyprland.enable = true;
+  };
 }

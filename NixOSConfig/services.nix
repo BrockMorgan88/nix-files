@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ ... }:
 {
   services = {
     # Enable CUPS to print documents.
@@ -30,5 +30,7 @@
         vi_default_mode = "insert";
       };
     };
+    # Enable the OpenSSH daemon.
+    # openssh.enable = true;
   };
 }

@@ -23,13 +23,13 @@
           "tray"
         ];
         "disk" = {
-          "format" = "Disk: {used}/{total} ({percentage_used}%)";
+          "format" = "  {used}/{total} ({percentage_used}%)";
         };
         "memory" = {
-          "format" = "RAM: {percentage}%";
+          "format" = "  {percentage}%";
         };
         "battery" = {
-          "format" = "BAT: {capacity}%";
+          "format" = "  {capacity}%";
           "states" = {
             "warning" = 30;
             "critical" = 15;
@@ -41,7 +41,7 @@
           };
         };
         "cpu" = {
-          "format" = "CPU: {usage}%";
+          "format" = "  {usage}%";
         };
       };
     };

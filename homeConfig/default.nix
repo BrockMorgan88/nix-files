@@ -1,11 +1,12 @@
 { inputs, pkgs, ... }:
 {
   imports = [
-    ./hyprland.nix
+    ./hyprland-ecosystem.nix
     ./waybar.nix
     ./other.nix
     ./home-settings.nix
     ./programs.nix
+    ./screenshot.nix
     inputs.nvf.homeManagerModules.default
     {
       programs.nvf = {
